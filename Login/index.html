@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="Social/style.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100" style="background-color: black;">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" action="#" >
+					<span class="login100-form-title">
+						Welcome to Junimea
+						Keep it funny!
+
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="userName" id="userName" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="password" id="password" placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button id="submit" class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+					<div class="text-center p-t-12">
+						<span class="txt1">
+							Forgot
+						</span>
+						<a class="txt2" href="#">
+							Username / Password?
+						</a>
+					</div>
+
+					
+
+					<div class="text-center">
+						<a class="txt2" href="../SignUp/index.html">
+							Create your Account
+							<i class="fa fa-long-arrow-right m-l-5" style="padding: 0px;" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+					
+						<center>
+						<a href="#" style="width: 70px;" id="fb-log" class="fa fa-facebook"></a>
+						<a href="#" style="width: 70px;" class="fa fa-twitter"></a>
+						<a href="#" style="width: 70px;" class="fa fa-google"></a>
+						<a href="#" style="width: 70px;" class="fa fa-linkedin"></a>
+						<a href="#" style="width: 70px;" class="fa fa-youtube"></a>
+						<a href="#" style="width: 70px;" class="fa fa-instagram"></a>
+						<a href="#" style="width: 70px;" class="fa fa-pinterest"></a>
+						<a href="#" style="width: 70px;" class="fa fa-snapchat-ghost"></a>
+						<a href="#" style="width: 70px;" class="fa fa-skype"></a>
+						</center>
+				
+		
+
+			</div>
+		</div>
+	</div>
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+	<script type="text/javascript">
+		$( "#submit" ).on( "click", function( event ) {
+			var userName = $("#userName").val();
+			var password = $("#password").val();
+			var jsonStrJson = JSON.stringify({"userName":userName, "password":password}); 
+		  event.preventDefault();
+		  $.ajax({
+		    beforeSend: function(xhrObj){
+		        xhrObj.setRequestHeader("Content-Type","application/json");
+		        xhrObj.setRequestHeader("Accept","application/json");
+		    },
+		    type: "POST",
+		    url: "http://localhost:5000/api/auth/login",       
+		    data: jsonStrJson,               
+		    dataType: "json",
+		    success: function(data){
+		       console.log(data);
+		       var json = JSON.parse(data);
+		       //console.log(json["auth_token"]);
+		       localStorage.setItem("token", json["auth_token"]);
+		       localStorage.setItem("userID", json["id"]);
+		       console.log(localStorage.getItem("token"));
+		       console.log(localStorage.getItem("userID"));
+		       window.location = '../content-scroll/content-scroll.html';
+		    }
+		});
+
+		});
+
+		 window.fbAsyncInit = function() {
+		    FB.init({
+		      appId            : '534359547007981',
+		      autoLogAppEvents : true,
+		      xfbml            : true,
+		      version          : 'v3.1'
+		    });
+		  };
+
+		  (function(d, s, id){
+		     var js, fjs = d.getElementsByTagName(s)[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement(s); js.id = id;
+		     js.src = "https://connect.facebook.net/en_US/sdk.js";
+		     fjs.parentNode.insertBefore(js, fjs);
+		   }(document, 'script', 'facebook-jssdk'));
+		$( "#fb-log" ).on( "click", function( event ) {
+			
+				FB.login(function(response) {
+			   if (response.authResponse) {
+			     var access_token =   FB.getAuthResponse()['accessToken'];
+			     console.log('Access Token = '+ access_token);
+			     FB.api('/me', function(response) {
+			     console.log('Good to see you, ' + response.name + '.');
+			     });
+			   } else {
+			     console.log('User cancelled login or did not fully authorize.');
+			   }
+			 }, {scope: ''});
+			
+			var jsonStrJson = JSON.stringify({
+"AccessToken":"EAAVuZAEgxnS4BAHDK5tNi9dZCdURF0XSSZCtoMx4HUEplJF2x9Qhw6NQcyaZAetHHZCE6JOZCM15uIbVvK3Jdzw0uIiVcEpxZCA8xkxhZCcAakOE3wBXS61blZB549yD1gm2WyedeIvYl6VFFUXHyRzrupRN8FTa1gXA7awMAnc0dUYWhDDylc3KP8DCyfTPUvoEZD"
+}
+												); 
+		  event.preventDefault();
+		  $.ajax({
+		    beforeSend: function(xhrObj){
+		        xhrObj.setRequestHeader("Content-Type","application/json");
+		       // xhrObj.setRequestHeader("Accept","application/json");
+		    },
+		    type: "POST",
+		    url: "http://localhost:5000/api/externalauth/facebook",       
+		    data: jsonStrJson,               
+		    dataType: "json",
+		    success: function(data){
+		       console.log(data);
+		       
+		       var json = JSON.parse(data);
+		       //console.log(json["auth_token"]);
+		       localStorage.setItem("token", json["auth_token"]);
+		       localStorage.setItem("userID", json["id"]);
+		       console.log(localStorage.getItem("token"));
+		       console.log(localStorage.getItem("userID"));
+		       window.location = '../content-scroll/content-scroll.html';
+		       
+		    }
+		});
+
+		});
+
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Juni.ro</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+
+  
+
+	<script type="text/javascript">
+		let urlParams = new URLSearchParams(window.location.search);
+		let myParam = urlParams.get('ID');
+		window.alert(myParam);
+
+
+		var app = angular.module('myApp', []);
+		var Username = "Alex Hang";
+		var pictureURL;
+		var connected;
+
+		function curentdate(){
+			var currentdate = new Date(); 
+			var datetime =  currentdate.getDate() + "/"
+			                + (currentdate.getMonth()+1)  + "/" 
+			                + currentdate.getFullYear() + "  "  
+			                + currentdate.getHours() + ":"  
+			                + currentdate.getMinutes() + ":" 
+			                + currentdate.getSeconds();
+			                
+			                return datetime;
+		};
+		//window.alert(curentdate());
+
+		console.log(localStorage.getItem("token"));
+		console.log(localStorage.getItem("userID"));
+		if(localStorage.getItem("token")!=undefined && localStorage.getItem("userID")!=undefined){
+			var connected = true;
+			$.ajax({
+		    beforeSend: function(xhrObj){
+		        xhrObj.setRequestHeader("Content-Type","application/json");
+		        xhrObj.setRequestHeader("Accept","application/json");
+		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
+		    },
+		    type: "GET",
+		    url: "http://localhost:5000/api/profile/me",       
+		    // data: jsonStrJson,               
+		    dataType: "json",
+		    success: function(data){
+		       console.log(data);
+		       Username = data["firstName"] +" "+ data["lastName"];
+		       window.alert(Username);
+		       if(data["pictureURL"] != null)
+		       		 pictureURL = data["pictureURL"];
+		       	else pictureURL = "https://www.bspmediagroup.com/event/img/logos/user_placeholder.png";
+		       //var json = JSON.parse(data);
+		       //console.log(json["auth_token"]);
+		    }
+		});
+
+
+		}
+		else{
+			connected = false;
+		}
+
+
+		function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+
+
+		app.controller('NAVCTRL', function($scope, $http,$interval) {
+
+			 $http({
+				    url: "http://localhost:5000/api/profile/me",
+				    method: "GET",
+				   	data: {},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+
+						console.log(response);
+						
+						
+						$scope.UserName = Username;
+						$scope.Image = pictureURL;
+						console.log($scope.UserName);
+						$scope.UserID = localStorage.getItem("userID");
+
+    				});	
+    				$scope.user_connected = connected;
+		});
+
+
+
+		app.controller('BlogPosts', function($scope, $http,$interval) {
+
+			// $http.get("customers.php")
+    		//.then(function (response) {$scope.names = response.data.records;});
+
+		    $scope.postari_blog = 
+		    [
+		    	{
+		    		"titlu":"Meme from Blog 1",
+		    		"Imagine":'http://via.placeholder.com/640x480'
+		    	},
+		    	{
+		    		"titlu":"Meme from Blog 2",
+		    		"Imagine":"http://via.placeholder.com/640x480"
+		    	}
+		    ];
+		});
+
+
+
+		app.controller('PostCTRL', function($scope, $http,$interval) {
+
+			 $http({
+				    url: "http://localhost:5000/api/PostGetters/GetPostById",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 "PostId":myParam
+
+							}
+					}).then(function (response){
+
+						$scope.postare = response.data;
+						console.log($scope.postare);
+						$scope.post = $scope.postare["result"];
+						console.log(JSON.stringify($scope.post));
+
+
+    				});	
+
+
+					$http({
+				    url: "http://localhost:5000/api/profile/me",
+				    method: "GET",
+				   	data: {},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+
+						console.log(response);
+						
+						
+						$scope.UserName = Username;
+						$scope.UserPic = pictureURL;
+						console.log($scope.UserName);
+						$scope.UserID = localStorage.getItem("userID");
+
+    				});	
+					    				
+					$scope.connected = connected;
+
+					// this data will be taken from the server using sessions
+					/*
+					$scope.connected = connected;
+					$scope.UserName = "Alex Hang";
+					$scope.UserPic = "https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg";
+					$scope.userID = 1;
+					*/
+    		//});
+
+			// $http.get("customers.php")
+    		//.then(function (response) {$scope.names = response.data.records;});
+    		/*
+		    $scope.post = {
+		    		"id":15,
+		    		"userId":"81ffb9db-c796-41ca-b008-011533c38eb4",
+		    		"postTtile":"meme1",
+		    		"description":"123456",
+		    		"likes":0,
+		    		"files":[{"id":11,"postId":15,"url":"C:\\Users\\dell\\Desktop\\VueASPNETCore2WebApiAuth\\backend\\AuthWebApi\\images\\27749978_405365276596338_2596750171110535689_n_8f23.jpg"}],
+		    		"createdDate":"2018-09-18T15:21:55.7666667"
+		    	}; 
+*/
+		  /*  $scope.user = {
+		    		"Nume":"Alex Hang",
+		    		"User-img":"https://www.bspmediagroup.com/event/img/logos/user_placeholder.png",
+		    };
+*/
+		    $scope.comments = [
+
+		    		{
+		    			"User":"Alex Hang",
+		    			"UserPic":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    			"Comentariu":"hello I really like this awesome post",
+		    		},
+		    		{
+		    			"User":"Alex Hang",
+		    			"UserPic":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    			"Comentariu":"hello I really like this awesome post",
+		    		},
+		    		{
+		    			"User":"Alex Hang",
+		    			"UserPic":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    			"Comentariu":"hello I really like this awesome post",
+		    		},
+
+		    ];
+			
+
+
+		});
+
+		
+		app.controller('RightCTRL', function($scope, $http,$interval) {
+
+			// $http.get("customers.php")
+    		//.then(function (response) {$scope.names = response.data.records;});
+
+		    $scope.postari_blog = 
+		    [
+		    	{
+		    		"titlu":"Meme from Blog 1",
+		    		"Imagine":'http://via.placeholder.com/640x480'
+		    	},
+		    	{
+		    		"titlu":"Meme from Blog 2",
+		    		"Imagine":"http://via.placeholder.com/640x480"
+		    	}
+		    ];
+		});
+
+
+	</script>
+
+
+	<style> 
+
+	html,body{
+		height: 100%;
+	}
+/*
+	.animatedsearch {
+	    width: 130px;
+	    box-sizing: border-box;
+	    border: 2px solid #ccc;
+	    border-radius: 4px;
+	    font-size: 16px;
+	    background-color: white;
+	    background-image: url('searchicon.png');
+	    background-position: 10px 10px; 
+	    background-repeat: no-repeat;
+	    padding: 12px 20px 12px 40px;
+	    -webkit-transition: width 0.4s ease-in-out;
+	    transition: width 0.4s ease-in-out;
+	}
+
+	.animatedsearch:focus {
+	    width: 100%;
+	}
+*/
+	.full-row-grey{
+		height: 100%;
+		background-color: #ededed;
+	}
+	.full-row-white-scroll{
+		height: 100%;
+	}
+	.grey{
+		background-color: #ededed;
+	}
+
+	::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #215ab7;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
+
+
+.postare{
+	width: 70%;
+	}
+
+.mobile-hide{
+		display: block;
+	}
+
+	.mobile-show{
+		display: none;
+	}
+
+@media screen and (max-width: 768px) {
+    .postare{
+		width: 100%;
+	}
+
+	.mobile-hide{
+		display: none;
+	}
+
+	.mobile-show{
+		display: block;
+	}
+}
+
+
+
+	</style>
+
+</head>
+<body  ng-app="myApp">
+
+
+<nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
+  <a href="#" class="active">Junimea</a>
+  <a href="#">HOT</a>
+  <a href="#">Trending</a>
+  <a href="#">Fresh</a>
+  <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
+  <a href="#">My Profile</a>
+  <a>
+  </a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i style="color: white;" class="fa fa-bars"></i>
+  </a>
+
+</nav>
+
+
+<nav ng-controller="NAVCTRL" class="navbar navbar-inverse mobile-hide" style="height: 70px;">
+  <div class="container-fluid ">
+    <div class="navbar-header mobile-hide">
+      <a class="navbar-brand" href="#" style="padding-top: 0px;">
+      	<table style="width: 50px; height: 40px;">
+      		<tr style="width: 50px; height: 40px;">
+      			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
+      			<td><h1>Junimea</h1></td>
+      		</tr>
+      	</table>
+      </a>
+    </div>
+    <ul class="nav navbar-nav">
+      <!--<li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
+    </ul>
+     <ul class="nav navbar-nav navbar-right mobile-hide">
+     	<li>
+     	<!--	<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button> -->
+     	</li>
+        <li class="dropdown" ng-if="user_connected==false">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+			<ul id="login-dp" class="dropdown-menu">
+				<li>
+					 <div class="row">
+							<div class="col-md-12">
+								Login via
+								<div class="social-buttons">
+									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+								</div>
+                                or
+								 <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
+											 <input name="Username" type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+										</div>
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputPassword2">Password</label>
+											 <input type="password" name="Password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+										</div>
+										<div class="form-group">
+											 <button class="btn btn-primary btn-block" onclick="LogIn()">Sign in</button>
+										</div>
+										<div class="checkbox">
+											 <label>
+											 <input type="checkbox"> keep me logged-in
+											 </label>
+										</div>
+								 </form>
+							</div>
+							<div class="bottom text-center">
+								New here ? <a href="#"><b>Join Us</b></a>
+							</div>
+					 </div>
+				</li>
+			</ul>
+        </li>
+        <li ng-if="user_connected!=false" >
+        	
+        	<div class="dropdown">
+			  <span class="dropdown-toggle" data-toggle="dropdown" >
+				<font style="color: white;">{{UserName}}</font>
+			  	
+			  	<img ng-src="{{Image}}" class="img-circle" alt="Cinque Terre" width="40" height="40" style="margin: 15px;" >
+
+			  </span>
+			  	
+			  <ul class="dropdown-menu">
+			    <li><a href="#">My Profile</a></li>
+			    <li><a href="#">Notifications</a></li>
+			    <li><a href="#">Settings</a></li>
+			    <li><a href="#">Log Out</a></li>
+			  </ul>
+			</div>
+        </li>
+      </ul>
+  </div>
+</nav>
+<br>
+<div class="container-fluid" style="height:100%;">
+	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
+		
+			<br>
+			<br>
+			<div class="btn-group-vertical">
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
+		
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
+	
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
+			<br>
+			</div>
+			
+			<div style="width: 100%; height: 2px; background-color: black;"></div>
+		<div style="height: 70%; overflow-y: scroll;">
+			<center>
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">Reclama</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+
+
+			</center>
+		</div>
+
+	</div>
+
+	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="PostCTRL" style="overflow-y: scroll; padding-right: 0;
+    padding-left: 0;">
+		<center>
+			<div  class="card postare" border-bottom: 1px solid black" > 
+					<h4 class="card-title">
+							<table style="width: 100%; height: 100px;">
+								<tr style="width: 100%; height: 100px;">
+									<td style="width:60px; height: 100px;">
+									<!--<img ng-src="{{post['Autor_IMG']}}" class="img-circle" alt="Cinque Terre" width="40" height="40">-->
+									<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Cinque Terre" width="40" height="40">
+									</td>
+									<td style="height: 100px;">
+										<h3>
+											 <font style="font-size: 15px; color: #080baf">{{post["firstName"] + ' '+post["lastName"]}}</font>
+											<br>
+											{{post["postTtile"]}}
+											<br>
+											 <font style="font-size: 15px; ">{{post["description"]}}</font>
+										</h3>
+									</td>
+								</tr>
+							</table>
+					</h4>
+
+
+
+					  
+					  <div class="card-body">
+<!--
+					  	 <div id="myCarousel" class="carousel slide" data-ride="carousel">
+						     Indicators 
+						    <ol class="carousel-indicators">
+						      <li ng-repeat="imagine in post['files']" data-target="#myCarousel" ng-attr-data-slide-to="{{$index}}"></li>
+						    </ol>
+							
+						     Wrapper for slides
+						    <div class="carousel-inner"  >
+						      <div ng-repeat-start="imagine in post['files'] track by $index" class="item active" ng-if="$index==0">
+						        <img ng-src="{{imagine['url']}}"  style="width:100%;">
+						      </div>
+						      <div ng-repeat-end class="item" ng-if="$index!=0" >
+						        <img ng-src="{{imagine['url']}}"  style="width:100%;">
+						      </div>
+						    </div>
+
+						     Left and right controls
+						    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+						      <span class="glyphicon glyphicon-chevron-left"></span>
+						      <span class="sr-only">Previous</span>
+						    </a>
+						    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+						      <span class="glyphicon glyphicon-chevron-right"></span>
+						      <span class="sr-only">Next</span>
+						    </a>
+						  </div>
+ -->
+
+					
+					   <img class="card-img-top" ng-repeat="imagine in post['files']" ng-src="{{imagine['url']}}" width="100%" alt="Card image"> 
+					
+					    <div style="text-align: left;"> 
+					    	<font>{{post["likes"]}}  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
+					    	<br>
+						    <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-comment"></span> Comment
+					        </button>
+				    	</div>
+					    <!--<p class="card-text">Some example text.</p>
+					    <a href="#" class="btn btn-primary">See Profile</a>-->
+					    <br>
+					  </div>
+				</div>
+				<div  class="card" style="width:70%;" > 
+					<table style="width: 100%; height: 100px;">
+								<tr style="width: 100%; height: 100px;">
+									<td style="width:60px; height: 100px;">
+									<img ng-src="{{UserPic}}" class="img-circle" style="margin-top: 0px;" alt="Cinque Terre" width="40" height="40">
+									</td>
+									<td style="height: 100px;">
+										<h3>Comentezi ca {{UserName}}
+										</h3>
+									</td>
+								</tr>
+							</table><textarea class="form-control" rows="5" id="comment"></textarea>
+
+							<br>
+							<ul style="list-style-type: none;">
+								<li ng-repeat="comment in comments">
+									<table style="width: 100%; height: 100px; background-color: #eff1f4; border-radius: 5px;">
+										<tr style="width: 100%; height: 40px;">
+											<td style="width:40px; height: 40px;">
+											<img ng-src="{{comment['UserPic']}}" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="Cinque Terre" width="40" height="40">
+											</td>
+											<td>
+												<h3 style="margin-left: 15px;"><b>{{comment["User"]}}</b>
+												
+												<br>
+												<font style="font-size: 15px;">{{comment["Comentariu"]}}</font>
+											</h3>
+												
+											</td>
+										</tr>
+									</table>
+								  	<div style="text-align: left;"> 
+									    <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
+								         	 <span class="glyphicon glyphicon-arrow-up"></span>
+								        </button>
+								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
+								         	 <span class="glyphicon glyphicon-arrow-down"></span>
+								        </button>
+								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
+								         	 <span class="glyphicon glyphicon-comment"></span> Reply
+								        </button>
+						    		</div>
+									<br>
+								</li>
+							</ul>
+
+				</div>
+		</center>
+	</div>
+
+	<script type="text/javascript">
+		/*$("#feed").on('scroll', function(){
+    if( $("#feed").scrollTop() > $(document).height() - $("#feed").height() ) {
+        //alert("Hello");
+    }
+}).scroll();*/
+	</script>
+	<div class="col-md-3 full-row-grey mobile-hide" ng-controller="RightCTRL" >
+		
+			<div style="width: 90%; height: 90%; overflow-y: scroll;" >
+
+				<center>
+					<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.juni.ro%2F&tabs=timeline&width=340&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2034901646732548" width="340" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+					
+					<div style="width: 100%; height: 70%; overflow-y: scroll;">
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title"><br></h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+
+
+
+					</div>
+
+
+
+				</center>
+			</div>
+		
+	</div>
+</div>
+
+
+</body>
+</html>

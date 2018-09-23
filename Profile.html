@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Juni.ro</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<link rel="stylesheet" type="text/css" href="fileupload/fileupload.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+	<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+//<![CDATA[
+       // bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
+  //]]>
+  </script>
+
+  <script type="text/javascript" src="fileupload/fileupload.js"></script>
+
+  
+
+	<script type="text/javascript">
+		
+		//global variables
+		var app = angular.module('myApp', []);
+		let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
+
+
+
+		app.controller('BlogPosts', function($scope, $http,$interval) {
+				
+				/* $http({
+				    url: "http://localhost:1337/lastposts",
+				    method: "GET",
+				   	data: {}
+					}).then(function (response){
+
+						$scope.postari_blog = response.data;
+
+    				});	*/
+
+		    $scope.postari_blog = 
+		    [
+		    	{
+		    		"titlu":"Meme from Blog 1",
+		    		"Imagine":'http://via.placeholder.com/640x480'
+		    	},
+		    	{
+		    		"titlu":"Meme from Blog 2",
+		    		"Imagine":"http://via.placeholder.com/640x480"
+		    	}
+		    ];
+		});
+
+		app.controller('NewsFeed', function($scope, $http, $interval) {
+
+
+
+    		$scope.see_post = function(id){
+    			// location.href = "singlepost.html?"+id;
+    			window.open("singlepost.html?"+id);
+    		};
+
+    		$scope.init = function(){
+    			/* $http({
+				    url: "http://localhost:1337/getposts",
+				    method: "GET",
+				   	data: {"curent":curent_post , "next":10}
+					}).then(function (response){
+
+						$scope.feed = response.data;
+
+    				});	
+
+			curent_post = 10;
+    				*/
+    		};
+
+    		
+
+
+		    $scope.feed = 
+		    [
+		    	{
+		    		"titlu":"Meme 1",
+		    		"Imagine":'http://memeshappen.com/download.php?memeid=36759',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 1,
+		    	},
+		    	{
+		    		"titlu":"Meme 2",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 2,
+		    	},
+		    	{
+		    		"titlu":"Meme 3",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 3,
+		    	},
+		    	{
+		    		"titlu":"Meme 4",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 4,
+		    	},
+		    	{
+		    		"titlu":"Meme 5",
+		    		"Imagine":'https://i.pinimg.com/originals/be/4d/59/be4d596223e93ec699087d4541be9917.jpg',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 5,
+		    	},
+		    	{
+		    		"titlu":"Meme 6",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 6,
+		    	},
+		    	{
+		    		"titlu":"Meme 7",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 7,
+		    	},
+		    ];
+
+		    $scope.aditional = [
+		    		{
+		    		"titlu":"Meme 7",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 8,
+		    	},
+		    	{
+		    		"titlu":"Meme 7",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 9,
+		    	},
+		    	{
+		    		"titlu":"Meme 7",
+		    		"Imagine":'http://via.placeholder.com/640x480',
+		    		"up":100,
+		    		"down":30,
+		    		"comments":15,
+		    		"Autor":"Alex Hang",
+		    		"Autor_IMG":"https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg",
+		    		"ID": 10,
+		    	},
+		    ] ;
+/*
+		$http.get("posts.php")
+		    		.then(function (response) {$scope.aditional = response.data.records;
+		        		$scope.feed = $scope.feed.concat($scope.aditional)});*/
+
+
+		    $interval(function () {
+		    	$scope.feed = $scope.feed.concat($scope.aditional); //this will be removed 
+				curent_post +=3; //this will be removed 
+
+				/* $http({
+				    url: "http://localhost:1337/getposts",
+				    method: "GET",
+				   	data: {"curent":curent_post , "next":curent_post+4}
+					}).then(function (response){
+						if(response.data!='null')
+							$scope.aditional = JSON.parse(response.data);
+							$scope.feed = $scope.feed.concat($scope.aditional);
+							curent_post +=3;
+    				});	*/
+    				
+    }, 4000);
+
+
+		});
+
+		
+		app.controller('RightCTRL', function($scope, $http,$interval) {
+
+			/* $http({
+				    url: "http://localhost:1337/lastposts",
+				    method: "GET",
+				   	data: {}
+					}).then(function (response){
+
+						$scope.postari_blog = JSON.parse(response.data);
+
+    				});	*/
+
+		    $scope.postari_blog = 
+		    [
+		    	{
+		    		"titlu":"Meme from Blog 1",
+		    		"Imagine":'http://via.placeholder.com/640x480'
+		    	},
+		    	{
+		    		"titlu":"Meme from Blog 2",
+		    		"Imagine":"http://via.placeholder.com/640x480"
+		    	}
+		    ];		// this will be deleted
+
+		});
+
+
+	</script>
+
+
+	<style> 
+
+	html,body{
+		height: 100%;
+	}
+/*
+	.animatedsearch {
+	    width: 130px;
+	    box-sizing: border-box;
+	    border: 2px solid #ccc;
+	    border-radius: 4px;
+	    font-size: 16px;
+	    background-color: white;
+	    background-image: url('searchicon.png');
+	    background-position: 10px 10px; 
+	    background-repeat: no-repeat;
+	    padding: 12px 20px 12px 40px;
+	    -webkit-transition: width 0.4s ease-in-out;
+	    transition: width 0.4s ease-in-out;
+	}
+
+	.animatedsearch:focus {
+	    width: 100%;
+	}
+*/
+	.full-row-grey{
+		height: 100%;
+		background-color: #ededed;
+	}
+	.full-row-white-scroll{
+		height: 100%;
+	}
+	.grey{
+		background-color: #ededed;
+	}
+
+	::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+	</style>
+
+</head>
+<body  ng-app="myApp">
+
+	<nav class="navbar navbar-inverse" style="height: 70px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#" style="padding-top: 0px;">
+      	<table style="width: 50px; height: 40px;">
+      		<tr style="width: 50px; height: 40px;">
+      			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
+      			<td><h1>Junimea</h1></td>
+      		</tr>
+      	</table>
+      </a>
+    </div>
+    <ul class="nav navbar-nav">
+      <!--<li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Page 1</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
+    </ul>
+    <ul class="nav navbar-nav navbar-right" style="padding: 10px;">
+      <li style="font-size: 20px;"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li style="font-size: 20px;"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container-fluid" style="height:100%;">
+	<div class="col-md-3 full-row-grey"  ng-controller="BlogPosts" >
+		
+			<br>
+			<br>
+			<div class="btn-group-vertical">
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
+		
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
+	
+			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
+			<br>
+			</div>
+			
+			<div style="width: 100%; height: 2px; background-color: black;"></div>
+		<div style="height: 70%; overflow-y: scroll;">
+			<center>
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">Reclama</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+				<div class="card" style="width:70%;">
+				  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
+				  <div class="card-body">
+				    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
+				    <!--<p class="card-text">Some example text.</p>
+				    <a href="#" class="btn btn-primary">See Profile</a>-->
+				  </div>
+				</div>
+
+
+
+			</center>
+		</div>
+
+	</div>
+
+	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
+		<center>
+			
+			<div class="card" style="width:70%; border-bottom: 1px solid black" > 
+				<img src="https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg" class="img-thumbnail" style="width: 20%;" alt="Cinque Terre">
+				<h3>Alex Hang</h3>
+				<p>Hello, my name is Alex, I am 18 years old, and I live in Bucharest</p>
+			</div>
+			<div ng-repeat="post in feed track by $index" style="width:100%;">
+				<div class="card advertising" style="width:70%;" ng-if="$index%5==0" > 
+					<!--<h4 class="card-title">Reclama</h4>-->
+					<br>
+					  <img class="card-img-top" src="https://i.ytimg.com/vi/nIRJMkcoTwc/maxresdefault.jpg" width="100%" alt="Card image">
+					 <!-- <div class="card-body">
+					   
+					    <div style="text-align: left;"> 
+					    	<font>180 points</font><font>40 comments</font>
+					    	<br>
+						    <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-comment"></span> Comment
+					        </button>
+				    	</div>
+					    <p class="card-text">Some example text.</p>
+					    <a href="#" class="btn btn-primary">See Profile</a>
+					  </div>-->
+				</div>
+
+				<div class="card" style="width:70%; border-bottom: 1px solid black" > 
+					<h4 class="card-title">	
+						{{post["titlu"]}}						
+					</h4>
+					  <img class="card-img-top" ng-src="{{post['Imagine']}}" ng-click="see_post(post['ID'])" width="100%" alt="Card image">
+					  <div class="card-body">
+					   
+					    <div style="text-align: left;"> 
+					    	<font>{{post["up"]-post["down"]}}  points </font><font> {{post["comments"]}} comments</font>
+					    	<br>
+						    <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm">
+					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
+					        </button>
+					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['ID'])">
+					         	 <span class="glyphicon glyphicon-comment"></span> Comment
+					        </button>
+				    	</div>
+					    <!--<p class="card-text">Some example text.</p>
+					    <a href="#" class="btn btn-primary">See Profile</a>-->
+					    <br>
+					  </div>
+				</div>
+			</div>
+		</center>
+	</div>
+
+	<script type="text/javascript">
+		/*$("#feed").on('scroll', function(){
+    if( $("#feed").scrollTop() > $(document).height() - $("#feed").height() ) {
+        //alert("Hello");
+    }
+}).scroll();*/
+	</script>
+	<div class="col-md-3 full-row-grey" ng-controller="RightCTRL" >
+		
+			<div style="width: 90%; height: 90%; overflow-y: scroll;" >
+
+				<center>
+					<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.juni.ro%2F&tabs=timeline&width=340&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2034901646732548" width="340" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+					
+					<div style="width: 100%; height: 70%; overflow-y: scroll;">
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title"><br></h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+						<div class="card" style="width:70%;">
+						  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
+						  <div class="card-body">
+						    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
+						    <!--<p class="card-text">Some example text.</p>
+						    <a href="#" class="btn btn-primary">See Profile</a>-->
+						  </div>
+						</div>
+
+
+
+					</div>
+
+
+
+				</center>
+			</div>
+		
+	</div>
+</div>
+
+
+</body>
+</html>
