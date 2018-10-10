@@ -29,7 +29,9 @@
 		var pictureURL;
 		let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
-
+		let urlParams = new URLSearchParams(window.location.search);
+		let id = urlParams.get('id');
+		
 		function curentdate(){
 			var currentdate = new Date(); 
 			var datetime =  currentdate.getDate() + "/"
@@ -120,9 +122,11 @@
       <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
     </ul>
      <ul class="nav navbar-nav navbar-right mobile-hide">
-     	<li>
-     		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
-     	</li>
+     	<!--
+			<li>
+				<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
+			</li>
+		-->
         <li class="dropdown" ng-if="user_connected==false">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 			<ul id="login-dp" class="dropdown-menu">
@@ -239,81 +243,11 @@
 	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
 		<center>
 			
-				
-			<!-- Modal -->
-				<div id="myModal" class="modal fade" role="dialog">
-				  <div class="modal-dialog modal-lg" >
-
-				    <!-- Modal content-->
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-				        <h4 class="modal-title">Modal Header</h4>
-				      </div>
-				      <div class="modal-body">
-				      	<form id="memepost" onsubmit="PostMeme()">
-				        	<div ng-if="connected!=false" id="posteaza_div" style="border-bottom: 1px solid black;">
-							<table style="width: 70%; height: 100px;">
-								<tr style="width: 100%; height: 100px;">
-									<td style="width:60px; height: 100px;">
-									<img ng-src="{{UserPic}}" class="img-circle" alt="Cinque Terre" width="40" height="40">
-									</td>
-									<td style="height: 100px;">
-										<h3>
-											Postezi ca <i>{{UserName}}</i>
-										</h3>
-									</td>
-								</tr>
-							</table>
-
-							<div class="form-group">
-							  <input type="text" name="PostTitle" style="width: 70%;" class="form-control" id="usr" placeholder="Pune un titlu original, nu O.C." required>
-							</div>
-							<div class="form-group">
-								<textarea name="Description"  class="form-control" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
-							</div>
-							<div class="form-group" style="width: 100%;">
-									   
-									       
-									            <div class="input-group image-preview">
-									                <span class="input-group-btn">
-									                    <button type="button" class="btn btn-default image-preview-clear" onclick="clearImage()">
-									                        <span class="glyphicon glyphicon-remove"></span> Clear
-									                    </button>
-									                    <div class="btn btn-default image-preview-input">
-									                        <span class="glyphicon glyphicon-folder-open"></span>
-									                        <span class="image-preview-input-title">Alege un fisier</span>
-									                        <input id="fileupload" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple="multiple">
-															
-									                    </div>
-									                    
-									                </span>
-									            </div>		    
-									            <br>
-									            <div id="dvPreview"></div>
-							</div>
-							<div class="form-group">
-								<input type="submit" name="posteaza" class="btn btn-success" value="posteaza" style="float: right;">
-							</div>	
-							<h1><br></h1>	
-
-						</form>
-					</div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-
-				  </div>
-				</div>
-
-				
-			<script type="text/javascript">
-			/*	window.setInterval(function(){
-				var data = $('#posteaza_div').find('.nicEdit-main').text();
-        		console.log(data);}, 5000);	*/
-			</script>
+			<div class="card" style="width:70%; border-bottom: 1px solid black" > 
+				<img src="https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg" class="img-thumbnail" style="width: 20%;" alt="Cinque Terre">
+				<h3>Alex Hang</h3>
+				<p>Hello, my name is Alex, I am 18 years old, and I live in Bucharest</p>
+			</div>
 			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
 				<div class="card advertising" style="width:70%;" ng-if="$index%5==0 && $index!=0" > 
 					<!--<h4 class="card-title">Reclama</h4>-->
@@ -339,32 +273,19 @@
 					  </div>-->
 				</div>
 
-				<div class="card postare" style="border-bottom: 1px solid black" > 
-					<h4 ng-click="see_user(post['userId'])" class="card-title">
-							<table style="width: 100%; height: 100px;">
-								<tr style="width: 100%; height: 100px;">
-									<td style="width:60px; height: 100px;">
-									<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Pic" width="40" height="40">
-									<!-- https://www.bspmediagroup.com/event/img/logos/user_placeholder.png
-										<img ng-src="{{post['Autor_IMG']}}"  class="img-circle" alt="Profile Pic" width="40" height="40">
-									-->
-									</td>
-
-									<td style="height: 100px;">
-
-										<h3>
-											 <font style="font-size: 15px; color: #080baf">{{post["firstName"] + ' '+post["lastName"]}}</font>
+				<div class="card postare" style="border-bottom: 1px solid black; width:70%;" > 
+					<h4 class="card-title">
+							
+										
+											 
 											<br>
 											{{post["postTtile"]}}
 											<br>
 											 <font style="font-size: 15px; ">{{post["description"]}}</font>
-										</h3>
+										
 										
 											
-										
-									</td>
-								</tr>
-							</table>
+					
 					</h4>
 					  
 					  <div class="card-body">

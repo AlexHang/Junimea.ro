@@ -130,7 +130,23 @@
 
 
 		app.controller('PostCTRL', function($scope, $http,$interval) {
+			
+			$scope.likepost= function(postid, value, $event){
+				$http({
+				    url: "http://localhost:5000/api/Post/LikePost",
+				    method: "POST",
+				   	data: {
+						"PostId":postid,
+						"Value": value
+					},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+						$event.target.style.color = "blue";
+						console.log(response);
 
+    				});
+			}
+			
 			 $http({
 				    url: "http://localhost:5000/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -654,13 +670,13 @@ position: fixed;
 					    <div style="text-align: left;"> 
 					    	<font>{{post["likes"]}}  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
 					    	<br>
-						    <button type="button" class="btn btn-default btn-sm">
+						     <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm">
+					        <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm">
+					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
 					         	 <span class="glyphicon glyphicon-comment"></span> Comment
 					        </button>
 				    	</div>

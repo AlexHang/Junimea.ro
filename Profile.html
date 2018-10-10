@@ -30,8 +30,30 @@
 		//global variables
 		var app = angular.module('myApp', []);
 		let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
+		let urlParams = new URLSearchParams(window.location.search);
+		let id = urlParams.get('id');
+		window.alert(id);
+		
+		app.controller('NAVCTRL', function($scope, $http,$interval) {
 
+			  $http({
+				    url: "http://localhost:5000/api/profile/me",
+				    method: "GET",
+				   	data: {},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
 
+						console.log(response);
+						
+						
+						$scope.UserName = Username;
+						$scope.Image = pictureURL;
+						console.log($scope.UserName);
+						$scope.UserID = localStorage.getItem("userID");
+
+    				});	
+    				$scope.user_connected = connected;
+		});
 
 		app.controller('BlogPosts', function($scope, $http,$interval) {
 				
@@ -68,22 +90,36 @@
     		};
 
     		$scope.init = function(){
-    			/* $http({
-				    url: "http://localhost:1337/getposts",
-				    method: "GET",
-				   	data: {"curent":curent_post , "next":10}
+    			 $http({
+				    url: "http://localhost:5000/api/PostGetters/GetAllUserPosts",
+				    method: "POST",
+				   	data: {"UserId":id}
 					}).then(function (response){
 
 						$scope.feed = response.data;
 
     				});	
 
-			curent_post = 10;
-    				*/
     		};
+			
+			$scope.likepost= function(postid, value, $event){
+				$http({
+				    url: "http://localhost:5000/api/Post/LikePost",
+				    method: "POST",
+				   	data: {
+						"PostId":postid,
+						"Value": value
+					},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+						$event.target.style.color = "blue";
+						console.log(response);
+
+    				});
+			}
 
     		
-
+/*
 
 		    $scope.feed = 
 		    [
@@ -191,17 +227,18 @@
 		    		"ID": 10,
 		    	},
 		    ] ;
+			*/
 /*
 		$http.get("posts.php")
 		    		.then(function (response) {$scope.aditional = response.data.records;
 		        		$scope.feed = $scope.feed.concat($scope.aditional)});*/
 
 
-		    $interval(function () {
+		  /*  $interval(function () {
 		    	$scope.feed = $scope.feed.concat($scope.aditional); //this will be removed 
 				curent_post +=3; //this will be removed 
 
-				/* $http({
+				 $http({
 				    url: "http://localhost:1337/getposts",
 				    method: "GET",
 				   	data: {"curent":curent_post , "next":curent_post+4}
@@ -210,9 +247,9 @@
 							$scope.aditional = JSON.parse(response.data);
 							$scope.feed = $scope.feed.concat($scope.aditional);
 							curent_post +=3;
-    				});	*/
+    				});	
     				
-    }, 4000);
+    }, 4000);*/
 
 
 		});
@@ -288,15 +325,150 @@
     width: 0px;
     background: transparent; /* make scrollbar transparent */
 }
+@media(max-width:768px){
+    #login-dp{
+        background-color: inherit;
+        color: #fff;
+    }
+    #login-dp .bottom{
+        background-color: inherit;
+        border-top:0 none;
+    }
+}
 
+
+.postare{
+	width: 70%;
+	}
+
+.mobile-hide{
+		display: block;
+	}
+
+	.mobile-show{
+		display: none;
+	}
+
+@media screen and (max-width: 768px) {
+    .postare{
+		width: 100%;
+	}
+
+	.mobile-hide{
+		display: none;
+	}
+
+	.mobile-show{
+		display: block;
+	}
+}
+
+	html,body{
+		height: 100%;
+	}
+/*
+	.animatedsearch {
+	    width: 130px;
+	    box-sizing: border-box;
+	    border: 2px solid #ccc;
+	    border-radius: 4px;
+	    font-size: 16px;
+	    background-color: white;
+	    background-image: url('searchicon.png');
+	    background-position: 10px 10px; 
+	    background-repeat: no-repeat;
+	    padding: 12px 20px 12px 40px;
+	    -webkit-transition: width 0.4s ease-in-out;
+	    transition: width 0.4s ease-in-out;
+	}
+
+	.animatedsearch:focus {
+	    width: 100%;
+	}
+*/
+	.full-row-grey{
+		height: 100%;
+		background-color: #ededed;
+	}
+	.full-row-white-scroll{
+		height: 100%;
+	}
+	.grey{
+		background-color: #ededed;
+	}
+
+	::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+
+
+#login-dp{
+    min-width: 250px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+    background-color:rgba(255,255,255,.8);
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
 	</style>
 
 </head>
 <body  ng-app="myApp">
 
-	<nav class="navbar navbar-inverse" style="height: 70px;">
-  <div class="container-fluid">
-    <div class="navbar-header">
+	
+<nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
+  <a href="#" class="active">Junimea</a>
+  <a href="#">HOT</a>
+  <a href="#">Trending</a>
+  <a href="#">Fresh</a>
+  <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
+  <a href="#">My Profile</a>
+  <a>
+  </a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i style="color: white;" class="fa fa-bars"></i>
+  </a>
+
+</nav>
+
+
+<nav ng-controller="NAVCTRL" class="navbar navbar-inverse mobile-hide" style="height: 70px;">
+  <div class="container-fluid ">
+    <div class="navbar-header mobile-hide">
       <a class="navbar-brand" href="#" style="padding-top: 0px;">
       	<table style="width: 50px; height: 40px;">
       		<tr style="width: 50px; height: 40px;">
@@ -312,10 +484,68 @@
       <li><a href="#">Page 2</a></li>
       <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
     </ul>
-    <ul class="nav navbar-nav navbar-right" style="padding: 10px;">
-      <li style="font-size: 20px;"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li style="font-size: 20px;"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
+     <ul class="nav navbar-nav navbar-right mobile-hide">
+     	<li>
+     		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
+     	</li>
+        <li class="dropdown" ng-if="user_connected==false">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
+			<ul id="login-dp" class="dropdown-menu">
+				<li>
+					 <div class="row">
+							<div class="col-md-12">
+								Login via
+								<div class="social-buttons">
+									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
+									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
+								</div>
+                                or
+								 <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
+											 <input name="Username" type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+										</div>
+										<div class="form-group">
+											 <label class="sr-only" for="exampleInputPassword2">Password</label>
+											 <input type="password" name="Password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
+										</div>
+										<div class="form-group">
+											 <button class="btn btn-primary btn-block" onclick="LogIn()">Sign in</button>
+										</div>
+										<div class="checkbox">
+											 <label>
+											 <input type="checkbox"> keep me logged-in
+											 </label>
+										</div>
+								 </form>
+							</div>
+							<div class="bottom text-center">
+								New here ? <a href="#"><b>Join Us</b></a>
+							</div>
+					 </div>
+				</li>
+			</ul>
+        </li>
+        <li ng-if="user_connected!=false" >
+        	
+        	<div class="dropdown">
+			  <span class="dropdown-toggle" data-toggle="dropdown" >
+				<font style="color: white;">{{UserName}}</font>
+			  	
+			  	<img ng-src="{{Image}}" class="img-circle" alt="Cinque Terre" width="40" height="40" style="margin: 15px;" >
+
+			  </span>
+			  	
+			  <ul class="dropdown-menu">
+			    <li><a href="#">My Profile</a></li>
+			    <li><a href="#">Notifications</a></li>
+			    <li><a href="#">Settings</a></li>
+			    <li><a href="#">Log Out</a></li>
+			  </ul>
+			</div>
+        </li>
+      </ul>
   </div>
 </nav>
 
@@ -378,8 +608,8 @@
 				<h3>Alex Hang</h3>
 				<p>Hello, my name is Alex, I am 18 years old, and I live in Bucharest</p>
 			</div>
-			<div ng-repeat="post in feed track by $index" style="width:100%;">
-				<div class="card advertising" style="width:70%;" ng-if="$index%5==0" > 
+			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
+				<div class="card advertising" style="width:70%;" ng-if="$index%5==0 && $index!=0" > 
 					<!--<h4 class="card-title">Reclama</h4>-->
 					<br>
 					  <img class="card-img-top" src="https://i.ytimg.com/vi/nIRJMkcoTwc/maxresdefault.jpg" width="100%" alt="Card image">
@@ -403,23 +633,65 @@
 					  </div>-->
 				</div>
 
-				<div class="card" style="width:70%; border-bottom: 1px solid black" > 
-					<h4 class="card-title">	
-						{{post["titlu"]}}						
+				<div class="card postare" style="border-bottom: 1px solid black; width:70%;" > 
+					<h4 class="card-title">
+							
+										
+											 
+											<br>
+											{{post["postTtile"]}}
+											<br>
+											 <font style="font-size: 15px; ">{{post["description"]}}</font>
+										
+										
+											
+					
 					</h4>
-					  <img class="card-img-top" ng-src="{{post['Imagine']}}" ng-click="see_post(post['ID'])" width="100%" alt="Card image">
+					  
 					  <div class="card-body">
-					   
+
+
+					  		<!-- <div id="{{ '#myCarousel' + $index }}" class="carousel slide" data-ride="carousel">
+						   
+							    <ol class="carousel-indicators">
+							      <li ng-repeat="(index1,imagine) in post['files']" data-target="{{'#myCarousel' + $parent.$index}}" data-slide-to="{{index1}}"></li>
+							    </ol>
+								
+							   
+							    <div class="carousel-inner"  >
+							      <div ng-repeat-start="(index1,imagine) in post['files']" class="item active" ng-if="index1==0">
+							        <img ng-src="{{imagine['url']}}"   style="width:100%;">
+							      </div>
+							      <div class="item" ng-repeat-end  ng-if="index1!=0" >
+							        <img ng-src="{{imagine['url']}}"  style="width:100%;">
+							      </div>
+							    </div>
+
+							     
+							    <a class="left carousel-control" ng-href="{{'#myCarousel' + $index}}" data-slide="prev">
+							      <span class="glyphicon glyphicon-chevron-left"></span>
+							      <span class="sr-only">Previous</span>
+							    </a>
+							    <a class="right carousel-control" ng-href="{{'#myCarousel' + $index}}" data-slide="next">
+							      <span class="glyphicon glyphicon-chevron-right"></span>
+							      <span class="sr-only">Next</span>
+							    </a>
+							  </div>
+-->
+
+					   <img ng-repeat="imagine in post['files']" class="card-img-top" ng-src="{{imagine['url']}}" ng-click="see_post(post['id'])" width="100%" alt="Card image">
+
+
 					    <div style="text-align: left;"> 
-					    	<font>{{post["up"]-post["down"]}}  points </font><font> {{post["comments"]}} comments</font>
+					    	<font>{{post["likes"]}}  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
 					    	<br>
-						    <button type="button" class="btn btn-default btn-sm">
+						    <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm">
+					        <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['ID'])">
+					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
 					         	 <span class="glyphicon glyphicon-comment"></span> Comment
 					        </button>
 				    	</div>
