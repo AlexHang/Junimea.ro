@@ -20,7 +20,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 
     		};
 			
-			$scope.likepost= function(postid, value, $event){
+						$scope.likepost= function(postid, value, $event){
 				$http({
 				    url: "http://localhost:5000/api/Post/LikePost",
 				    method: "POST",
@@ -30,7 +30,15 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 					},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
-						$event.target.style.color = "blue";
+						/*
+						$event.target.style.color = "white";
+						$event.target.style.background = "blue";
+						*/
+						if($event.target.classList.contains('glyphicon'))
+						{
+							$event.target.parentElement.classList.toggle("button_is_liked");
+						}
+						$event.target.classList.toggle("button_is_liked");
 						console.log(response);
 
     				});
