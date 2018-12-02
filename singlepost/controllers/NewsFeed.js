@@ -1,8 +1,9 @@
 app.controller('BlogPosts', function($scope, $http,$interval) {
-
+	
 			// $http.get("customers.php")
     		//.then(function (response) {$scope.names = response.data.records;});
 
+			
 		    $scope.postari_blog = 
 		    [
 		    	{
@@ -19,7 +20,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 
 
 		app.controller('PostCTRL', function($scope, $http,$interval) {
-			
+			$scope.id1 = myParam;
 			$scope.likepost= function(postid, value, $event){
 				$http({
 				    url: "http://localhost:5000/api/Post/LikePost",
@@ -32,6 +33,27 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 					}).then(function (response){
 						$event.target.style.color = "blue";
 						console.log(response);
+
+    				});
+			}
+			
+			$scope.postComment=function(){
+				var formData = new FormData($('#commentForm')[0]);
+				console.log(formData);
+				$http({
+				    url: "http://localhost:5000/api/Comments",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 formData
+							}
+					}).then(function (response){
+
+						
+						console.log(response.data);
+						$scope.post = $scope.postare["result"];
+						console.log(JSON.stringify($scope.post));
+
 
     				});
 			}
@@ -49,6 +71,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 						$scope.postare = response.data;
 						console.log($scope.postare);
 						$scope.post = $scope.postare["result"];
+						$scope.comments = $scope.post["comments"];
 						console.log(JSON.stringify($scope.post));
 
 
@@ -100,7 +123,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 		    		"Nume":"Alex Hang",
 		    		"User-img":"https://www.bspmediagroup.com/event/img/logos/user_placeholder.png",
 		    };
-*/
+
 		    $scope.comments = [
 
 		    		{
@@ -120,7 +143,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 		    		},
 
 		    ];
-			
+	*/		
 
 
 		});

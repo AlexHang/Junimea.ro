@@ -5,19 +5,24 @@ function LogIn(){
 }
 
 
-function PostMeme(){
-	var formData = new FormData($('#memepost')[0]);
+function postComment(){
+	document.getElementById("PostId").value=myParam;
+	//var formData = new FormData($('#commentForm'));
+	//var formData = $('#commentForm').serialize();
+	var form = document.getElementById('commentForm');
+	var formData = new FormData(form);
+	//var formData = form.serialize();
 	console.log(formData);
 	if(connected){
 			$.ajax({
 				type : 'POST',
 				
-				url : "http://localhost:5000/api/Post",
+				url : "http://localhost:5000/api/Comments",
 				//Add the request header
 				headers : {
 					Authorization : 'Bearer ' + localStorage.getItem("token")
 				},
-				//contentType : 'application/x-www-form-urlencoded',
+				//contentType : 'multipart/form-data ',
 				contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
 				processData: false, // NEEDED, DON'T OMIT THIS
 				//Add form data
@@ -28,8 +33,8 @@ function PostMeme(){
 					location.reload();
 				},
 				error : function(xhr, status, error) {
-					var err = eval("(" + xhr.responseText + ")");
-					console.log(err);   
+					//var err = eval("(" + xhr.responseText + ")");
+					console.log(xhr.responseText);   
 					
 				}
 			}); //End of Ajax

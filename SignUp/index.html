@@ -153,7 +153,7 @@
 			        xhrObj.setRequestHeader("Accept","application/json");
 			    },
 			    type: "POST",
-			    url: "http://localhost:5000/api/accounts",       
+			    url: "https://junimea.serveo.net/api/accounts",       
 			    data: jsonStrJson,               
 			    dataType: "json",
 			    success: function(data){
@@ -167,7 +167,11 @@
 			       console.log(localStorage.getItem("token"));
 			       console.log(localStorage.getItem("userID"));
 			       window.location = '../content-scroll/content-scroll.html';*/
-			    }
+			    },
+				error: function(textStatus, errorThrown){
+					console.log(textStatus);
+			       window.alert(textStatus["responseText"]);
+				}
 			});
 		  }
 		  

@@ -20,10 +20,72 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" type="text/css" href="Social/style.css">
+	<style>
+	 /* WebKit and Opera browsers */
+	  @-webkit-keyframes spinner {
+		from { -webkit-transform: rotateY(0deg);    }
+		to   { -webkit-transform: rotateY(-360deg); }
+	  }
+
+	  /* all other browsers */
+	  @keyframes spinner {
+		from {
+		  -moz-transform: rotateY(0deg);
+		  -ms-transform: rotateY(0deg);
+		  transform: rotateY(0deg);
+		}
+		to {
+		  -moz-transform: rotateY(-360deg);
+		  -ms-transform: rotateY(-360deg);
+		  transform: rotateY(-360deg);
+		}
+	  }
+	  #stage {
+		margin: 1em auto;
+		-webkit-perspective: 1200px;
+		-moz-perspective: 1200px;
+		-ms-perspective: 1200px;
+		perspective: 1200px;
+	  }
+
+	  #spinner {
+		-webkit-animation-name: spinner;
+		-webkit-animation-timing-function: linear;
+		-webkit-animation-iteration-count: infinite;
+		-webkit-animation-duration: 2s;
+
+		animation-name: spinner;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		animation-duration: 2s;
+
+		-webkit-transform-style: preserve-3d;
+		-moz-transform-style: preserve-3d;
+		-ms-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+	  }
+	/*
+	  #spinner:hover {
+		-webkit-animation-play-state: paused;
+		animation-play-state: paused;
+	  }
+	  */
+	</style>
 <!--===============================================================================================-->
 </head>
 <body>
+	<div id="spinner_container" style="position:absolute; width:100%; height:100%; z-index:-999;background-color:black;">
+		
+		<div style="margin-top:250px;"
+			id="spinner" 
+			style="text-align: center;
+					color: #fff;">
+					<center>
+						<img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" style="width:300px">
+					</center>
+		</div>
 
+	</div>
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100" style="background-color: black;">
@@ -114,10 +176,17 @@
 		})
 	</script>
 	<script type="text/javascript">
+		function showSpinner(){
+			document.getElementById("spinner_container").style.zIndex="999";
+		}
+		function hideSpinner(){
+			document.getElementById("spinner_container").style.zIndex="-999";
+		}
 		$( "#submit" ).on( "click", function( event ) {
+			showSpinner();
 			var userName = $("#userName").val();
 			var password = $("#password").val();
-			var jsonStrJson = JSON.stringify({"userName":userName, "password":password}); 
+			var jsonStrJson = JSON.stringify({"username":userName, "password":password}); 
 		  event.preventDefault();
 		  $.ajax({
 		    beforeSend: function(xhrObj){
@@ -125,7 +194,7 @@
 		        xhrObj.setRequestHeader("Accept","application/json");
 		    },
 		    type: "POST",
-		    url: "http://localhost:5000/api/auth/login",       
+		    url: "https://junimea.serveo.net/api/auth/login",       
 		    data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -137,7 +206,13 @@
 		       console.log(localStorage.getItem("token"));
 		       console.log(localStorage.getItem("userID"));
 		       window.location = '../content-scroll/content-scroll.html';
-		    }
+		    },
+			error: function(textStatus, errorThrown){
+					hideSpinner();
+					console.log(textStatus);
+					window.alert(textStatus["responseText"]);
+				   
+				}
 		});
 
 		});
