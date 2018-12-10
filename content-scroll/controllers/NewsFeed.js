@@ -10,10 +10,11 @@
     			// location.href = "singlepost.html?"+id;
     			window.open("../Profile/Profile.html?id="+id);
     		};
+			
 
     		$scope.init = function(){
     			 $http({
-				    url: "http://localhost:5000/api/PostGetters/GetPosts",
+				    url: "https://junimea.serveo.net/api/PostGetters/GetPosts",
 				    method: "POST",
 				   	data:  {
 								"StartDate":curentdate()
@@ -30,7 +31,7 @@
 					
 					
 					$http({
-				    url: "http://localhost:5000/api/profile/me",
+				    url: "https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -59,7 +60,7 @@
 
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: "http://localhost:5000/api/Post/LikePost",
+				    url: "https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -83,6 +84,28 @@
 						$event.target.classList.toggle(class_to_give);
 						
 						console.log(response);
+
+    				});
+			}
+			
+			$scope.report_post = function(id){
+				$scope.ReportId=id;
+				document.getElementById("reportID").value=id;
+			}
+			
+			$scope.reportSubmit= function(){
+				window.alert("Inca nu merge, are erori la back-end");
+				$http({
+				    url: "https://junimea.serveo.net/api/ReportPost/ReportPost",
+				    method: "POST",
+				   	data: {
+						"PostId":document.getElementById("reportID").value,
+						"Reason": document.getElementById("reportReason").value
+					},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+						console.log(response);
+						location.reload();
 
     				});
 			}

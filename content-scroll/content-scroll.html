@@ -13,7 +13,49 @@
 	<link rel="stylesheet" type="text/css" href="fileupload/fileupload.css">
 	<link rel="stylesheet" type="text/css" href="menu/style.css">
 	<link rel="stylesheet" type="text/css" href="css/mobile.css">
+	
+	<style>
+		 /* WebKit and Opera browsers */
+  @-webkit-keyframes spinner {
+    from { -webkit-transform: rotateY(0deg);    }
+    to   { -webkit-transform: rotateY(-360deg); }
+  }
+
+  /* all other browsers */
+  @keyframes spinner {
+    from {
+      -moz-transform: rotateY(0deg);
+      -ms-transform: rotateY(0deg);
+      transform: rotateY(0deg);
+    }
+    to {
+      -moz-transform: rotateY(-360deg);
+      -ms-transform: rotateY(-360deg);
+      transform: rotateY(-360deg);
+    }
+  }
+
+  .spinner {
+    -webkit-animation-name: spinner;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 4s;
+
+    animation-name: spinner;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 4s;
+
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+	</style>
+	
+	
 	<!-- jQuery library -->
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<!-- Latest compiled JavaScript -->
@@ -54,7 +96,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: "http://localhost:5000/api/profile/me",       
+		    url: "https://junimea.serveo.net/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -81,6 +123,8 @@
 	<script type="text/javascript" src="controllers/NewsFeed.js"></script>
     <script type="text/javascript" src="controllers/RightCTRL.js"></script>
     <script type="text/javascript" src="menu/script.js"></script>
+	
+	
 </head>
 <body  ng-app="myApp">
 
@@ -107,7 +151,7 @@
       <a class="navbar-brand" href="#" style="padding-top: 0px;">
       	<table style="width: 50px; height: 40px;">
       		<tr style="width: 50px; height: 40px;">
-      			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
+      			<td><img class="spinner" src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
       			<td><h1>Junimea</h1></td>
       		</tr>
       	</table>
@@ -413,6 +457,23 @@
 					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
 					         	 <span class="glyphicon glyphicon-comment"></span> Comment
 					        </button>
+
+
+					        <!--<div class="dropdown" style="float: right;">
+							  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+							  	more
+							  <span class="caret"></span></button>
+							  <ul class="dropdown-menu">
+							    <li><a href="#">HTML</a></li>
+							    <li><a href="#">CSS</a></li>
+							    <li><a href="#">JavaScript</a></li>
+							  </ul>
+							</div>
+					        -->
+					        <button type="button" class="btn btn-danger btn-sm" ng-click="report_post(post['id'])" style="float: right;  "    data-toggle="modal" data-target="#report_modal">
+					         	 <span class="glyphicon glyphicon-exclamation-sign"></span> Report
+					        </button>
+					        
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
 					    <a href="#" class="btn btn-primary">See Profile</a>-->
@@ -420,8 +481,42 @@
 					  </div>
 				</div>
 			</div>
+			<!-- Modal -->
+			<div id="report_modal" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Raporteaza o postare</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form ng-submit="reportSubmit()">
+			        	<input type="text" name="PostId" id="reportID" class="form-control" >
+			        	<br>
+			        	<p>Scrie aici motivul pentru care raportezi postarea</p>
+			        	<textarea class="form-control" rows="5" id="reportReason" name="Reason" placeholder="De ce vrei ba sa dai report ? ..." required></textarea>
+			        	<br>
+			     		
+			        </form>
+			        <button class="btn btn-danger" ng-click="reportSubmit()" >Raporteaza</button>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+
+			  </div>
+			</div>
 		</center>
 	</div>
+
+
+
+
+
+
 
 	<script type="text/javascript">
 		/*$("#feed").on('scroll', function(){

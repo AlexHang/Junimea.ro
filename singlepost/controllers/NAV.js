@@ -1,7 +1,7 @@
 app.controller('NAVCTRL', function($scope, $http,$interval) {
 
 			 $http({
-				    url: "http://localhost:5000/api/profile/me",
+				    url: "https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},

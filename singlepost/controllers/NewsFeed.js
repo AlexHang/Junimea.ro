@@ -23,7 +23,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			$scope.id1 = myParam;
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: "http://localhost:5000/api/Post/LikePost",
+				    url: "https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -41,7 +41,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var formData = new FormData($('#commentForm')[0]);
 				console.log(formData);
 				$http({
-				    url: "http://localhost:5000/api/Comments",
+				    url: "https://junimea.serveo.net/api/Comments",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -59,7 +59,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			}
 			
 			 $http({
-				    url: "http://localhost:5000/api/PostGetters/GetPostById",
+				    url: "https://junimea.serveo.net/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -79,7 +79,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 
 
 					$http({
-				    url: "http://localhost:5000/api/profile/me",
+				    url: "https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
