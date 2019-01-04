@@ -31,7 +31,21 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 					},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
-						$event.target.style.color = "blue";
+						var class_to_give;
+						if(value>=0)
+							class_to_give = "button_is_liked";
+						else class_to_give = "button_is_disliked";
+						
+						/*
+						$event.target.style.color = "white";
+						$event.target.style.background = "blue";
+						*/
+						if($event.target.classList.contains('glyphicon'))
+						{
+							$event.target.parentElement.classList.toggle(class_to_give);
+						}
+						$event.target.classList.toggle(class_to_give);
+						
 						console.log(response);
 
     				});

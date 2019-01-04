@@ -80,3 +80,37 @@
     color: #fff;
     background-color:#59b5fa;
 }
+
+
+.button_is_liked{
+    color: white;
+    background: blue;
+}
+
+.button_is_liked:hover {
+   color: white;
+    background: blue;
+}
+
+.button_is_liked:focus {
+   color: white;
+    background: blue;
+}
+
+
+.button_is_disliked{
+    color: white;
+    background: #f90500;
+}
+
+.button_is_disliked:hover {
+   color: white;
+    background: #f90500;
+}
+
+.button_is_disliked:focus {
+   color: white;
+    background: #f90500;
+}
+
+

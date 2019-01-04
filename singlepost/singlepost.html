@@ -32,6 +32,24 @@
 		//let curent_post = 1; this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
 
+		function nextPost(){
+			let id=myParam*1;
+			id++;
+			window.location.href="../singlepost/singlepost.html?ID="+id;
+		}
+
+		function previousPost(){
+			let id=myParam*1;
+			if(id>1){
+				id--;
+				window.location.href="../singlepost/singlepost.html?ID="+id;
+			}else{
+				window.alert("there is no previous post");
+			}
+		}
+
+
+
 		function curentdate(){
 			var currentdate = new Date(); 
 			var datetime =  currentdate.getDate() + "/"
@@ -62,7 +80,9 @@
 		    success: function(data){
 		       console.log(data);
 		       Username = data["firstName"] +" "+ data["lastName"];
-		       window.alert(Username);
+		       //
+		      // window.alert(Username);
+		      //
 		       if(data["pictureURL"] != null)
 		       		 pictureURL = data["pictureURL"];
 		       	else pictureURL = "https://www.bspmediagroup.com/event/img/logos/user_placeholder.png";
@@ -296,7 +316,10 @@
 						    </a>
 						  </div>
  -->
-
+							<ul class="pager">
+		  						<li class="previous"><a href="#" style="background-color: red" onclick="previousPost()"><font style="color: white;">Previous</font></a></li>
+		 						 <li class="next"><a href="#" style="background-color: green;" onclick="nextPost()"><font style="color: white;">Next</font></a></li>
+							</ul>
 					
 					   <img class="card-img-top" ng-repeat="imagine in post['files']" ng-src="{{imagine['url']}}" width="100%" alt="Card image"> 
 					
@@ -316,6 +339,8 @@
 					    <!--<p class="card-text">Some example text.</p>
 					    <a href="#" class="btn btn-primary">See Profile</a>-->
 					    <br>
+
+						    
 					  </div>
 				</div>
 				<div  class="card" style="width:70%;" > 
@@ -346,7 +371,11 @@
 									<table style="width: 100%; height: 100px; background-color: #eff1f4; border-radius: 5px;">
 										<tr style="width: 100%; height: 40px;">
 											<td style="width:40px; height: 40px;">
+												<!--
 											<img ng-src="{{comment['UserPic']}}" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="" width="40" height="40">
+												-->
+												<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="" width="40" height="40">
+											
 											</td>
 											<td>
 												<h5 style="margin-left: 15px;"><b>{{comment["userId"]}}</b>

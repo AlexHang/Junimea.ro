@@ -94,7 +94,8 @@
 			}
 			
 			$scope.reportSubmit= function(){
-				window.alert("Inca nu merge, are erori la back-end");
+				//window.alert("Inca nu merge, are erori la back-end");
+				
 				$http({
 				    url: "https://junimea.serveo.net/api/ReportPost/ReportPost",
 				    method: "POST",
@@ -105,7 +106,10 @@
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
 						console.log(response);
-						location.reload();
+						//location.reload();
+						console.log(response["data"]["message"]);
+						window.alert(response["data"]["message"]);
+						$('#report_modal').modal('toggle');
 
     				});
 			}
