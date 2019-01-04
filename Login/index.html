@@ -176,6 +176,7 @@
 		})
 	</script>
 	<script type="text/javascript">
+		var tok;
 		function showSpinner(){
 			document.getElementById("spinner_container").style.zIndex="999";
 		}
@@ -238,19 +239,26 @@
 				FB.login(function(response) {
 			   if (response.authResponse) {
 			     var access_token =   FB.getAuthResponse()['accessToken'];
+			     tok=access_token;
 			     console.log('Access Token = '+ access_token);
 			     FB.api('/me', function(response) {
+
 			     console.log('Good to see you, ' + response.name + '.');
 			     });
 			   } else {
 			     console.log('User cancelled login or did not fully authorize.');
 			   }
-			 }, {scope: ''});
+			 }, {scope: 'email'});
 			
-			var jsonStrJson = JSON.stringify({
+			/*var jsonStrJson = JSON.stringify({
 "AccessToken":"EAAVuZAEgxnS4BAHDK5tNi9dZCdURF0XSSZCtoMx4HUEplJF2x9Qhw6NQcyaZAetHHZCE6JOZCM15uIbVvK3Jdzw0uIiVcEpxZCA8xkxhZCcAakOE3wBXS61blZB549yD1gm2WyedeIvYl6VFFUXHyRzrupRN8FTa1gXA7awMAnc0dUYWhDDylc3KP8DCyfTPUvoEZD"
 }
-												); 
+												); */
+
+							var jsonStrJson=JSON.stringify({
+"AccessToken":tok
+}
+												);
 		  event.preventDefault();
 		  $.ajax({
 		    beforeSend: function(xhrObj){
@@ -258,13 +266,13 @@
 		       // xhrObj.setRequestHeader("Accept","application/json");
 		    },
 		    type: "POST",
-		    url: "http://localhost:5000/api/externalauth/facebook",       
+		    url: "https://junimea.serveo.net/api/externalauth/facebook",       
 		    data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
 		       console.log(data);
 		       
-		       var json = JSON.parse(data);
+		       var json = data;
 		       //console.log(json["auth_token"]);
 		       localStorage.setItem("token", json["auth_token"]);
 		       localStorage.setItem("userID", json["id"]);
