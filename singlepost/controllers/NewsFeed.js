@@ -50,6 +50,55 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 
     				});
 			}
+			$scope.edit_comm=function(id,message){
+					document.getElementById("edit_comm_id").value=id;
+					document.getElementById("edit_message").value=message;
+					
+				
+			}
+			
+			$scope.editComment=function(){
+				var formData = new FormData($('#commentForm')[0]);
+				console.log(formData);
+				$http({
+				    url: "https://junimea.serveo.net/api/Comments/UpdateComment",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 formData
+							}
+					}).then(function (response){
+
+						
+						console.log(response.data);
+						$scope.post = $scope.postare["result"];
+						console.log(JSON.stringify($scope.post));
+
+
+    				});
+			}
+			
+			$scope.delete_comm = function(comm_id){
+				var r = confirm("Sigur stergi comentariul");
+				if (r == true) {
+				   $http({
+				    url: "https://junimea.serveo.net/api/Comments/DeleteComment",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 "CommentId":comm_id
+	
+							}
+					}).then(function (response){
+						console.log(response.data);
+						window.alert("Comentariul a fost sters");
+						location.reload();
+    				});	
+				} else {
+				  window.alert("Ai apasat Cancel");
+				}
+			}
+			
 			
 			$scope.postComment=function(){
 				var formData = new FormData($('#commentForm')[0]);
