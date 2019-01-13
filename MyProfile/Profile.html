@@ -13,49 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="fileupload/fileupload.css">
 	<link rel="stylesheet" type="text/css" href="menu/style.css">
 	<link rel="stylesheet" type="text/css" href="css/mobile.css">
-	
-	<style>
-		 /* WebKit and Opera browsers */
-  @-webkit-keyframes spinner {
-    from { -webkit-transform: rotateY(0deg);    }
-    to   { -webkit-transform: rotateY(-360deg); }
-  }
-
-  /* all other browsers */
-  @keyframes spinner {
-    from {
-      -moz-transform: rotateY(0deg);
-      -ms-transform: rotateY(0deg);
-      transform: rotateY(0deg);
-    }
-    to {
-      -moz-transform: rotateY(-360deg);
-      -ms-transform: rotateY(-360deg);
-      transform: rotateY(-360deg);
-    }
-  }
-
-  .spinner {
-    -webkit-animation-name: spinner;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-duration: 4s;
-
-    animation-name: spinner;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-duration: 4s;
-
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    -ms-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-  }
-	</style>
-	
-	
 	<!-- jQuery library -->
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<!-- Latest compiled JavaScript -->
@@ -71,11 +29,13 @@
 		var pictureURL;
 		let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
-
+		//let urlParams = new URLSearchParams(window.location.search);
+		//let id = urlParams.get('id');
+		
 		function curentdate(){
 			var currentdate = new Date(); 
-			var datetime = (  currentdate.getDate() + "/"
-			                + currentdate.getMonth()+1)  + "/"
+			var datetime = (currentdate.getMonth()+1)  + "/"  
+			                + currentdate.getDate() + "/"
 			                + currentdate.getFullYear() + "  "  
 			                + currentdate.getHours() + ":"  
 			                + currentdate.getMinutes() + ":" 
@@ -116,6 +76,45 @@
 		else{
 			connected = false;
 		}
+
+
+
+		function edit_post_by_id(){
+			var formData = new FormData($('#memepost')[0]);
+				console.log(formData);
+				if(connected){
+						$.ajax({
+							type : 'POST',
+							
+							url : "https://junimea.serveo.net/api/Post/UpdatePost",
+							//Add the request header
+							headers : {
+								Authorization : 'Bearer ' + localStorage.getItem("token")
+							},
+							//contentType : 'application/x-www-form-urlencoded',
+							contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+							processData: false, // NEEDED, DON'T OMIT THIS
+							//Add form data
+							data : formData,
+							success : function(response) {
+								console.log(response);
+								window.alert("Uploaded Successfully");
+								location.reload();
+							},
+							error : function(xhr, status, error) {
+								var err = eval("(" + xhr.responseText + ")");
+								console.log(err);   
+								
+							}
+						}); //End of Ajax
+				}
+				else {
+					window.alert("not connected");
+				}
+		}
+
+		
+
 	</script>
 
 	<script type="text/javascript" src="controllers/NAV.js"></script>
@@ -123,8 +122,6 @@
 	<script type="text/javascript" src="controllers/NewsFeed.js"></script>
     <script type="text/javascript" src="controllers/RightCTRL.js"></script>
     <script type="text/javascript" src="menu/script.js"></script>
-	
-	
 </head>
 <body  ng-app="myApp">
 
@@ -151,7 +148,7 @@
       <a class="navbar-brand" href="#" style="padding-top: 0px;">
       	<table style="width: 50px; height: 40px;">
       		<tr style="width: 50px; height: 40px;">
-      			<td><img class="spinner" src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
+      			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
       			<td><h1>Junimea</h1></td>
       		</tr>
       	</table>
@@ -164,9 +161,11 @@
       <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
     </ul>
      <ul class="nav navbar-nav navbar-right mobile-hide">
-     	<li>
-     		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
-     	</li>
+     	<!--
+			<li>
+				<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
+			</li>
+		-->
         <li class="dropdown" ng-if="user_connected==false">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 			<ul id="login-dp" class="dropdown-menu">
@@ -235,8 +234,6 @@
 			<br>
 			<br>
 			<div class="btn-group-vertical">
-				<a href="../MyProfile/Profile.html" target="_blank"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-user" ></span>My Profile</font></button></a>
-
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
 		
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
@@ -285,81 +282,11 @@
 	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
 		<center>
 			
-				
-			<!-- Modal -->
-				<div id="myModal" class="modal fade" role="dialog">
-				  <div class="modal-dialog modal-lg" >
-
-				    <!-- Modal content-->
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-				        <h4 class="modal-title">Modal Header</h4>
-				      </div>
-				      <div class="modal-body">
-				      	<form id="memepost" onsubmit="PostMeme()">
-				        	<div ng-if="connected!=false" id="posteaza_div" style="border-bottom: 1px solid black;">
-							<table style="width: 70%; height: 100px;">
-								<tr style="width: 100%; height: 100px;">
-									<td style="width:60px; height: 100px;">
-									<img ng-src="{{UserPic}}" class="img-circle" alt="Cinque Terre" width="40" height="40">
-									</td>
-									<td style="height: 100px;">
-										<h3>
-											Postezi ca <i>{{UserName}}</i>
-										</h3>
-									</td>
-								</tr>
-							</table>
-
-							<div class="form-group">
-							  <input type="text" name="PostTitle" style="width: 70%;" class="form-control" id="usr" placeholder="Pune un titlu original, nu O.C." required>
-							</div>
-							<div class="form-group">
-								<textarea name="Description"  class="form-control" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
-							</div>
-							<div class="form-group" style="width: 100%;">
-									   
-									       
-									            <div class="input-group image-preview">
-									                <span class="input-group-btn">
-									                    <button type="button" class="btn btn-default image-preview-clear" onclick="clearImage()">
-									                        <span class="glyphicon glyphicon-remove"></span> Clear
-									                    </button>
-									                    <div class="btn btn-default image-preview-input">
-									                        <span class="glyphicon glyphicon-folder-open"></span>
-									                        <span class="image-preview-input-title">Alege un fisier</span>
-									                        <input id="fileupload" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple="multiple">
-															
-									                    </div>
-									                    
-									                </span>
-									            </div>		    
-									            <br>
-									            <div id="dvPreview"></div>
-							</div>
-							<div class="form-group">
-								<input type="submit" name="posteaza" class="btn btn-success" value="posteaza" style="float: right;">
-							</div>	
-							<h1><br></h1>	
-
-						</form>
-					</div>
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				      </div>
-				    </div>
-
-				  </div>
-				</div>
-
-				
-			<script type="text/javascript">
-			/*	window.setInterval(function(){
-				var data = $('#posteaza_div').find('.nicEdit-main').text();
-        		console.log(data);}, 5000);	*/
-			</script>
+			<div class="card" style="width:70%; border-bottom: 1px solid black" > 
+				<!--<img src="https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg" class="img-thumbnail" style="width: 20%;" alt="Cinque Terre">-->
+				<h3>Alex Hang</h3>
+				<p>- Your Personal Profile -</p>
+			</div>
 			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
 				<div class="card advertising" style="width:70%;" ng-if="$index%5==0 && $index!=0" > 
 					<!--<h4 class="card-title">Reclama</h4>-->
@@ -385,34 +312,36 @@
 					  </div>-->
 				</div>
 
-				<div class="card postare" style="border-bottom: 1px solid black" > 
-					<h4 ng-click="see_user(post['userId'])" class="card-title">
-							<table style="width: 100%; height: 100px;">
-								<tr style="width: 100%; height: 100px;">
-									<td style="width:60px; height: 100px;">
-									<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Pic" width="40" height="40">
-									<!-- https://www.bspmediagroup.com/event/img/logos/user_placeholder.png
-										<img ng-src="{{post['Autor_IMG']}}"  class="img-circle" alt="Profile Pic" width="40" height="40">
-									-->
-									</td>
+				<div class="card postare" style="border-bottom: 1px solid black; width:70%;" > 
+					<h4 class="card-title">
+							
+										
+											 
+											 	
+											 	<br>
+											 <center>
 
-									<td style="height: 100px;">
-
-										<h3>
-											 <font style="font-size: 15px; color: #080baf">{{post["firstName"] + ' '+post["lastName"]}}</font>
-											<br>
-											{{post["postTtile"]}}
+											<font style="font-size: 25px; ">{{post["postTtile"]}}</font>
 											<br>
 											 <font style="font-size: 15px; ">{{post["description"]}}</font>
-										</h3>
+											 </center>
+											 <br>
+											<div style="float: right;">
+											 	<button ng-click="delete_Post(post['id'])" type="button" class="btn btn-danger btn-sm">
+										          <span class="glyphicon glyphicon-trash"></span> Delete 
+										        </button>
+											 </div>
+											 <div style="float: left;">
+											 	<button type="button" ng-click="edit_post(post['id'])" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" >
+										          <span class="glyphicon glyphicon-edit"></span> Edit 
+										        </button>
+											 </div>
+										<br>
 										
 											
-										
-									</td>
-								</tr>
-							</table>
+					
 					</h4>
-					  
+					  <br>
 					  <div class="card-body">
 
 
@@ -459,23 +388,6 @@
 					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
 					         	 <span class="glyphicon glyphicon-comment"></span> Comment
 					        </button>
-
-
-					        <!--<div class="dropdown" style="float: right;">
-							  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-							  	more
-							  <span class="caret"></span></button>
-							  <ul class="dropdown-menu">
-							    <li><a href="#">HTML</a></li>
-							    <li><a href="#">CSS</a></li>
-							    <li><a href="#">JavaScript</a></li>
-							  </ul>
-							</div>
-					        -->
-					        <button type="button" class="btn btn-danger btn-sm" ng-click="report_post(post['id'])" style="float: right;  "    data-toggle="modal" data-target="#report_modal">
-					         	 <span class="glyphicon glyphicon-exclamation-sign"></span> Report
-					        </button>
-					        
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
 					    <a href="#" class="btn btn-primary">See Profile</a>-->
@@ -483,42 +395,58 @@
 					  </div>
 				</div>
 			</div>
-			<!-- Modal -->
-			<div id="report_modal" class="modal fade" role="dialog">
-			  <div class="modal-dialog">
-
-			    <!-- Modal content-->
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        <h4 class="modal-title">Raporteaza o postare</h4>
-			      </div>
-			      <div class="modal-body">
-			        <form ng-submit="reportSubmit()">
-			        	<input type="text" name="PostId" id="reportID" class="form-control" >
-			        	<br>
-			        	<p>Scrie aici motivul pentru care raportezi postarea</p>
-			        	<textarea class="form-control" rows="5" id="reportReason" name="Reason" placeholder="De ce vrei ba sa dai report ? ..." required></textarea>
-			        	<br>
-			     		
-			        </form>
-			        <button class="btn btn-danger" ng-click="reportSubmit()" >Raporteaza</button>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			      </div>
-			    </div>
-
-			  </div>
-			</div>
 		</center>
+
+
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Edit Post</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>Edit your post</p>
+		        <form id="memepost" onsubmit="edit_post_by_id()">
+		        	
+		        
+		        	<input id="edit_id" name="Id" type="text" style="display: none;" >
+					
+			        <div class="form-group">
+					  <label for="title">Title:</label>
+					  <input type="text" name="PostTitle" class="form-control" id="edit_title">
+					</div>
+					<div class="form-group">
+					  <label for="description">Description:</label>
+					  <textarea class="form-control" name="Description" id="edit_description">
+					  	
+					  </textarea> 
+					</div>
+					<div class="form-group" style="width: 100%;">
+						<span class="image-preview-input-title">Alege un fisier</span>
+						<input id="fileupload" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple="multiple">
+					</div>
+
+					<center>
+						<input type="submit" class="btn btn-success">
+							
+						</button>
+					</center>
+				</form>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>
+
+
+
 	</div>
-
-
-
-
-
-
 
 	<script type="text/javascript">
 		/*$("#feed").on('scroll', function(){
