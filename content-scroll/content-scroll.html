@@ -116,6 +116,33 @@
 		else{
 			connected = false;
 		}
+
+
+		function submitTicket(){
+				$.ajax({
+			    beforeSend: function(xhrObj){
+			        xhrObj.setRequestHeader("Content-Type","application/json");
+			        xhrObj.setRequestHeader("Accept","application/json");
+			        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
+			    },
+			    type: "POST",
+			    url: "https://junimea.serveo.net/api/Ticket/AddTicket",       
+			     data: {
+						"Message" : document.getElementById('ticketText').value,
+			     },               
+			    dataType: "json",
+			    success: function(data){
+			       console.log(data);
+			       window.alert("Ticket-ul a fost trimis !");
+			    }
+			});
+
+		}	
+
+
+
+
+
 	</script>
 
 	<script type="text/javascript" src="controllers/NAV.js"></script>
@@ -167,6 +194,7 @@
      	<li>
      		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
      	</li>
+     	
         <li class="dropdown" ng-if="user_connected==false">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 			<ul id="login-dp" class="dropdown-menu">
@@ -216,9 +244,9 @@
 
 			  </span>
 			  	
-			  <ul class="dropdown-menu">
-			    <li><a href="#">My Profile</a></li>
-			    <li><a href="#">Notifications</a></li>
+			  <ul class="dropdown-menu" style="min-width: 260px;">
+			    <li><a href="../MyProfile/Profile.html" target="_blank" >My Profile</a></li>
+			    <li><a href="#" data-toggle="modal" data-target="#ticketModal">Deschide Ticket</a></li>
 			    <li><a href="#">Settings</a></li>
 			    <li><a href="#">Log Out</a></li>
 			  </ul>
@@ -229,13 +257,43 @@
 </nav>
 
 
+<!-- Modal -->
+<div id="ticketModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Trimite un Ticket</h4>
+      </div>
+      <div class="modal-body">
+        <h1>Scrie aici ce problema ai</h1>
+        	
+        		<textarea id="ticketText" class="form-control"></textarea>	
+        		<br>
+        		<center>
+        			<button class="btn btn-success" onclick="submitTicket()"> Trimite </button>
+        		</center>
+        		
+        	
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="container-fluid " style="height:100%;">
 	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
 		
 			<br>
 			<br>
 			<div class="btn-group-vertical">
-				<a href="../MyProfile/Profile.html" target="_blank"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-user" ></span>My Profile</font></button></a>
+				
 
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
 		
