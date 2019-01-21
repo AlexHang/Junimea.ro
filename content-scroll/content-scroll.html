@@ -119,6 +119,11 @@
 
 
 		function submitTicket(){
+				var aux = {
+						"Message" : document.getElementById('ticketText').value,
+			     };
+
+				//window.alert(document.getElementById('ticketText').value);
 				$.ajax({
 			    beforeSend: function(xhrObj){
 			        xhrObj.setRequestHeader("Content-Type","application/json");
@@ -126,14 +131,14 @@
 			        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 			    },
 			    type: "POST",
+			    dataType: "JSON",
 			    url: "https://junimea.serveo.net/api/Ticket/AddTicket",       
-			     data: {
-						"Message" : document.getElementById('ticketText').value,
-			     },               
-			    dataType: "json",
+			     data: JSON.stringify(aux),               
+			    
 			    success: function(data){
 			       console.log(data);
 			       window.alert("Ticket-ul a fost trimis !");
+			       location.reload();
 			    }
 			});
 

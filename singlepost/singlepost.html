@@ -34,13 +34,13 @@
 
 		function nextPost(){
 			let id=myParam*1;
-			id--;
+			id++;
 			window.location.href="../singlepost/singlepost.html?ID="+id;
 		}
 
 		function previousPost(){
 			let id=myParam*1;
-			id++;
+			id--;
 			window.location.href="../singlepost/singlepost.html?ID="+id;
 		}
 
@@ -398,16 +398,17 @@
 												<img  ng-src="{{imagine['url']}}" style="width: 100%;">
 											</div>
 								  	<div style="text-align: left;"> 
-									    <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
-								         	 <span class="glyphicon glyphicon-arrow-up"></span>
+									    <button style="margin-top: -10px;" type="button"  class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],1,$event)">
+								         	 <span class="glyphicon glyphicon-arrow-up"  ></span>
 								        </button>
-								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
-								         	 <span class="glyphicon glyphicon-arrow-down"></span>
+								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],-1,$event)" >
+								         	 <span class="glyphicon glyphicon-arrow-down" ></span>
 								        </button>
+								        
 								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
 								         	 <span class="glyphicon glyphicon-comment"></span> Reply
 								        </button>
-								       
+								      
 						    		</div>
 									<br>
 								</li>

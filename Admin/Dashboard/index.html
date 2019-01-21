@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <style type="text/css">
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript">
+	var app = angular.module('JuniAdmin', []);
+		var Username;
+		var pictureURL;
+		//let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
+		var connected;
+
+		function curentdate(){
+			var currentdate = new Date(); 
+			var datetime = (  currentdate.getDate() + "/"
+			                + currentdate.getMonth()+1)  + "/"
+			                + currentdate.getFullYear() + "  "  
+			                + currentdate.getHours() + ":"  
+			                + currentdate.getMinutes() + ":" 
+			                + currentdate.getSeconds();
+			                
+			                return datetime;
+		};
+		//window.alert(curentdate());
+
+		console.log(localStorage.getItem("token"));
+		console.log(localStorage.getItem("userID"));
+		if(localStorage.getItem("token")!=undefined && localStorage.getItem("userID")!=undefined){
+			var connected = true;
+			$.ajax({
+		    beforeSend: function(xhrObj){
+		        xhrObj.setRequestHeader("Content-Type","application/json");
+		        xhrObj.setRequestHeader("Accept","application/json");
+		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
+		    },
+		    type: "GET",
+		    url: "https://junimea.serveo.net/api/profile/me",       
+		    // data: jsonStrJson,               
+		    dataType: "json",
+		    success: function(data){
+		       console.log(data);
+		       Username = data["firstName"] +" "+ data["lastName"];
+		       window.alert(Username);
+		       if(data["pictureURL"] != null)
+		       		 pictureURL = data["pictureURL"];
+		       	else pictureURL = "https://www.bspmediagroup.com/event/img/logos/user_placeholder.png";
+		       //var json = JSON.parse(data);
+		       //console.log(json["auth_token"]);
+		    }
+		});
+
+
+		}
+		else{
+			connected = false;
+		}
+
+</script>
+<script type="text/javascript" src="controllers/bans.js"></script>
+
+
+</head>
+<body ng-app="JuniAdmin">
+  
+<nav class="navbar navbar-inverse" style="background-color: black; margin-bottom: 0px; border-radius: 0px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">JUNI ADMIN DASHBOARD</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Page 2</a></li>
+        <li><a href="#">Page 3</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid" style="height: 100%; padding: 0px;">
+  <div class="col-md-2 col-lg-2" style="height: 100%; background-color: black;">
+    
+  </div>
+  <!---->
+  <div class="col-md-10 col-lg-10" style="padding: 0px;">
+    
+  
+  <button class="btn btn-primary" style=" height: 150px; float: left; width: 20%;">
+    <div style="height:5px;"></div>
+    <center>
+      <font style="font-size: 20px; color: white;">Mesaje</span></font>
+      <br>
+      <font style="font-size: 80px; color: white;"><span class="glyphicon glyphicon-envelope"></span></font>
+      
+      
+    </center>
+    
+  </button>   
+  <button class="btn btn-warning" style=" height: 150px; float: left; width: 20%;">
+    <div style="height:5px;"></div>
+    <center>
+      <font style="font-size: 20px; color: white;">Notificari</span></font>
+      <br>
+      <font style="font-size: 80px; color: white;"><span class="glyphicon glyphicon-bell "></span></font>
+    </center>
+    
+  </button> 
+  <button class="btn btn-success" style=" height: 150px; float: left; width: 20%;">
+    <div style="height:5px;"></div>
+    <center>
+      <font style="font-size: 20px; color: white;">Tickete</span></font>
+      <br>
+      <font style="font-size: 80px; color: white;"><span class="glyphicon glyphicon-calendar"></span></font>
+    </center>
+  </button> 
+  <button class="btn btn-danger" style=" height: 150px; float: left; width: 20%;">
+    <div style="height:5px;"></div>
+    <center>
+      <font style="font-size: 20px; color: white;">Post Reports</span></font>
+      <br>
+      <font style="font-size: 80px; color: white;"><span class="glyphicon glyphicon-exclamation-sign  "></span></font>
+    </center>
+    <div class="height:25px;"></div>
+  </button> 
+  <button class="btn btn-info" style=" height: 150px; float: left; width: 20%;">
+    <div style="height:5px;"></div>
+    <center>
+      <font style="font-size: 20px; color: white;">Mesaje</span></font>
+      <br>
+      <font style="font-size: 80px; color: white;"><span class="glyphicon glyphicon-envelope"></span></font>
+    </center>
+    <div class="height:25px;"></div>
+  </button>
+
+  
+  <div style="width: 70%; float: left; height: 600px; background-color: #eff9f0; overflow-y: scroll;">
+    <center><h1>Tickets</h1></center>
+    <table style="width: 100%;">
+      <tbody style="width: 100%;">
+        <tr style="width: 100%; border-bottom: 1px solid black;">
+          <td style="width: 20%; border-right: 2px solid black">
+            <font style="font-size: 18px;">
+              <center>
+                Alex Hang
+              </center>
+              
+            </font>
+          </td>
+          <td style="width: 70%; " >
+            <font style="font-size: 18px; margin: 5px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique elementum varius. Sed volutpat nulla nec dui ornare pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In metus erat, fermentum eu luctus in, laoreet gravida diam. Nam aliquet tellus sed metus consequat congue non id quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam iaculis mi id augue placerat venenatis. Sed facilisis erat at rutrum ultrices. Suspendisse malesuada mollis mauris, gravida vulputate massa cursus id.
+            </font>
+          </td>
+          <td style="width: 10%">
+            <button class="btn btn-primary" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </font>
+            </button>
+            <p>
+              <br>
+            </p>
+            <button class="btn btn-danger" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-trash"></span>
+              </font>
+            </button>
+          </td>
+        </tr>
+
+
+
+<tr style="width: 100%; border-bottom: 1px solid black;">
+          <td style="width: 20%; border-right: 2px solid black">
+            <font style="font-size: 18px;">
+              <center>
+                Alex Hang
+              </center>
+              
+            </font>
+          </td>
+          <td style="width: 70%; " >
+            <font style="font-size: 18px; margin: 5px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique elementum varius. Sed volutpat nulla nec dui ornare pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In metus erat, fermentum eu luctus in, laoreet gravida diam. Nam aliquet tellus sed metus consequat congue non id quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam iaculis mi id augue placerat venenatis. Sed facilisis erat at rutrum ultrices. Suspendisse malesuada mollis mauris, gravida vulputate massa cursus id.
+            </font>
+          </td>
+          <td style="width: 10%">
+            <button class="btn btn-primary" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </font>
+            </button>
+            <p>
+              <br>
+            </p>
+            <button class="btn btn-danger" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-trash"></span>
+              </font>
+            </button>
+          </td>
+        </tr>
+
+
+
+        <tr style="width: 100%; border-bottom: 1px solid black;">
+          <td style="width: 20%; border-right: 2px solid black">
+            <font style="font-size: 18px;">
+              <center>
+                Alex Hang
+              </center>
+              
+            </font>
+          </td>
+          <td style="width: 70%; " >
+            <font style="font-size: 18px; margin: 5px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique elementum varius. Sed volutpat nulla nec dui ornare pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In metus erat, fermentum eu luctus in, laoreet gravida diam. Nam aliquet tellus sed metus consequat congue non id quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam iaculis mi id augue placerat venenatis. Sed facilisis erat at rutrum ultrices. Suspendisse malesuada mollis mauris, gravida vulputate massa cursus id.
+            </font>
+          </td>
+          <td style="width: 10%">
+            <button class="btn btn-primary" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </font>
+            </button>
+            <p>
+              <br>
+            </p>
+            <button class="btn btn-danger" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-trash"></span>
+              </font>
+            </button>
+          </td>
+        </tr>
+
+
+        <tr style="width: 100%; border-bottom: 1px solid black;">
+          <td style="width: 20%; border-right: 2px solid black">
+            <font style="font-size: 18px;">
+              <center>
+                Alex Hang
+              </center>
+              
+            </font>
+          </td>
+          <td style="width: 70%; " >
+            <font style="font-size: 18px; margin: 5px;">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tristique elementum varius. Sed volutpat nulla nec dui ornare pretium. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In metus erat, fermentum eu luctus in, laoreet gravida diam. Nam aliquet tellus sed metus consequat congue non id quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam iaculis mi id augue placerat venenatis. Sed facilisis erat at rutrum ultrices. Suspendisse malesuada mollis mauris, gravida vulputate massa cursus id.
+            </font>
+          </td>
+          <td style="width: 10%">
+            <button class="btn btn-primary" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </font>
+            </button>
+            <p>
+              <br>
+            </p>
+            <button class="btn btn-danger" style="width: 100%; height: 100%;"> 
+              <font style="font-size: 40px;">
+                <span class="glyphicon glyphicon-trash"></span>
+              </font>
+            </button>
+          </td>
+        </tr>
+
+        
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div ng-controller="BanController" style="width: 30%; float: right; height: 600px; background-color: #eff3f9; overflow-y:scroll;">
+    <div style="width: 100%";>
+      <center>
+        <h1>Banned Users</h1>
+      </center>
+      <button class="btn btn-danger btn-lg" style="float: right;" data-toggle="modal" data-target="#BanModal">
+      	Ban New User
+      </button>
+    </div>
+    <ul style="list-style-type: none;">
+      <li ng-repeat="ban in banList" style=" padding: 10px;  border-bottom: 2px solid black;">
+        <table style="width: 100%; height: 50px;">
+          <tbody style="width: 100%;">
+            <tr style="width: 100%;">
+              <td style="width: 20%;">
+                <button ng-click="unBanUser(ban['bannedUserId'])" type="button" class="btn btn-success btn-lg">
+                   UnBan 
+                </button>
+              </td>
+              <td style="width: 80%;">
+                <center>
+                  <font style="font-size: 35px; ">
+                    {{ban["bannedEmail"]}}
+                  </font>
+                  {{ban["bannedUserId"]}}
+                </center>
+                  
+                
+              </td>
+              <!--
+              <td style="width: 20%;">
+                <img src="http://www.seedcoworking.com/wp-content/uploads/2018/06/placeholder.jpg" style="height: 50px; border-radius: 100%;">
+              </td>
+              -->
+
+            </tr>
+          </tbody>
+        </table>
+
+        <font>
+         from: {{ban["banStart"]}}<br>to:{{ban["banEnd"]}}
+      </font>
+      </li>
+
+      
+
+
+
+    </ul>
+
+			    <!-- Modal -->
+			<div id="BanModal" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Ban New User</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+					  <label for="usr_ban">ID:</label>
+					  <input type="text" class="form-control" id="usr_ban">
+					</div>
+					<div class="form-group">
+					  <label for="email_ban">Email:</label>
+					  <input type="text" class="form-control" id="email_ban">
+					</div>
+					<div class="form-group">
+					  <label for="duration_ban">Duration (Weeks):</label>
+					  <input type="number" class="form-control" id="duration_ban">
+					</div>
+			      </div>
+			      <button class="btn btn-lg btn-success" ng-click="BanUser()">
+			      	Ban User
+			      </button>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+
+			  </div>
+			</div>
+
+
+
+
+  </div>
+  </div>  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+  /*
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Year', 'Visitors', { role: 'style' } ],
+        ['2010', 65010, 'color: gray'],
+        ['2011', 110064, 'color: #76A7FA'],
+        ['2012', 120106, 'opacity: 0.2'],
+        ['2015', 225000, 'stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF'],
+        ['2017', 280000, 'stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2']
+      ]);
+
+  // Optional; add a title and set the width and height of the chart
+  //var options = {'title':'My Average Day', 'width':550, 'height':400};
+  var options = { 'width':'100%', height:600  };
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+  chart.draw(data, options);
+}
+*/
+</script>
+
+
+</body>
+</html>
