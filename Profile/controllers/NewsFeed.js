@@ -11,9 +11,10 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
     			 $http({
 				    url: "https://junimea.serveo.net/api/PostGetters/GetAllUserPosts",
 				    method: "POST",
-				   	data: {"UserId":id}
+				   	data: {"UserId":localStorage.getItem("userID") ,
+							"StartDate":curentdate()}
 					}).then(function (response){
-
+						console.log(response.data);
 						$scope.feed = response.data;
 
     				});	

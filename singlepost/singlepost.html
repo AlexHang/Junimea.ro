@@ -31,13 +31,21 @@
 		var pictureURL;
 		//let curent_post = 1; this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
-
+/*
 		function nextPost(){
 			let id=myParam*1;
-			id++;
-			window.location.href="../singlepost/singlepost.html?ID="+id;
+			
+			
+			//id++;
+			
+			
+			//window.location.href="../singlepost/singlepost.html?ID="+id;
+			
+		
+			
+			
 		}
-
+*/
 		function previousPost(){
 			let id=myParam*1;
 			id--;
@@ -313,8 +321,8 @@
 						  </div>
  -->
 							<ul class="pager">
-		  						<li class="previous"><a href="#" style="background-color: red" onclick="previousPost()"><font style="color: white;">Previous</font></a></li>
-		 						 <li class="next"><a href="#" style="background-color: green;" onclick="nextPost()"><font style="color: white;">Next</font></a></li>
+		  						<li class="previous"><a href="#" style="background-color: red" ng-click="previousPost()"><font style="color: white;">Previous</font></a></li>
+		 						 <li class="next"><a href="#" style="background-color: green;" ng-click="nextPost()"><font style="color: white;">Next</font></a></li>
 							</ul>
 					
 					   <img class="card-img-top" ng-repeat="imagine in post['files']" ng-src="{{imagine['url']}}" width="100%" alt="Card image"> 

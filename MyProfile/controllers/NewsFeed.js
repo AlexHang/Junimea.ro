@@ -40,7 +40,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				   	data: {"PostId": id}
 					}).then(function (response){
-
+						
 						$scope.feed = response.data;
 						location.reload();
     				}); //End of Ajax
@@ -62,7 +62,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 				   	data: {"UserId":localStorage.getItem("userID") ,
 							"StartDate":curentdate()}
 					}).then(function (response){
-
+						
 						$scope.feed = response.data;
 						
     				});	

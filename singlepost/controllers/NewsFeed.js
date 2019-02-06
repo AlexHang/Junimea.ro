@@ -22,6 +22,44 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 		app.controller('PostCTRL', function($scope, $http,$interval) {
 			$scope.id1 = myParam;
 			
+			
+			$scope.nextPost=function(){
+				 $http({
+				    url: "https://junimea.serveo.net/api/PostGetters/GetNext",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 "CurrentId":myParam
+
+							}
+					}).then(function (response){
+						
+						console.log(response.data);
+						window.location.href="../singlepost/singlepost.html?ID="+response.data.result.id;
+    				});	
+			}
+			
+			
+			$scope.previousPost=function(){
+				 $http({
+				    url: "https://junimea.serveo.net/api/PostGetters/GetPrevious",
+				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+				    method: "POST",
+				   	data:  {
+								 "CurrentId":myParam
+
+							}
+					}).then(function (response){
+						
+						console.log(response.data);
+						window.location.href="../singlepost/singlepost.html?ID="+response.data.result.id;
+    				});	
+			}
+			
+			
+			
+			
+			
 			$scope.likepost= function(postid, value, $event){
 				$http({
 				    url: "https://junimea.serveo.net/api/Post/LikePost",
