@@ -56,7 +56,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: "https://junimea.serveo.net/api/profile/me",       
+		    url: " https://junimea.serveo.net/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -86,7 +86,7 @@
 						$.ajax({
 							type : 'POST',
 							
-							url : "https://junimea.serveo.net/api/Post/UpdatePost",
+							url : " https://junimea.serveo.net/api/Post/UpdatePost",
 							//Add the request header
 							headers : {
 								Authorization : 'Bearer ' + localStorage.getItem("token")

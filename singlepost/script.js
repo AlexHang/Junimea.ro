@@ -17,7 +17,7 @@ function postComment(){
 			$.ajax({
 				type : 'POST',
 				
-				url : "https://junimea.serveo.net/api/Comments",
+				url : " https://junimea.serveo.net/api/Comments",
 				//Add the request header
 				headers : {
 					Authorization : 'Bearer ' + localStorage.getItem("token")

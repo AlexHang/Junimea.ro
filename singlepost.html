@@ -54,7 +54,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: "http://localhost:5000/api/profile/me",       
+		    url: " https://junimea.serveo.net/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -89,7 +89,7 @@
 		app.controller('NAVCTRL', function($scope, $http,$interval) {
 
 			 $http({
-				    url: "http://localhost:5000/api/profile/me",
+				    url: " https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -133,7 +133,7 @@
 			
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: "http://localhost:5000/api/Post/LikePost",
+				    url: " https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -148,7 +148,7 @@
 			}
 			
 			 $http({
-				    url: "http://localhost:5000/api/PostGetters/GetPostById",
+				    url: " https://junimea.serveo.net/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -167,7 +167,7 @@
 
 
 					$http({
-				    url: "http://localhost:5000/api/profile/me",
+				    url: " https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},

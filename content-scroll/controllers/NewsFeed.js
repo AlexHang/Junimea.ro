@@ -14,7 +14,7 @@
 
     		$scope.init = function(){
     			 $http({
-				    url: "https://junimea.serveo.net/api/PostGetters/GetPosts",
+				    url: " https://junimea.serveo.net/api/PostGetters/GetPosts",
 				    method: "POST",
 				   	data:  {
 								"StartDate":curentdate()
@@ -31,7 +31,7 @@
 					
 					
 					$http({
-				    url: "https://junimea.serveo.net/api/profile/me",
+				    url: " https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -60,7 +60,7 @@
 
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: "https://junimea.serveo.net/api/Post/LikePost",
+				    url: " https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -97,7 +97,7 @@
 				//window.alert("Inca nu merge, are erori la back-end");
 				
 				$http({
-				    url: "https://junimea.serveo.net/api/ReportPost/ReportPost",
+				    url: " https://junimea.serveo.net/api/ReportPost/ReportPost",
 				    method: "POST",
 				   	data: {
 						"PostId":document.getElementById("reportID").value,

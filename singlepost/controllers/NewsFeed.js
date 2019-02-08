@@ -25,7 +25,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.nextPost=function(){
 				 $http({
-				    url: "https://junimea.serveo.net/api/PostGetters/GetNext",
+				    url: " https://junimea.serveo.net/api/PostGetters/GetNext",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -42,7 +42,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.previousPost=function(){
 				 $http({
-				    url: "https://junimea.serveo.net/api/PostGetters/GetPrevious",
+				    url: " https://junimea.serveo.net/api/PostGetters/GetPrevious",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -62,7 +62,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: "https://junimea.serveo.net/api/Post/LikePost",
+				    url: " https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -92,7 +92,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.likecomment= function(postid, value, $event){
 				$http({
-				    url: "https://junimea.serveo.net/api/Comments/LikeComment",
+				    url: " https://junimea.serveo.net/api/Comments/LikeComment",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -133,7 +133,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var formData = new FormData($('#commentForm')[0]);
 				console.log(formData);
 				$http({
-				    url: "https://junimea.serveo.net/api/Comments/UpdateComment",
+				    url: " https://junimea.serveo.net/api/Comments/UpdateComment",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -154,7 +154,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var r = confirm("Sigur stergi comentariul");
 				if (r == true) {
 				   $http({
-				    url: "https://junimea.serveo.net/api/Comments/DeleteComment",
+				    url: " https://junimea.serveo.net/api/Comments/DeleteComment",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -176,7 +176,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var formData = new FormData($('#commentForm')[0]);
 				console.log(formData);
 				$http({
-				    url: "https://junimea.serveo.net/api/Comments",
+				    url: " https://junimea.serveo.net/api/Comments",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -194,7 +194,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			}
 			
 			 $http({
-				    url: "https://junimea.serveo.net/api/PostGetters/GetPostById",
+				    url: " https://junimea.serveo.net/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -214,7 +214,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 
 
 					$http({
-				    url: "https://junimea.serveo.net/api/profile/me",
+				    url: " https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
