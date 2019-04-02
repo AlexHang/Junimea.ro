@@ -11,7 +11,7 @@ function PostMeme(){
 	if(connected){
 			$.ajax({
 				type : 'POST',
-				url : " https://junimea.serveo.net/api/Post",
+				url : "  https://junimea.serveo.net/api/Post",
 				//Add the request header
 				headers : {
 					Authorization : 'Bearer ' + localStorage.getItem("token")

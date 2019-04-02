@@ -1,7 +1,7 @@
 
 app.controller('BanController', function($scope, $http,$interval) {
 				$http({
-				    url: "http://localhost:5000/api/UserManagement/GetBans",
+				    url: "http:// https://junimea.serveo.net/api/UserManagement/GetBans",
 				    method: "POST",
 				   	data: {
 						
@@ -19,7 +19,7 @@ app.controller('BanController', function($scope, $http,$interval) {
 					$scope.unBanUser = function(id){
 						
 						$http({
-								url: "http://localhost:5000/api/UserManagement/UnbanUser",
+								url: "http:// https://junimea.serveo.net/api/UserManagement/UnbanUser",
 								method: "POST",
 								data: {
 										"UserId" : id
@@ -38,7 +38,7 @@ app.controller('BanController', function($scope, $http,$interval) {
 					$scope.BanUser = function(){
 						//window.alert("se trimite");
 						$http({
-								url: "http://localhost:5000/api/UserManagement/BanUser",
+								url: "http:// https://junimea.serveo.net/api/UserManagement/BanUser",
 								method: "POST",
 								data: {
 										"BannedUserId" : document.getElementById("usr_ban").value,

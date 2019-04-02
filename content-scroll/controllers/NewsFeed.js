@@ -1,7 +1,15 @@
 		app.controller('NewsFeed', function($scope, $http, $interval) {
 
-
-
+		
+		
+		
+		
+		
+			$scope.feed=[];
+			$scope.canScroll=false;
+			
+			
+			
     		$scope.see_post = function(id){
     			// location.href = "singlepost.html?"+id;
     			window.open("../singlepost/singlepost.html?ID="+id);
@@ -11,10 +19,16 @@
     			window.open("../Profile/Profile.html?id="+id);
     		};
 			
+			
+			
+			$interval(function () {
+				$scope.canScroll=true;
+			  }, 2000);
+			
 
     		$scope.init = function(){
     			 $http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetPosts",
+				    url: "  https://junimea.serveo.net/api/PostGetters/GetPostBatchInitial",
 				    method: "POST",
 				   	data:  {
 								"StartDate":curentdate()
@@ -31,7 +45,7 @@
 					
 					
 					$http({
-				    url: " https://junimea.serveo.net/api/profile/me",
+				    url: "  https://junimea.serveo.net/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -57,10 +71,38 @@
 					$scope.userID = 1;
 					*/
     		};
-
+			
+		
+			 angular.element(document.querySelector('#feed')).bind('scroll', function(){
+			  //alert('scrolling is cool!');
+			  if($scope.canScroll==true){
+				  $scope.canScroll=false;
+				  $http({
+				    url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
+				    method: "POST",
+				   	data:  {
+								"StartDate":curentdate()
+							}
+					}).then(function (response){
+						
+						$scope.aux=response.data;
+						//$scope.feed.push($scope.aux);
+						angular.extend($scope.feed , $scope.aux);
+						console.log(response.data);
+    				});	
+				  
+				  
+				  
+			  }
+			  
+			  
+			});
+		
+		
+			
 			$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: " https://junimea.serveo.net/api/Post/LikePost",
+				    url: "  https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -97,7 +139,7 @@
 				//window.alert("Inca nu merge, are erori la back-end");
 				
 				$http({
-				    url: " https://junimea.serveo.net/api/ReportPost/ReportPost",
+				    url: "https://junimea.serveo.net/api/Ticket/ReportPost",
 				    method: "POST",
 				   	data: {
 						"PostId":document.getElementById("reportID").value,

@@ -74,8 +74,8 @@
 
 		function curentdate(){
 			var currentdate = new Date(); 
-			var datetime = (  currentdate.getDate() + "/"
-			                + currentdate.getMonth()+1)  + "/"
+			var datetime =  currentdate.getDate() + "/"
+							+ (currentdate.getMonth()+1) + "/"
 			                + currentdate.getFullYear() + "  "  
 			                + currentdate.getHours() + ":"  
 			                + currentdate.getMinutes() + ":" 
@@ -83,7 +83,7 @@
 			                
 			                return datetime;
 		};
-		//window.alert(curentdate());
+		window.alert(curentdate());
 
 		console.log(localStorage.getItem("token"));
 		console.log(localStorage.getItem("userID"));
@@ -96,7 +96,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: " https://junimea.serveo.net/api/profile/me",       
+		    url: "  https://junimea.serveo.net/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -132,7 +132,7 @@
 			    },
 			    type: "POST",
 			    dataType: "JSON",
-			    url: " https://junimea.serveo.net/api/Ticket/AddTicket",       
+			    url: "  https://junimea.serveo.net/api/Ticket/AddTicket",       
 			     data: JSON.stringify(aux),               
 			    
 			    success: function(data){
@@ -149,7 +149,7 @@
 
 
 	</script>
-
+	
 	<script type="text/javascript" src="controllers/NAV.js"></script>
 	<script type="text/javascript" src="controllers/BlogPosts.js"></script>
 	<script type="text/javascript" src="controllers/NewsFeed.js"></script>
@@ -345,7 +345,7 @@
 
 	</div>
 
-	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
+	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed"  data-ng-init="init()" style="overflow-y: scroll;">
 		<center>
 			
 				
