@@ -23,7 +23,60 @@
 			
 			$interval(function () {
 				$scope.canScroll=true;
-			  }, 2000);
+			  }, 500);
+			  
+			  
+			  
+			  $scope.refreshFeed=function(){
+					
+					 for(let i=0;i<5;i++){
+						$scope.lastpost=$scope.feed["result"][$scope.feed["result"].length-1].id;
+							 //console.log($scope.feed["result"][3]);
+						  
+						  if($scope.canScroll==true){
+							  $scope.canScroll=false;
+							  /*
+							  $http({
+								url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
+								method: "POST",
+								data:  {
+											"StartDate":curentdate()
+										}
+								}).then(function (response){
+									
+									$scope.aux=response.data;
+									//$scope.feed.push($scope.aux);
+									angular.extend($scope.feed , $scope.aux);
+									console.log(response.data);
+								});	
+								*/
+								
+									$http({
+										url: " https://junimea.serveo.net/api/PostGetters/GetPrevious",
+										headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+										method: "POST",
+										data:  {
+													 "CurrentId":$scope.lastpost
+
+												}
+										}).then(function (response){
+											if(response.data["result"]!=null){
+												console.log(response.data["result"]);
+												$scope.feed["result"].push(response.data["result"]);
+												console.log($scope.feed["result"]);
+											
+											}
+											
+										});
+								}
+						
+					  
+					  
+				  }
+			}
+			  
+			  
+			  
 			
 
     		$scope.init = function(){
@@ -72,29 +125,16 @@
 					*/
     		};
 			
+			
+			
+			 $interval(function () {
+				$scope.canScroll=true;
+				$scope.refreshFeed();
+			  }, 2000);
 		
 			 angular.element(document.querySelector('#feed')).bind('scroll', function(){
-			  //alert('scrolling is cool!');
-			  if($scope.canScroll==true){
-				  $scope.canScroll=false;
-				  $http({
-				    url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
-				    method: "POST",
-				   	data:  {
-								"StartDate":curentdate()
-							}
-					}).then(function (response){
-						
-						$scope.aux=response.data;
-						//$scope.feed.push($scope.aux);
-						angular.extend($scope.feed , $scope.aux);
-						console.log(response.data);
-    				});	
-				  
-				  
-				  
-			  }
-			  
+				 
+				$scope.refreshFeed();
 			  
 			});
 		

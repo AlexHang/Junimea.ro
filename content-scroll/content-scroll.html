@@ -83,7 +83,7 @@
 			                
 			                return datetime;
 		};
-		window.alert(curentdate());
+		//window.alert(curentdate());
 
 		console.log(localStorage.getItem("token"));
 		console.log(localStorage.getItem("userID"));
@@ -102,7 +102,7 @@
 		    success: function(data){
 		       console.log(data);
 		       Username = data["firstName"] +" "+ data["lastName"];
-		       window.alert(Username);
+		      // window.alert(Username);
 		       if(data["pictureURL"] != null)
 		       		 pictureURL = data["pictureURL"];
 		       	else pictureURL = "https://www.bspmediagroup.com/event/img/logos/user_placeholder.png";
@@ -305,6 +305,11 @@
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
 	
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
+			
+				
+				<button type="button" data-toggle="modal" data-target="#myModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>Posteaza</font></button>
+			
+			
 			<br>
 			</div>
 			
