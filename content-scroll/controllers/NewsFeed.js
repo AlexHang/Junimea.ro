@@ -7,7 +7,7 @@
 		
 			$scope.feed=[];
 			$scope.canScroll=false;
-			
+			$scope.reachedEnd=false;
 			
 			
     		$scope.see_post = function(id){
@@ -23,33 +23,47 @@
 			
 			$interval(function () {
 				$scope.canScroll=true;
-			  }, 500);
+			  }, 2000);
 			  
-			  
+			  angular.element(document.querySelector('#feed')).bind('scroll', function(){
+				 
+				$scope.refreshFeed();
+				
+			});
 			  
 			  $scope.refreshFeed=function(){
 					
+					
+					
+					if($scope.canScroll==true && $scope.reachedEnd==false){
+						$scope.lastpost=$scope.feed["result"][$scope.feed["result"].length-1].createdDate;
+							  $scope.canScroll=false;
+								
+								$http({
+											url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
+											method: "POST",
+											data:  {
+														"StartDate":$scope.lastpost
+													}
+											}).then(function (response){
+												
+												if(response.data["result"][response.data["result"].length-1]!=undefined){
+													console.log(response.data["result"]);
+													for(let i=0;i<response.data["result"].length;i++){
+														$scope.feed["result"].push(response.data["result"][i]);
+													}
+													console.log($scope.feed["result"]);
+												}else $scope.reachedEnd=true;
+											});	
+					
+					}
+						/*  
 					 for(let i=0;i<5;i++){
-						$scope.lastpost=$scope.feed["result"][$scope.feed["result"].length-1].id;
+						
 							 //console.log($scope.feed["result"][3]);
 						  
 						  if($scope.canScroll==true){
 							  $scope.canScroll=false;
-							  /*
-							  $http({
-								url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
-								method: "POST",
-								data:  {
-											"StartDate":curentdate()
-										}
-								}).then(function (response){
-									
-									$scope.aux=response.data;
-									//$scope.feed.push($scope.aux);
-									angular.extend($scope.feed , $scope.aux);
-									console.log(response.data);
-								});	
-								*/
 								
 									$http({
 										url: " https://junimea.serveo.net/api/PostGetters/GetPrevious",
@@ -72,7 +86,7 @@
 						
 					  
 					  
-				  }
+				  } */
 			}
 			  
 			  
@@ -126,17 +140,8 @@
     		};
 			
 			
-			
-			 $interval(function () {
-				$scope.canScroll=true;
-				$scope.refreshFeed();
-			  }, 2000);
-		
-			 angular.element(document.querySelector('#feed')).bind('scroll', function(){
-				 
-				$scope.refreshFeed();
-			  
-			});
+	
+			 
 		
 		
 			
