@@ -145,9 +145,10 @@
 		
 		
 			
-			$scope.likepost= function(postid, value, $event){
+			$scope.likepost= function(postid, value, $event, id){
+				document.getElementById(id).innerHTML=((document.getElementById(id).innerHTML)*1) + (value*1);
 				$http({
-				    url: "  https://junimea.serveo.net/api/Post/LikePost",
+				    url: "https://junimea.serveo.net/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,

@@ -165,9 +165,10 @@
 
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
   <a href="#" class="active">Junimea</a>
+  <!--
   <a href="#">HOT</a>
   <a href="#">Trending</a>
-  <a href="#">Fresh</a>
+  <a href="#">Fresh</a>-->
   <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
   <a href="#">My Profile</a>
   <a>
@@ -301,13 +302,13 @@
 			<br>
 			<div class="btn-group-vertical">
 				
-
+	<!--
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
 		
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
 	
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
-			
+	-->		
 				
 				<button type="button" data-toggle="modal" data-target="#myModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>Posteaza</font></button>
 			
@@ -486,44 +487,17 @@
 					  <div class="card-body">
 
 
-					  		<!-- <div id="{{ '#myCarousel' + $index }}" class="carousel slide" data-ride="carousel">
-						   
-							    <ol class="carousel-indicators">
-							      <li ng-repeat="(index1,imagine) in post['files']" data-target="{{'#myCarousel' + $parent.$index}}" data-slide-to="{{index1}}"></li>
-							    </ol>
-								
-							   
-							    <div class="carousel-inner"  >
-							      <div ng-repeat-start="(index1,imagine) in post['files']" class="item active" ng-if="index1==0">
-							        <img ng-src="{{imagine['url']}}"   style="width:100%;">
-							      </div>
-							      <div class="item" ng-repeat-end  ng-if="index1!=0" >
-							        <img ng-src="{{imagine['url']}}"  style="width:100%;">
-							      </div>
-							    </div>
-
-							     
-							    <a class="left carousel-control" ng-href="{{'#myCarousel' + $index}}" data-slide="prev">
-							      <span class="glyphicon glyphicon-chevron-left"></span>
-							      <span class="sr-only">Previous</span>
-							    </a>
-							    <a class="right carousel-control" ng-href="{{'#myCarousel' + $index}}" data-slide="next">
-							      <span class="glyphicon glyphicon-chevron-right"></span>
-							      <span class="sr-only">Next</span>
-							    </a>
-							  </div>
--->
 
 					   <img ng-repeat="imagine in post['files']" class="card-img-top" ng-src="{{imagine['url']}}" ng-click="see_post(post['id'])" width="100%" alt="Card image">
 
 
 					    <div style="text-align: left;"> 
-					    	<font>{{post["likes"]}}  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
+					    	<font> <span id="{{'likeCount'+$index}}">{{post["likes"]}}</span>  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
 					    	<br>
-						    <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event)">
+						    <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event,'likeCount'+$index)">
 					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event)">
+					        <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event,'likeCount'+$index)">
 					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
 					        </button>
 					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">

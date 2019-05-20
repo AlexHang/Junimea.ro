@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="Social/style.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100" style="background-color: black;">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" action="#" >
+					<span class="login100-form-title">
+						Welcome to Junimea
+						
+						Super Admin Register
+
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="Email" id="userName" required placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="Password" id="password" required placeholder="Password">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100" data-validate = "Valid name is required">
+						<input class="input100" type="text" name="FirstName" id="FirstName" required placeholder="First Name">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					<div class="wrap-input100" data-validate = "Valid name is required">
+						<input class="input100" type="text" required name="LastName" id="LastName" placeholder="Last Name">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="wrap-input100" data-validate = "Valid name is required">
+						<input class="input100" type="text" required name="Token" id="Token" placeholder="Token">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" style="padding: 0px;" aria-hidden="true"></i>
+						</span>
+					</div>
+
+					
+					<div class="container-login100-form-btn">
+						<button id="submit" class="login100-form-btn">
+							SignUp
+						</button>
+					</div>
+
+				
+
+					
+
+					<div class="text-center">
+						<a class="txt2" href="../LogIn/index.html">
+							Already have an account ?
+							<i class="fa fa-long-arrow-right m-l-5" style="padding: 0px;" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+					
+						<center>
+						<a href="#" style="width: 70px;" class="fa fa-facebook"></a>
+						<a href="#" style="width: 70px;" class="fa fa-twitter"></a>
+						<a href="#" style="width: 70px;" class="fa fa-google"></a>
+						<a href="#" style="width: 70px;" class="fa fa-linkedin"></a>
+						<a href="#" style="width: 70px;" class="fa fa-youtube"></a>
+						<a href="#" style="width: 70px;" class="fa fa-instagram"></a>
+						<a href="#" style="width: 70px;" class="fa fa-pinterest"></a>
+						<a href="#" style="width: 70px;" class="fa fa-snapchat-ghost"></a>
+						<a href="#" style="width: 70px;" class="fa fa-skype"></a>
+						</center>
+						
+					
+
+			</div>
+		</div>
+	</div>
+	
+
+	
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+	<script type="text/javascript">
+		$( "#submit" ).on( "click", function( event ) {
+			var ok = 1;
+			var userName = $("#userName").val();
+			var password = $("#password").val();
+
+			if(password.length<6)
+			{
+				window.alert("password is too short");
+				ok = 0;
+			}
+
+			var FirstName = $("#FirstName").val();
+			var LastName = $("#LastName").val();
+			var Token = $("#Token").val();
+			var jsonStrJson = JSON.stringify({
+												"Email" : userName,
+												"Password": password,
+												"FirstName" : FirstName,
+												"LastName" : LastName,
+												"Location" : "Romania",
+												"Token": Token,
+												
+											}); 
+			console.log(jsonStrJson);
+		  event.preventDefault();
+		  if(ok == 1){
+			  	$.ajax({
+			    beforeSend: function(xhrObj){
+			        xhrObj.setRequestHeader("Content-Type","application/json");
+			        xhrObj.setRequestHeader("Accept","application/json");
+			    },
+			    type: "POST",
+			    url: "https://junimea.serveo.net/api/accounts/RegisterSuperAdmin",       
+			    data: jsonStrJson,               
+			    dataType: "json",
+			    success: function(data){
+			       console.log(data);
+			       window.alert(data);
+			       window.location = '../LogIn/index.html';
+			       //var json = JSON.parse(data);
+			       //console.log(json["auth_token"]);
+			       /*localStorage.setItem("token", json["auth_token"]);
+			       localStorage.setItem("userID", json["id"]);
+			       console.log(localStorage.getItem("token"));
+			       console.log(localStorage.getItem("userID"));
+			       window.location = '../content-scroll/content-scroll.html';*/
+			    },
+				error: function(textStatus, errorThrown){
+					console.log(textStatus);
+			       window.alert(textStatus["responseText"]);
+				}
+			});
+		  }
+		  
+
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+</html>

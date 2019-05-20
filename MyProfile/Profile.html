@@ -102,8 +102,8 @@
 								location.reload();
 							},
 							error : function(xhr, status, error) {
-								var err = eval("(" + xhr.responseText + ")");
-								console.log(err);   
+								//var err = eval("(" + xhr.responseText + ")");
+								console.log(xhr.responseText);   
 								
 							}
 						}); //End of Ajax

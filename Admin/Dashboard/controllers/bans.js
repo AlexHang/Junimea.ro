@@ -1,7 +1,7 @@
 
 app.controller('BanController', function($scope, $http,$interval) {
 				$http({
-				    url: "http:// https://junimea.serveo.net/api/UserManagement/GetBans",
+				    url: "https://junimea.serveo.net/api/UserManagement/GetBans",
 				    method: "POST",
 				   	data: {
 						
@@ -19,7 +19,7 @@ app.controller('BanController', function($scope, $http,$interval) {
 					$scope.unBanUser = function(id){
 						
 						$http({
-								url: "http:// https://junimea.serveo.net/api/UserManagement/UnbanUser",
+								url: "https://junimea.serveo.net/api/UserManagement/UnbanUser",
 								method: "POST",
 								data: {
 										"UserId" : id
@@ -35,10 +35,31 @@ app.controller('BanController', function($scope, $http,$interval) {
 					
 					}
 					
+					$scope.searchUser=function(){
+						
+						$http({
+								url: "https://junimea.serveo.net/api/UserManagement/SearchUsers",
+								method: "POST",
+								data: {
+										"FirstName":"Alex",
+										"LastName":"Hang"
+								},
+								headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+								}).then(function (response){
+									console.log(response);
+									//location.reload();
+									//console.log(response["data"]);
+									console.log(response["data"]["result"]);
+									document.getElementById("usr_ban").value=response["data"]["result"][0].userId;
+									document.getElementById("email_ban").value=response["data"]["result"][0].userEmail;
+								});
+					
+					}
+					
 					$scope.BanUser = function(){
 						//window.alert("se trimite");
 						$http({
-								url: "http:// https://junimea.serveo.net/api/UserManagement/BanUser",
+								url: "https://junimea.serveo.net/api/UserManagement/BanUser",
 								method: "POST",
 								data: {
 										"BannedUserId" : document.getElementById("usr_ban").value,

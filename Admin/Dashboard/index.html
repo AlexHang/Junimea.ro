@@ -19,6 +19,10 @@
       width: 100%;
       height: 100%;
     }
+	
+	.clear{
+		clear:both;
+	}
   </style>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -95,23 +99,16 @@
       <a class="navbar-brand" href="#">JUNI ADMIN DASHBOARD</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 2</a></li>
-        <li><a href="#">Page 3</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
+      
     </div>
   </div>
 </nav>
 <div class="container-fluid" style="height: 100%; padding: 0px;">
-  <div class="col-md-2 col-lg-2" style="height: 100%; background-color: black;">
+  <!--<div class="col-md-2 col-lg-2" style="height: 150%; background-color: black;">
     
   </div>
-  <!---->
+  -->
+  <div class="col-md-1"></div>
   <div class="col-md-10 col-lg-10" style="padding: 0px;">
     
   
@@ -308,39 +305,31 @@
       <center>
         <h1>Banned Users</h1>
       </center>
-      <button class="btn btn-danger btn-lg" style="float: right;" data-toggle="modal" data-target="#BanModal">
+      <button class="btn btn-danger btn-lg" style="width:100%" data-toggle="modal" data-target="#BanModal">
       	Ban New User
       </button>
     </div>
-    <ul style="list-style-type: none;">
-      <li ng-repeat="ban in banList" style=" padding: 10px;  border-bottom: 2px solid black;">
-        <table style="width: 100%; height: 50px;">
-          <tbody style="width: 100%;">
-            <tr style="width: 100%;">
-              <td style="width: 20%;">
+    <ul style="list-style-type: none; padding:20px;">
+      <li ng-repeat="ban in banList" style=" padding: 10px;  border-bottom: 2px solid black; border-top:2px solid black; ">
+        
                 <button ng-click="unBanUser(ban['bannedUserId'])" type="button" class="btn btn-success btn-lg">
                    UnBan 
                 </button>
-              </td>
-              <td style="width: 80%;">
+				{{ban["bannedUserId"]}}
                 <center>
-                  <font style="font-size: 35px; ">
+                  <font style="font-size: 25px; ">
                     {{ban["bannedEmail"]}}
                   </font>
-                  {{ban["bannedUserId"]}}
+				  <br />
+                  
                 </center>
                   
-                
-              </td>
+       
               <!--
               <td style="width: 20%;">
                 <img src="http://www.seedcoworking.com/wp-content/uploads/2018/06/placeholder.jpg" style="height: 50px; border-radius: 100%;">
               </td>
               -->
-
-            </tr>
-          </tbody>
-        </table>
 
         <font>
          from: {{ban["banStart"]}}<br>to:{{ban["banEnd"]}}
@@ -364,6 +353,23 @@
 			        <h4 class="modal-title">Ban New User</h4>
 			      </div>
 			      <div class="modal-body">
+				  
+				  
+				  
+					<div>
+						<div class="form-group">
+						  <label for="FirstName">First Name:</label>
+						  <input type="text" class="form-control" id="FirstName">
+						</div>
+						<div class="form-group">
+						  <label for="LastName">Last Name:</label>
+						  <input type="text" class="form-control" id="LastName">
+						</div>
+						<center>
+							<button class="btn btn-info" ng-click="searchUser()">Search User</button>
+						</center>
+					</div>
+					
 			        <div class="form-group">
 					  <label for="usr_ban">ID:</label>
 					  <input type="text" class="form-control" id="usr_ban">
@@ -376,7 +382,11 @@
 					  <label for="duration_ban">Duration (Weeks):</label>
 					  <input type="number" class="form-control" id="duration_ban">
 					</div>
+					
+					
 			      </div>
+				  
+				  
 			      <button class="btn btn-lg btn-success" ng-click="BanUser()">
 			      	Ban User
 			      </button>
@@ -392,6 +402,53 @@
 
 
   </div>
+  
+  <div class="clear">
+	
+  </div>
+  <div style="width:100%; padding:25px; background-color:white;">
+	<center><h1>Admin Section</h1> </center>
+  </div>
+  <div class="clear"></div>
+  
+  
+  <div class="row">
+  
+	
+	<div class="col-md-4" style="height:600px; overflow-y:scroll;">
+		<div style="width:100%; background-color:black; color:white; text-align:right;" class="well">
+			<center><h3>Admini existenti</h3></center>
+			<button class="btn btn-success" >Adauga Admin</button>
+		</div>
+		<!-- Admin Card-->
+		<div style="width:100%;" class="well">
+			<table style="width:100%;">
+				<tr style="width:100%;">
+					<td style="width:25%;">
+						<img src="https://www.w3schools.com/bootstrap/sanfran.jpg" style="width:100%;"  class="img-thumbnail" >
+					</td>
+					<td style="width:50%; padding-left:20px;">
+						<h3>Alex Hang</h3>
+					</td>
+					<td style="width:25%;">
+						<center>
+							<button class="btn btn-danger" style="margin-bottom:15px;">Sterge</button>
+							<button class="btn btn-primary">Trimite Token</button>
+						</center>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- Sfarsit Admin Card-->
+		
+		
+		
+		
+		
+	</div>
+  
+  </div>
+  
   </div>  
 </div>
 
