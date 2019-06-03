@@ -41,8 +41,8 @@ app.controller('BanController', function($scope, $http,$interval) {
 								url: "https://junimea.serveo.net/api/UserManagement/SearchUsers",
 								method: "POST",
 								data: {
-										"FirstName":"Alex",
-										"LastName":"Hang"
+										"FirstName":document.getElementById("FirstName").value,
+										"LastName":document.getElementById("LastName").value
 								},
 								headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 								}).then(function (response){

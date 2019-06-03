@@ -185,19 +185,27 @@
 				//window.alert("Inca nu merge, are erori la back-end");
 				
 				$http({
-				    url: "https://junimea.serveo.net/api/Ticket/ReportPost",
+				    url: "https://junimea.serveo.net/api/Reports/ReportPost",
 				    method: "POST",
 				   	data: {
-						"PostId":document.getElementById("reportID").value,
-						"Reason": document.getElementById("reportReason").value
+						"EntityId":document.getElementById("reportID").value,
+						"Message": document.getElementById("reportReason").value
 					},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
+						
+						/*
+						if(response.status==400){
+							window.alert("you already reported this post");
+							$('#report_modal').modal('toggle');
+						}
+						*/
+						
 						console.log(response);
 						//location.reload();
 						console.log(response["data"]["message"]);
 						window.alert(response["data"]["message"]);
-						$('#report_modal').modal('toggle');
+						
 
     				});
 			}

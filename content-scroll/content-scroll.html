@@ -120,12 +120,12 @@
 		}
 
 
-		function submitTicket(){
+		function submitReports(){
 				var aux = {
-						"Message" : document.getElementById('ticketText').value,
+						"Message" : document.getElementById('ReportsText').value,
 			     };
 
-				//window.alert(document.getElementById('ticketText').value);
+				//window.alert(document.getElementById('ReportsText').value);
 				$.ajax({
 			    beforeSend: function(xhrObj){
 			        xhrObj.setRequestHeader("Content-Type","application/json");
@@ -254,7 +254,7 @@
 			  	
 			  <ul class="dropdown-menu" style="min-width: 260px;">
 			    <li><a href="../MyProfile/Profile.html" target="_blank" >My Profile</a></li>
-			    <li><a href="#" data-toggle="modal" data-target="#ticketModal">Deschide Ticket</a></li>
+			    <li><a href="#" data-toggle="modal" data-target="#ReportsModal">Deschide Reports</a></li>
 			    <li><a href="#">Settings</a></li>
 			    <li><a href="#">Log Out</a></li>
 			  </ul>
@@ -266,7 +266,7 @@
 
 
 <!-- Modal -->
-<div id="ticketModal" class="modal fade" role="dialog">
+<div id="ReportsModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -276,13 +276,80 @@
         <h4 class="modal-title">Trimite un Ticket</h4>
       </div>
       <div class="modal-body">
-        <h1>Scrie aici ce problema ai</h1>
+	  
+		<ul class="nav nav-pills nav-justified">
+		  <li class="active"><a data-toggle="pill" href="#myTickets">Ticketele mele</a></li>
+		  <li><a data-toggle="pill" href="#sendTicket">Trimite Ticket</a></li>
+		</ul>
+		
+		<div class="tab-content">
+		  <div id="myTickets" class="tab-pane fade in active" style="color:black; background-color:white;"> 
+			
+			
+			
+			<div id="TicketScroll" style="width:100%; height:400px; overflow-y:scroll;">
+				
+			</div>
+			
+			<script type="text/javascript">
+				
+				$.ajax({
+			    beforeSend: function(xhrObj){
+			        xhrObj.setRequestHeader("Content-Type","application/json");
+			        xhrObj.setRequestHeader("Accept","application/json");
+			        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
+			    },
+			    type: "GET",
+			    url: "https://junimea.serveo.net/api/Ticket/GetTickets",                     
+			    success: function(data){
+			       console.log(data["postReport"]);
+				   let tickets=data["postReport"];
+				   let display=document.getElementById("TicketScroll");
+				   for(let i=0;i<tickets.length;i++){
+						if(tickets[i]["isAddressed"]==true){
+						
+							display.innerHTML+='<div class="well" style="margin:10px;">'+
+												'<p>'+
+													'<b>Ticket:</b> '+tickets[i]["message"]+
+												'</p>'+
+												'<p>'+
+													'<b>Raspuns:</b> '+tickets[i]["addressedMessage"]+
+												'</p>'+
+											'</div>';
+						
+						}else{
+						
+							display.innerHTML+='<div class="well" style="margin:10px;">'+
+												'<p>'+
+													'<b>Ticket:</b> '+tickets[i]["message"]+
+												'</p>'+
+												'<p>'+
+													'<b>Raspuns: - </b>'+
+												'</p>'+
+											'</div>';
+						
+						}
+				   }
+			    }
+			});
+				
+			</script>
+			
+		  </div>
+		  <div id="sendTicket" class="tab-pane fade" style="color:black; background-color:white;">
+				<h1>Scrie aici ce problema ai</h1>
         	
-        		<textarea id="ticketText" class="form-control"></textarea>	
+        		<textarea id="ReportsText" class="form-control"></textarea>	
         		<br>
         		<center>
-        			<button class="btn btn-success" onclick="submitTicket()"> Trimite </button>
+        			<button class="btn btn-success" onclick="submitReports()"> Trimite </button>
         		</center>
+		  </div>
+		</div>
+	  
+	  
+	  
+        
         		
         	
         
@@ -392,7 +459,10 @@
 							<div class="form-group" style="width: 100%;">
 									   
 									       
-									            <div class="input-group image-preview">
+										   
+												<p>Daca fisierul ales este mai mare de 1MB, va rugam sa folositi <a target="_blank" href="../image%20compress/index.html"> acest tool pentru a-l comprima</a></p>
+									           
+											   <div class="input-group image-preview">
 									                <span class="input-group-btn">
 									                    <button type="button" class="btn btn-default image-preview-clear" onclick="clearImage()">
 									                        <span class="glyphicon glyphicon-remove"></span> Clear
@@ -400,6 +470,8 @@
 									                    <div class="btn btn-default image-preview-input">
 									                        <span class="glyphicon glyphicon-folder-open"></span>
 									                        <span class="image-preview-input-title">Alege un fisier</span>
+															
+		
 									                        <input id="fileupload" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple="multiple">
 															
 									                    </div>
