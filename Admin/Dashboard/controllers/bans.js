@@ -16,6 +16,11 @@ app.controller('BanController', function($scope, $http,$interval) {
 
     				});
 					
+					
+					
+					
+					
+					
 					$scope.unBanUser = function(id){
 						
 						$http({
