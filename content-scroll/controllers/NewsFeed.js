@@ -194,12 +194,12 @@
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
 						
-						/*
+						
 						if(response.status==400){
 							window.alert("you already reported this post");
 							$('#report_modal').modal('toggle');
 						}
-						*/
+						
 						
 						console.log(response);
 						//location.reload();
