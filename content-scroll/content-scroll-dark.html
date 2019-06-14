@@ -18,6 +18,13 @@
 	
 	
 	<style>
+	
+	.modal-content{
+		background-color:black;
+		color:white;
+	}
+	
+	
 		 /* WebKit and Opera browsers */
   @-webkit-keyframes spinner {
     from { -webkit-transform: rotateY(0deg);    }
@@ -54,6 +61,19 @@
     -ms-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }
+  
+  
+	.grey {
+		background-color: #222222;
+		color: white;
+	}
+	
+	.full-row-grey {
+		height: 100%;
+		background-color: #222222;
+	}
+  
+  
 	</style>
 	
 	
@@ -163,7 +183,7 @@
 	
 	
 </head>
-<body  ng-app="myApp">
+<body style="background-color:black; color:white;" ng-app="myApp">
 
 
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
@@ -531,7 +551,7 @@
 					  </div>-->
 				</div>
 
-				<div class="card postare" style="border-bottom: 1px solid black" > 
+				<div class="card postare" style="border-bottom: 1px solid white" > 
 					<h4 ng-click="see_user(post['userId'])" class="card-title">
 							<table style="width: 100%; height: 100px;">
 								<tr style="width: 100%; height: 100px;">
@@ -659,13 +679,13 @@
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
 	-->		
 				
+				
 				<a href="../MyProfile/Profile.html" style="color:black;"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Profilul Meu</font></button></a>
+				
 				<button type="button" data-toggle="modal" data-target="#ReportsModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Tickete Support</font></button>
-				<a href="content-scroll-dark.html" style="color:black;"  ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Dark Theme</font></button></a>
+				<a href="content-scroll.html" style="color:black;"  ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Bright Theme</font></button></a>
 				<br />
 				<a href="https://www.facebook.com/www.juni.ro/" style="color:black;" target="_blank" ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Junimea on Facebook</font></button></a>
-				
-				
 				
 				
 			
