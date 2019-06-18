@@ -1,4 +1,4 @@
-window.onload = function () {
+/*window.onload = function () {
     var fileUpload = document.getElementById("fileupload");
     fileUpload.onchange = function () {
         if (typeof (FileReader) != "undefined") {
@@ -32,4 +32,4 @@ window.onload = function () {
 function clearImage(){
 	document.getElementById("fileupload").value = "";
 	document.querySelector('#dvPreview').innerHTML = " ";
-}
+}*/

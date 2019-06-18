@@ -1,17 +1,10 @@
-function LogIn(){
-    $.post('https://proiectexemplu.000webhostapp.com/Junimea/Back-End/LogIn.php', $('#login-nav').serialize(), function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
-    });
-}
-
-
 		
 		
 		var FileArray=[];
 		
 		
 		function addFilesToArray(){
-		window.alert("addFilesToArray");
+		
 		var files  = document.getElementById('fileupload').files;
 		//var preview = document.getElementById('image');
 		
@@ -26,7 +19,7 @@ function LogIn(){
 		// var canvas = document.getElementById("canvas");
 		function previewFile(file) {
 		
-			window.alert("previewFile");
+			
 			
 			var reader  = new FileReader();
 			
@@ -100,71 +93,3 @@ function LogIn(){
 	}
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function PostMeme(){
-	//var formData = new FormData($('#memepost')[0]);
-	
-	
-	var title = document.getElementById("PostTitle").value;
-	var description = document.getElementById("Description").value;
-	
-	
-	var formData = new FormData();
-		formData.append('PostTitle',title);
-		formData.append('Description',description);
-		
-		for(var i=0; i<FileArray.length;i++){
-			var blob = dataURItoBlob(FileArray[i]);
-			formData.append('Files',blob);
-			console.log(formData);
-		}
-		
-		for (var v of formData.values()) {
-		   console.log(v); 
-		}
-	
-	//console.log(formData);
-	if(connected){
-			$.ajax({
-				type : 'POST',
-				url : "  https://junimea.serveo.net/api/Post",
-				//Add the request header
-				headers : {
-					Authorization : 'Bearer ' + localStorage.getItem("token")
-				},
-				//contentType : 'application/x-www-form-urlencoded',
-				contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-				processData: false, // NEEDED, DON'T OMIT THIS
-				//Add form data
-				data : formData,
-				success : function(response) {
-					console.log(response);
-					window.alert("Uploaded Successfully");
-					location.reload();
-				},
-				error : function(xhr, status, error) {
-					var err = eval("(" + xhr.responseText + ")");
-					console.log(err);   
-					
-				}
-			}); //End of Ajax
-	}
-	else {
-		window.alert("not connected");
-	}
-	
-} 

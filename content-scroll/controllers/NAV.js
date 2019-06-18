@@ -9,11 +9,14 @@ app.controller('NAVCTRL', function($scope, $http,$interval) {
 
 						console.log(response);
 						
+						$scope.UserData=response.data;
 						
 						$scope.UserName = Username;
 						$scope.Image = pictureURL;
 						console.log($scope.UserName);
+						
 						$scope.UserID = localStorage.getItem("userID");
+						
 
     				});	
     				$scope.user_connected = connected;

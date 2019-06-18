@@ -1,18 +1,43 @@
-function LogIn(){
-    $.post('https://proiectexemplu.000webhostapp.com/Junimea/Back-End/LogIn.php', $('#login-nav').serialize(), function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
-    });
-}
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
+</head>
+<body>
+	<input type="file" id="fileOpload" multiple><br>
+	<!--<img src="" alt="Image preview..." id="image">
 
+	
+	<canvas id="canvas" height=500 width=500></canvas>-->
+	<br />
+	
+	
+	
+	
+	<form id="memepost">
+		<input type="text" name="PostTitle">
+		<input type="text" name="Description">
 		
-		
+	</form>
+	
+	<input type="text" name="Files" id="imgSrc">
+	
+	
+	<button onclick="uploadmeme()">Upload</button>
+	
+	
+	<script type="text/javascript">
+	
+	
 		var FileArray=[];
 		
 		
 		function addFilesToArray(){
-		window.alert("addFilesToArray");
-		var files  = document.getElementById('fileupload').files;
+		
+		var files    = document.getElementById('fileOpload').files;
 		//var preview = document.getElementById('image');
 		
 		
@@ -22,11 +47,11 @@ function LogIn(){
 		}
 		
 		
-		//var imgSrc  = document.getElementById("imgSrc"); 
+		var imgSrc  = document.getElementById("imgSrc"); 
 		// var canvas = document.getElementById("canvas");
 		function previewFile(file) {
 		
-			window.alert("previewFile");
+			
 			
 			var reader  = new FileReader();
 			
@@ -38,7 +63,7 @@ function LogIn(){
 				var preview=new Image();
                 preview.src = reader.result;
 				//FileArray.push(reader.result);
-				//$("#imgSrc").val(reader.result)
+				$("#imgSrc").val(reader.result)
 				//FileArray.push(canvas.toDataURL());
                 preview.onload = function () {
                    
@@ -75,7 +100,7 @@ function LogIn(){
 		
         
     }
-    document.getElementById('fileupload').addEventListener('change', addFilesToArray);
+    document.getElementById('fileOpload').addEventListener('change', addFilesToArray);
 	
 	
 	
@@ -100,32 +125,14 @@ function LogIn(){
 	}
 	
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function PostMeme(){
-	//var formData = new FormData($('#memepost')[0]);
 	
 	
-	var title = document.getElementById("PostTitle").value;
-	var description = document.getElementById("Description").value;
+	connected=true;
 	
-	
-	var formData = new FormData();
-		formData.append('PostTitle',title);
-		formData.append('Description',description);
+	function uploadmeme(){
+		
+		var formData = new FormData($('#memepost')[0]);
+		
 		
 		for(var i=0; i<FileArray.length;i++){
 			var blob = dataURItoBlob(FileArray[i]);
@@ -136,35 +143,46 @@ function PostMeme(){
 		for (var v of formData.values()) {
 		   console.log(v); 
 		}
-	
-	//console.log(formData);
-	if(connected){
-			$.ajax({
-				type : 'POST',
-				url : "  https://junimea.serveo.net/api/Post",
-				//Add the request header
-				headers : {
-					Authorization : 'Bearer ' + localStorage.getItem("token")
-				},
-				//contentType : 'application/x-www-form-urlencoded',
-				contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-				processData: false, // NEEDED, DON'T OMIT THIS
-				//Add form data
-				data : formData,
-				success : function(response) {
-					console.log(response);
-					window.alert("Uploaded Successfully");
-					location.reload();
-				},
-				error : function(xhr, status, error) {
-					var err = eval("(" + xhr.responseText + ")");
-					console.log(err);   
-					
-				}
-			}); //End of Ajax
+		
+		if(connected){
+				$.ajax({
+					type : 'POST',
+					url : "http://localhost:5000/api/Post",
+					//Add the request header
+					headers : {
+						Authorization : 'Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGV4YW5kcnVoYW5nQHlhaG9vLmNvbSIsImp0aSI6IjM3NDZmOTdhLWI5NWEtNDRlZi1hMWYwLWJmN2IyNzUyY2Y0NyIsImlhdCI6MTU2MDg2ODc2MCwicm9sIjoiYXBpX2FjY2VzcyIsImlkIjoiZTgyMzE3MTktYzkzOS00NTM5LThlZmQtZjU1NjRkMTgyYmY4IiwibmJmIjoxNTYwODY4NzYwLCJleHAiOjE1NjA4NzU5NjAsImlzcyI6IndlYkFwaSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMC8ifQ.XvAZsuUWIDMxDki8YkBDe63peg9VuxGmLrSwdDegh8w"
+						},
+					//contentType : 'application/x-www-form-urlencoded',
+					contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+					processData: false, // NEEDED, DON'T OMIT THIS
+					//Add form data
+					data : formData,
+					success : function(response) {
+						console.log(response);
+						window.alert("Uploaded Successfully");
+						//location.reload();
+					},
+					error : function(xhr, status, error) {
+						var err = eval("(" + xhr.responseText + ")");
+						console.log(err);   
+						
+					}
+				}); //End of Ajax
+		}
+		else {
+			window.alert("not connected");
+		}
+		
 	}
-	else {
-		window.alert("not connected");
-	}
 	
-} 
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+</body>
+</html>

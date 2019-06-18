@@ -206,6 +206,7 @@
      		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
      	</li>
      	
+        <!--
         <li class="dropdown" ng-if="user_connected==false">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
 			<ul id="login-dp" class="dropdown-menu">
@@ -263,6 +264,7 @@
 			  </ul>
 			</div>
         </li>
+		-->
       </ul>
   </div>
 </nav>
@@ -438,7 +440,39 @@
 				        <h4 class="modal-title">Modal Header</h4>
 				      </div>
 				      <div class="modal-body">
-				      	<form id="memepost" onsubmit="PostMeme()">
+					  
+					  
+						<!--<img src="" alt="Image preview..." id="image">
+
+						
+						<canvas id="canvas" height=500 width=500></canvas>-->
+						<br />
+						
+						
+						
+						
+						<form id="memepost">
+							<div class="form-group">
+							  <input type="text" name="PostTitle" style="width: 70%;" class="form-control" id="PostTitle" placeholder="Pune un titlu original, nu O.C." required>
+							</div>
+							<div class="form-group">
+								<textarea name="Description"  class="form-control" id="Description" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
+							</div>
+							<div style="padding:20px; width:50%; color:white; border-radius:15px; background-color:#1a3d5c;;">
+								<input type="file" id="fileupload" multiple><br>
+							</div>
+							
+							<input type="text" name="Files" style="visibility:hidden;" id="imgSrc">
+							
+							<button class="btn btn-success" onclick="PostMeme()">Upload</button>
+						</form>
+						
+						
+						
+						
+						
+					  
+				      	<!--<form id="memepost" onsubmit="PostMeme()">
 				        	<div ng-if="connected!=false" id="posteaza_div" style="border-bottom: 1px solid black;">
 							<table style="width: 70%; height: 100px;">
 								<tr style="width: 100%; height: 100px;">
@@ -454,10 +488,10 @@
 							</table>
 
 							<div class="form-group">
-							  <input type="text" name="PostTitle" style="width: 70%;" class="form-control" id="usr" placeholder="Pune un titlu original, nu O.C." required>
+							  <input type="text" name="PostTitle" style="width: 70%;" class="form-control" id="PostTitle" placeholder="Pune un titlu original, nu O.C." required>
 							</div>
 							<div class="form-group">
-								<textarea name="Description"  class="form-control" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
+								<textarea name="Description"  class="form-control" id="Description" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
 							</div>
 							<div class="form-group" style="width: 100%;">
 									   
@@ -475,7 +509,7 @@
 									                        <span class="image-preview-input-title">Alege un fisier</span>
 															
 		
-									                        <input id="fileupload" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple="multiple">
+									                        <input id="fileupload" onchange="addFilesToArray" type="file" accept="image/png, image/jpeg, image/gif, image/webp" name="Files" required multiple>
 															
 									                    </div>
 									                    
@@ -488,9 +522,9 @@
 								<input type="submit" name="posteaza" class="btn btn-success" value="posteaza" style="float: right;">
 							</div>	
 							<h1><br></h1>	
-
-						</form>
-					</div>
+							</div>
+						</form>-->
+					
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -649,7 +683,7 @@
 	<div class="col-md-3 full-row-grey mobile-hide" ng-controller="RightCTRL" >
 		
 		
-			<div class="btn-group-vertical" style="margin-top:25px;">
+			<div class="btn-group-vertical" ng-controller="NAVCTRL" style="margin-top:25px; width:100%; max-height:60%; overflow-y:scroll;">
 				
 	<!--
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
@@ -659,7 +693,26 @@
 			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
 	-->		
 				
-				<a href="../MyProfile/Profile.html" style="color:black;"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Profilul Meu</font></button></a>
+				
+				
+				
+				<center>
+					<div class="row">
+						<div class="col-lg-4 col-md-12" style="padding:10px;">
+							<img src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Picture" style="width:80%">
+						</div>
+						<div class="col-lg-8 col-md-12" style="text-align:left; padding:10px;">
+							<h1>{{UserData.firstName+" "+UserData.lastName}}</h1>
+							<h3>{{UserData.location}}</h3>
+						</div>
+						
+					</div>
+				</center>
+					
+					
+				  
+				
+				<a href="../MyProfile/Profile.html" style="color:black;"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Postarile mele</font></button></a>
 				<button type="button" data-toggle="modal" data-target="#ReportsModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Tickete Support</font></button>
 				<a href="content-scroll-dark.html" style="color:black;"  ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Dark Theme</font></button></a>
 				<br />
@@ -673,7 +726,7 @@
 			</div>
 		
 		
-			<div style="width: 100%; height: 70%; overflow-y: scroll;" >
+			<div style="width: 100%; height: 40%; overflow-y: scroll;" >
 			
 				<center>
 				
@@ -738,7 +791,184 @@
 	</div>
 </div>
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
-    <script type="text/javascript" src="script.js"></script>  
+<script type="text/javascript">
+
+
+function LogIn(){
+    $.post('https://proiectexemplu.000webhostapp.com/Junimea/Back-End/LogIn.php', $('#login-nav').serialize(), function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+}
+
+
+		
+		
+		var FileArray=[];
+		
+		
+		function addFilesToArray(){
+		window.alert("addFilesToArray");
+		var files  = document.getElementById('fileupload').files;
+		//var preview = document.getElementById('image');
+		
+		
+		console.log(files.length);
+			for(var i=0;i<files.length;i++)
+				previewFile(files[i]);
+		}
+		
+		
+		//var imgSrc  = document.getElementById("imgSrc"); 
+		// var canvas = document.getElementById("canvas");
+		function previewFile(file) {
+		
+			window.alert("previewFile");
+			
+			var reader  = new FileReader();
+			
+			//var percentage = 0.5;
+            reader.addEventListener("load", function () {
+			
+			
+			
+				var preview=new Image();
+                preview.src = reader.result;
+				//FileArray.push(reader.result);
+				//$("#imgSrc").val(reader.result)
+				//FileArray.push(canvas.toDataURL());
+                preview.onload = function () {
+                   
+					var canvas = document.createElement("canvas");
+                    var ctx = canvas.getContext("2d");
+                    canvas.height = canvas.width * (preview.height / preview.width);
+                    var oc = document.createElement('canvas'),octx = oc.getContext('2d');
+                   // oc.width = preview.width * percentage;
+                   // oc.height = preview.height * percentage;
+					oc.width = 640;
+                    oc.height = oc.width*(preview.height / preview.width);
+                   // canvas.width = oc.width;
+                   // canvas.height = oc.height;
+				   canvas.width = 640;
+                    canvas.height = canvas.width*(preview.height / preview.width);
+                    octx.drawImage(preview, 0, 0, oc.width, oc.height);
+                    octx.drawImage(oc, 0, 0, oc.width, oc.height);
+                    ctx.drawImage(oc, 0, 0, oc.width, oc.height,0, 0, canvas.width, canvas.height);
+					
+					FileArray.push(canvas.toDataURL());
+					
+					
+					
+                }
+				
+				
+            }, false);
+		
+		
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		
+		
+        
+    }
+    document.getElementById('fileupload').addEventListener('change', addFilesToArray);
+	
+	
+	
+	function dataURItoBlob(dataURI) {
+		// convert base64/URLEncoded data component to raw binary data held in a string
+		var byteString;
+		if (dataURI.split(',')[0].indexOf('base64') >= 0)
+			byteString = atob(dataURI.split(',')[1]);
+		else
+			byteString = unescape(dataURI.split(',')[1]);
+
+		// separate out the mime component
+		var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+		// write the bytes of the string to a typed array
+		var ia = new Uint8Array(byteString.length);
+		for (var i = 0; i < byteString.length; i++) {
+			ia[i] = byteString.charCodeAt(i);
+		}
+
+		return new Blob([ia], {type:mimeString});
+	}
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function PostMeme(){
+	//var formData = new FormData($('#memepost')[0]);
+	
+	
+	var title = document.getElementById("PostTitle").value;
+	var description = document.getElementById("Description").value;
+	
+	
+	var formData = new FormData();
+		formData.append('PostTitle',title);
+		formData.append('Description',description);
+		
+		for(var i=0; i<FileArray.length;i++){
+			var blob = dataURItoBlob(FileArray[i]);
+			formData.append('Files',blob);
+			console.log(formData);
+		}
+		
+		for (var v of formData.values()) {
+		   console.log(v); 
+		}
+	
+	//console.log(formData);
+	if(connected){
+			$.ajax({
+				type : 'POST',
+				url : "https://junimea.serveo.net/api/Post",
+				//Add the request header
+				headers : {
+					Authorization : 'Bearer ' + localStorage.getItem("token")
+				},
+				//contentType : 'application/x-www-form-urlencoded',
+				contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+				processData: false, // NEEDED, DON'T OMIT THIS
+				//Add form data
+				data : formData,
+				success : function(response) {
+					console.log(response);
+					window.alert("Uploaded Successfully");
+					location.reload();
+				},
+				error : function(xhr, status, error) {
+					var err = eval("(" + xhr.responseText + ")");
+					console.log(err);   
+					
+				}
+			}); //End of Ajax
+	}
+	else {
+		window.alert("not connected");
+	}
+	
+} 
+
+
+
+
+</script>  
 
 </body>
 </html>
