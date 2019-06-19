@@ -73,6 +73,16 @@
 		background-color: #222222;
 	}
   
+	 .grid-preview-img{
+    	margin-top:25px;
+    	height: 200px;
+        object-fit: cover;
+		max-width:100%;
+  		
+    
+    }
+  
+  
   
 	</style>
 	
@@ -468,13 +478,28 @@
 							<div class="form-group">
 								<textarea name="Description"  class="form-control" id="Description" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
 							</div>
-							<div style="padding:20px; width:50%; border-radius:15px; background-color:#1a3d5c;;">
-								<input type="file" id="fileupload" multiple><br>
+							<div class="form-group">
+								<label  for="fileupload" style="padding:20px; width:50%; color:white; border-radius:15px; background-color:#1a3d5c;;">
+									Adauga Fisiere
+								</label>
+								<input type="file" style="visibility:hidden;" id="fileupload" multiple><br>
+							</div>
+							<div >
+								
+									<div class="row" id="UploadPreview">
+										
+										
+									</div>
+		
 							</div>
 							
 							<input type="text" name="Files" style="visibility:hidden;" id="imgSrc">
+							<br />
 							
-							<button class="btn btn-success" onclick="PostMeme()">Upload</button>
+							<center>
+								<button type="submit" class="btn btn-success" onclick="PostMeme()">Upload</button>
+							</center>
+							
 						</form>
 					  <!--
 				      	<form id="memepost" onsubmit="PostMeme()">

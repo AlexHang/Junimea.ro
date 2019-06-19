@@ -1,3 +1,5 @@
+
+
 function LogIn(){
     $.post('https://proiectexemplu.000webhostapp.com/Junimea/Back-End/LogIn.php', $('#login-nav').serialize(), function(data, status){
         alert("Data: " + data + "\nStatus: " + status);
@@ -8,13 +10,13 @@ function LogIn(){
 		
 		
 		var FileArray=[];
-		
+		var displayImg=document.getElementById("UploadPreview");
 		
 		function addFilesToArray(){
-		window.alert("addFilesToArray");
-		var files  = document.getElementById('fileupload').files;
-		//var preview = document.getElementById('image');
-		
+			//window.alert("addFilesToArray");
+			var files  = document.getElementById('fileupload').files;
+			//var preview = document.getElementById('image');
+			displayImg.innerHTML="";
 		
 		console.log(files.length);
 			for(var i=0;i<files.length;i++)
@@ -26,7 +28,7 @@ function LogIn(){
 		// var canvas = document.getElementById("canvas");
 		function previewFile(file) {
 		
-			window.alert("previewFile");
+			//window.alert("previewFile");
 			
 			var reader  = new FileReader();
 			
@@ -34,9 +36,16 @@ function LogIn(){
             reader.addEventListener("load", function () {
 			
 			
-			
+				
+				
 				var preview=new Image();
                 preview.src = reader.result;
+				
+				displayImg.innerHTML+='<div class="col-md-4">'+
+											'<img src="'+reader.result+'" class="grid-preview-img">'+
+										'</div>';
+				
+				
 				//FileArray.push(reader.result);
 				//$("#imgSrc").val(reader.result)
 				//FileArray.push(canvas.toDataURL());
@@ -141,7 +150,7 @@ function PostMeme(){
 	if(connected){
 			$.ajax({
 				type : 'POST',
-				url : "  https://junimea.serveo.net/api/Post",
+				url : "https://junimea.serveo.net/api/Post",
 				//Add the request header
 				headers : {
 					Authorization : 'Bearer ' + localStorage.getItem("token")
@@ -168,3 +177,6 @@ function PostMeme(){
 	}
 	
 } 
+
+
+
