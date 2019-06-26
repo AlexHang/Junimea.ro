@@ -187,8 +187,9 @@
 				<b>Mesaj: </b>{{post["message"]}}
 			</font>
           </td>
-		  <!--
+
           <td style="width: 20%">
+		  <!--
             <button class="btn btn-primary" style="width: 100%; height: 100%;"> 
               <font style="font-size: 40px;">
                 <span class="glyphicon glyphicon-pencil"></span>
@@ -197,13 +198,14 @@
             <p>
               <br>
             </p>
-            <button class="btn btn-danger" style="width: 100%; height: 100%;"> 
-              <font style="font-size: 40px;">
-                <span class="glyphicon glyphicon-trash"></span>
+			-->
+            <button class="btn btn-danger" ng-click='deletePost(post["entityId"])'> 
+              <font style="font-size: 20px;">
+                Delete Post <!--<span class="glyphicon glyphicon-trash"></span>-->
               </font>
             </button>
           </td>
-		  -->
+
         </tr>
 		
 

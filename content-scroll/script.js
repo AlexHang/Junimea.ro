@@ -16,7 +16,7 @@ function LogIn(){
 			//window.alert("addFilesToArray");
 			var files  = document.getElementById('fileupload').files;
 			//var preview = document.getElementById('image');
-			displayImg.innerHTML="";
+			//displayImg.innerHTML="";
 		
 		console.log(files.length);
 			for(var i=0;i<files.length;i++)
@@ -128,6 +128,10 @@ function PostMeme(){
 	//var formData = new FormData($('#memepost')[0]);
 	
 	
+	$("#uploadSpinner").show();
+	$("#memepost").hide();
+	
+	
 	var title = document.getElementById("PostTitle").value;
 	var description = document.getElementById("Description").value;
 	
@@ -164,11 +168,14 @@ function PostMeme(){
 					console.log(response);
 					window.alert("Uploaded Successfully");
 					location.reload();
+					
+					
 				},
 				error : function(xhr, status, error) {
 					var err = eval("(" + xhr.responseText + ")");
 					console.log(err);   
-					
+					$("#uploadSpinner").hide();
+					$("#memepost").show();
 				}
 			}); //End of Ajax
 	}
