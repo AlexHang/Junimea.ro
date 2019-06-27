@@ -18,10 +18,11 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 		});
 
 
+		
 
 		app.controller('PostCTRL', function($scope, $http,$interval) {
 			$scope.id1 = myParam;
-			
+			$scope.currentUserLikeValue=0;
 			
 			$scope.nextPost=function(){
 				 $http({
@@ -61,33 +62,63 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			
 			$scope.likepost= function(postid, value, $event){
-				$http({
-				    url: " https://junimea.serveo.net/api/Post/LikePost",
-				    method: "POST",
-				   	data: {
-						"PostId":postid,
-						"Value": value
-					},
-					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
-					}).then(function (response){
-						var class_to_give;
-						if(value>=0)
-							class_to_give = "button_is_liked";
-						else class_to_give = "button_is_disliked";
-						
-						/*
-						$event.target.style.color = "white";
-						$event.target.style.background = "blue";
-						*/
-						if($event.target.classList.contains('glyphicon'))
-						{
-							$event.target.parentElement.classList.toggle(class_to_give);
-						}
-						$event.target.classList.toggle(class_to_give);
-						
-						console.log(response);
+				//console.log('likeCount');
+				if(connected ==true){	
+					
+					$http({
+						url: "https://junimea.serveo.net/api/Post/LikePost",
+						method: "POST",
+						data: {
+							"PostId":postid,
+							"Value": value
+						},
+						headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+						}).then(function (response){
+							var class_to_give;
+							if(value>0){
+								class_to_give = "button_is_liked";
+								document.getElementById("downVote").classList.remove("button_is_disliked");
+								
+								if($scope.currentUserLikeValue<=0){
+									document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) + (value*1);
+									$scope.currentUserLikeValue=value;
+								}else{
+									document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) - (value*1);
+									$scope.currentUserLikeValue=0;
+								}
+								
+								
+							}else if(value<0){
+								class_to_give = "button_is_disliked";
+								document.getElementById("upVote").classList.remove("button_is_liked");
+								//document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) + (value*1);
+								
+								if($scope.currentUserLikeValue>=0){
+									document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) + (value*1);
+									$scope.currentUserLikeValue=value;
+								}else{
+									document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) - (value*1);
+									$scope.currentUserLikeValue=0;
+								}
+							} 
+							
+							/*
+							$event.target.style.color = "white";
+							$event.target.style.background = "blue";
+							*/
+							if($event.target.classList.contains('glyphicon'))
+							{
+								$event.target.parentElement.classList.toggle(class_to_give);
+							}else $event.target.classList.toggle(class_to_give);
+							
+							console.log(response);
 
-    				});
+						});
+				}else{
+					
+					$('#LogInModal').modal('show');
+
+				}
 			}
 			
 			$scope.likecomment= function(postid, value, $event){

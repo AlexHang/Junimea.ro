@@ -12,11 +12,21 @@
 			
     		$scope.see_post = function(id){
     			// location.href = "singlepost.html?"+id;
-    			window.open("../singlepost/singlepost.html?ID="+id);
+				if(connected==true){
+					window.open("../singlepost/singlepost.html?ID="+id);
+				}else{
+					$('#LogInModal').modal('show');
+				}
+    			
     		};
     		$scope.see_user = function(id){
     			// location.href = "singlepost.html?"+id;
-    			window.open("../Profile/Profile.html?id="+id);
+				if(connected==true){
+					window.open("../Profile/Profile.html?id="+id);
+				}else{
+					$('#LogInModal').modal('show');
+				}
+    			
     		};
 			
 			
@@ -106,7 +116,7 @@
 						console.log($scope.feed);
     				});	
 
-			curent_post = 10;
+				curent_post = 10;
     				
 					
 					
@@ -146,45 +156,81 @@
 		
 			
 			$scope.likepost= function(postid, value, $event, id){
-				document.getElementById(id).innerHTML=((document.getElementById(id).innerHTML)*1) + (value*1);
-				$http({
-				    url: "https://junimea.serveo.net/api/Post/LikePost",
-				    method: "POST",
-				   	data: {
-						"PostId":postid,
-						"Value": value
-					},
-					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
-					}).then(function (response){
-						var class_to_give;
-						if(value>=0)
-							class_to_give = "button_is_liked";
-						else class_to_give = "button_is_disliked";
-						
-						/*
-						$event.target.style.color = "white";
-						$event.target.style.background = "blue";
-						*/
-						if($event.target.classList.contains('glyphicon'))
-						{
-							$event.target.parentElement.classList.toggle(class_to_give);
-						}
-						$event.target.classList.toggle(class_to_give);
-						
-						console.log(response);
+				//console.log('likeCount'+id);
+				if(connected ==true){	
+					
+					$http({
+						url: "https://junimea.serveo.net/api/Post/LikePost",
+						method: "POST",
+						data: {
+							"PostId":postid,
+							"Value": value
+						},
+						headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+						}).then(function (response){
+							var class_to_give;
+							if(value>0){
+								class_to_give = "button_is_liked";
+								document.getElementById("downVote"+id).classList.remove("button_is_disliked");
+								
+								if($scope.feed["result"][id]["currentUserLikeValue"]<=0){
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=value;
+								}else{
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) - (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=0;
+								}
+								
+								
+							}else if(value<0){
+								class_to_give = "button_is_disliked";
+								document.getElementById("upVote"+id).classList.remove("button_is_liked");
+								//document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+								
+								if($scope.feed["result"][id]["currentUserLikeValue"]>=0){
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=value;
+								}else{
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) - (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=0;
+								}
+							} 
+							
+							/*
+							$event.target.style.color = "white";
+							$event.target.style.background = "blue";
+							*/
+							if($event.target.classList.contains('glyphicon'))
+							{
+								$event.target.parentElement.classList.toggle(class_to_give);
+							}else $event.target.classList.toggle(class_to_give);
+							
+							console.log(response);
 
-    				});
+						});
+				}else{
+					
+					$('#LogInModal').modal('show');
+
+				}
 			}
 			
 			$scope.report_post = function(id){
-				$scope.ReportId=id;
-				document.getElementById("reportID").value=id;
+				if(connected==true){
+					$scope.ReportId=id;
+					document.getElementById("reportID").value=id;
+					$('#report_modal').modal('show');
+					
+				}else{
+					$('#LogInModal').modal('show');
+				}
+				
 			}
 			
 			$scope.reportSubmit= function(){
 				//window.alert("Inca nu merge, are erori la back-end");
-				
-				$http({
+				if(connected==true){
+					$http({
 				    url: "https://junimea.serveo.net/api/Reports/ReportPost",
 				    method: "POST",
 				   	data: {
@@ -208,7 +254,16 @@
 						
 
     				});
+				}else{
+					$('#LogInModal').modal('show');
+				}
+				
 			}
+			
+			
+			
+			
+			
     		
 /*
 

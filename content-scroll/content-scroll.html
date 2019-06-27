@@ -69,7 +69,7 @@
   
 	</style>
 	
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<!-- jQuery library -->
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -197,12 +197,12 @@
 
 
 <nav ng-controller="NAVCTRL" class="navbar navbar-inverse mobile-hide" style="height: 70px; margin-bottom:0px;">
-  <div class="container-fluid ">
+  <div class="container">
     <div class="navbar-header mobile-hide">
       <a class="navbar-brand" href="#" style="padding-top: 0px;">
       	<table style="width: 50px; height: 40px;">
       		<tr style="width: 50px; height: 40px;">
-      			<td><img class="spinner" src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
+      			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
       			<td><h1 style="color:white;">JUNIMEA</h1></td>
       		</tr>
       	</table>
@@ -215,72 +215,96 @@
       <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
     </ul>
      <ul class="nav navbar-nav navbar-right mobile-hide">
-     	<li>
+     	
+		
+		<li ng-if="user_connected!=false">
      		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
      	</li>
-     	
-        <!--
-        <li class="dropdown" ng-if="user_connected==false">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-			<ul id="login-dp" class="dropdown-menu">
-				<li>
-					 <div class="row">
-							<div class="col-md-12">
-								Login via
-								<div class="social-buttons">
-									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-								</div>
-                                or
-								 <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
-											 <input name="Username" type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-										</div>
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputPassword2">Password</label>
-											 <input type="password" name="Password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-										</div>
-										<div class="form-group">
-											 <button class="btn btn-primary btn-block" onclick="LogIn()">Sign in</button>
-										</div>
-										<div class="checkbox">
-											 <label>
-											 <input type="checkbox"> keep me logged-in
-											 </label>
-										</div>
-								 </form>
-							</div>
-							<div class="bottom text-center">
-								New here ? <a href="#"><b>Join Us</b></a>
-							</div>
-					 </div>
-				</li>
-			</ul>
-        </li>
-        <li ng-if="user_connected!=false" >
+		
+		<li ng-if="user_connected!=false">
+			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+				<i class="fa fa-moon-o" aria-hidden="true"></i>
+			</a>
+		</li>
+		
+		<li ng-if="user_connected!=false">
+			<a href="https://www.facebook.com/www.juni.ro/" style="color:white; font-size:34px;">
+				<i class="fa fa-facebook-official" aria-hidden="true"></i>
+			</a>
+		</li>
+		
+     	<li ng-if="user_connected!=false" >
         	
         	<div class="dropdown">
 			  <span class="dropdown-toggle" data-toggle="dropdown" >
 				<font style="color: white;">{{UserName}}</font>
 			  	
-			  	<img ng-src="{{Image}}" class="img-circle" alt="Cinque Terre" width="40" height="40" style="margin: 15px;" >
+			  	<img ng-src="{{Image}}" class="img-circle" alt="Profile Pic" width="40" height="40" style="margin: 15px;" >
 
 			  </span>
 			  	
 			  <ul class="dropdown-menu" style="min-width: 260px;">
 			    <li><a href="../MyProfile/Profile.html" target="_blank" >My Profile</a></li>
 			    <li><a href="#" data-toggle="modal" data-target="#ReportsModal">Tickete Support</a></li>
-			    <li><a href="#">Settings</a></li>
 			    <li><a href="#">Log Out</a></li>
 			  </ul>
 			</div>
         </li>
-		-->
+        
+		
+        <li ng-if="user_connected==false">
+		
+			<a style="color:white" href="../LogIn/index.html" class="btn btn-primary" >
+				Log In
+			</a>
+     	
+        </li>
+        
+
       </ul>
   </div>
 </nav>
+
+<div id="LogInModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Log In</h4>
+      </div>
+      <div class="modal-body">
+        <p>Va rugam sa va logati sau sa va creati un cont pentru a putea vota postari, comenta sau adauga postari proprii</p>
+      
+		<div class="row">
+			<div class="col-md-6">
+				<center>
+					<a href="../LogIn/index.html" class="btn" style="padding:20px; font-size:20px; width:70%; color:white; border-radius:15px; background-color:#1a3d5c;">
+							<b>Log In</b>
+					</a>
+				</center>
+			</div>
+			<div class="col-md-6">
+				<center>
+					<a href="../SignUp/index.html" class="btn" style="padding:20px; font-size:20px; width:70%; color:white; border-radius:15px; background-color:#1a3d5c;">
+							<b>SignUp</b>
+					</a>
+				</center>
+			</div>
+		</div>
+	  
+	  </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
 
 
 <!-- Modal -->
@@ -380,29 +404,13 @@
   </div>
 </div>
 
-<div class="container-fluid " style="height:100%;">
+<div class="container" style="height:100%;">
 	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
 		
-			<br>
-			<br>
-			<div class="btn-group-vertical">
-				
-	<!--
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
-		
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
+			
+			
 	
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
-	-->		
-				
-				<button type="button" data-toggle="modal" data-target="#myModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>Posteaza</font></button>
-			
-			
-			<br>
-			</div>
-			
-			<div style="width: 100%; height: 2px; background-color: black;"></div>
-		<div style="height: 70%; overflow-y: scroll;">
+		<div style="height: 90%; overflow-y: scroll; margin-top:35px;">
 			<center>
 				<div class="card">
 				  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
@@ -472,10 +480,21 @@
 								<textarea name="Description"  class="form-control" id="Description" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
 							</div>
 							<div class="form-group">
-								<label  for="fileupload" style="padding:20px; width:50%; color:white; border-radius:15px; background-color:#1a3d5c;;">
-									Adauga Fisiere
-								</label>
-								<input type="file" style="visibility:hidden;" id="fileupload" multiple><br>
+							<div class="row">
+								<div class="col-md-6">
+									<label  for="fileupload" style="padding:20px; width:100%; font-size:20px; color:white; border-radius:15px; background-color:#1a3d5c;;">
+										Adauga Fisiere
+									</label>
+									<input type="file" style="visibility:hidden;" id="fileupload" multiple><br>
+								</div>
+								<div class="col-md-6">
+									<button type="submit" class="btn" style="padding:20px; font-size:20px; width:100%; color:white; border-radius:15px; background-color:#1a3d5c;" onclick="PostMeme()">
+										<b>Posteaza</b>
+									</button>
+								</div>
+							</div>
+								
+								
 							</div>
 							<div >
 								
@@ -490,7 +509,7 @@
 							<br />
 							
 							<center>
-								<button type="submit" class="btn btn-success" onclick="PostMeme()">Upload</button>
+								
 							</center>
 							
 						</form>
@@ -601,7 +620,7 @@
 					  </div>-->
 				</div>
 
-				<div class="card postare" style="border-bottom: 1px solid black" > 
+				<div class="card postare" style="border-bottom: 1px solid #ceced4" > 
 					<h4 ng-click="see_user(post['userId'])" class="card-title">
 							<table style="width: 100%; height: 100px;">
 								<tr style="width: 100%; height: 100px;">
@@ -619,7 +638,7 @@
 											<br>
 											{{post["postTtile"]}}
 											<br>
-											 <font style="font-size: 15px; ">{{post["description"]}}</font>
+											 
 										</h3>
 										
 											
@@ -627,27 +646,37 @@
 									</td>
 								</tr>
 							</table>
-					</h4>
+						</h4>
+						
+						
+							<font style="font-size:14px; float:left; margin-top:-20px;text-align: justify;text-justify: inter-word;">
+								{{post["description"]}}
+							</font>
+						
+							
+					
 					  
 					  <div class="card-body">
-
+						
 
 
 					   <img ng-repeat="imagine in post['files']" class="card-img-top" ng-src="{{imagine['url']}}" ng-click="see_post(post['id'])" width="100%" alt="Card image">
 
 
-					    <div style="text-align: left;"> 
+					    <div style="text-align: left; color:#ceced4;"> 
 					    	<font> <span id="{{'likeCount'+$index}}">{{post["likes"]}}</span>  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
 					    	<br>
-						    <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event,'likeCount'+$index)">
-					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
+						    <button type="button" id="{{'upVote'+$index}}" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event,$index)">
+					         	 <span class="glyphicon glyphicon-arrow-up"></span>
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event,'likeCount'+$index)">
-					         	 <span class="glyphicon glyphicon-arrow-down"></span> Down
+					        <button type="button" id="{{'downVote'+$index}}" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event,$index)">
+					         	 <span class="glyphicon glyphicon-arrow-down"></span>
 					        </button>
 					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
-					         	 <span class="glyphicon glyphicon-comment"></span> Comment
-					        </button>
+					         	 <span class="glyphicon glyphicon-comment"></span>
+					        </button>  
+							
+							
 
 
 					        <!--<div class="dropdown" style="float: right;">
@@ -660,10 +689,24 @@
 							    <li><a href="#">JavaScript</a></li>
 							  </ul>
 							</div>
-					        -->
+					        
 					        <button type="button" class="btn btn-danger btn-sm" ng-click="report_post(post['id'])" style="float: right;  "    data-toggle="modal" data-target="#report_modal">
 					         	 <span class="glyphicon glyphicon-exclamation-sign"></span> Report
 					        </button>
+							
+							<button type="button"  style="float: right;  " >
+					         	
+					        </button>
+							-->
+							<div class="dropdown" style="float: right;">
+							  <button  class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+								<i class="fa fa-bars" aria-hidden="true"></i>
+							  </button>
+							  <ul class="dropdown-menu dropdown-menu-right">
+								<li><a href="#">Copy Link</a></li>
+								<li><a ng-click="report_post(post['id'])" href="#">Report</a></li>
+							  </ul>
+							</div>
 					        
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
@@ -716,80 +759,23 @@
     }
 }).scroll();*/
 	</script>
-	<div class="col-md-3 full-row-grey mobile-hide" ng-controller="RightCTRL" >
+	<div class="col-md-3 mobile-hide" style="height:90%; " ng-controller="RightCTRL" >
 		
 		
-			<div class="btn-group-vertical" ng-controller="NAVCTRL" style="margin-top:25px; width:100%; max-height:60%; overflow-y:scroll;">
-				
-	<!--
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
 		
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
-	
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
-	-->		
-				
-				
-				
-				
-				<center>
-					<div class="row">
-						<div class="col-lg-4 col-md-12" style="padding:10px;">
-							<img src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Picture" style="width:80%">
-						</div>
-						<div class="col-lg-8 col-md-12" style="text-align:left; padding:10px;">
-							<h1>{{UserData.firstName+" "+UserData.lastName}}</h1>
-							<h3>{{UserData.location}}</h3>
-						</div>
-						
+		
+			
+			<div style="width: 100%; height: 100%; margin-top:50px;">
+						<img src="http://mgmarkham.com/wp-content/uploads/2014/10/GoJS-Vertical-Banner-Ads-160x600-green-MG-Markham-Design.png"
+							alt="ads here"
+							style="height:90%;"/>
 					</div>
-				</center>
-					
-					
-				  
-				
-				<a href="../MyProfile/Profile.html" style="color:black;"><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Postarile mele</font></button></a>
-				<button type="button" data-toggle="modal" data-target="#ReportsModal" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Tickete Support</font></button>
-				<a href="content-scroll-dark.html" style="color:black;"  ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Dark Theme</font></button></a>
-				<br />
-				<a href="https://www.facebook.com/www.juni.ro/" style="color:black;" target="_blank" ><button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;">Junimea on Facebook</font></button></a>
-				
-				
-				
-				
-			
-			<br>
-			</div>
-		
-		
-			<div style="width: 100%; height: 40%; overflow-y: scroll;" >
-			
 				<center>
-				
-					<!--<iframe
-						src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.juni.ro%2F&tabs=timeline&width=300&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2034901646732548"
-						style="border:none;overflow:hidden; width:100%; height:500px;" 
-						scrolling="no"
-						frameborder="0"
-						allowTransparency="true" 
-						allow="encrypted-media"></iframe>
-					
-						<iframe 
-							src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.juni.ro%2F&tabs=timeline&width=340&height=400&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2034901646732548" 
-						   height="400"
-							style="border:none;overflow:hidden; width:100%;" 
-							scrolling="no" 
-							frameborder="0" 
-							allowTransparency="true" 
-							allow="encrypted-media">
-						</iframe>
-					-->
 					
 					
 					
-					
-					
-					<div style="width: 100%; height: 70%; overflow-y: scroll;">
+
+					<div ng-if="1==0" style="width: 100%; height: 90%; margin-top:30px; overflow-y: scroll;">
 						<div class="card">
 						  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
 						  <div class="card-body">
@@ -822,7 +808,7 @@
 
 
 				</center>
-			</div>
+			
 		
 	</div>
 </div>
