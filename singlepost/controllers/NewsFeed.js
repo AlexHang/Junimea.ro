@@ -24,6 +24,10 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			$scope.id1 = myParam;
 			$scope.currentUserLikeValue=0;
 			
+			$scope.user_connected=connected;
+			
+			
+			
 			$scope.nextPost=function(){
 				 $http({
 				    url: " https://junimea.serveo.net/api/PostGetters/GetNext",
