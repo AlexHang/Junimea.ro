@@ -128,9 +128,10 @@
 
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
   <a href="#" class="active">Junimea</a>
+  <!--
   <a href="#">HOT</a>
   <a href="#">Trending</a>
-  <a href="#">Fresh</a>
+  <a href="#">Fresh</a>-->
   <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
   <a href="#">My Profile</a>
   <a>
@@ -142,14 +143,14 @@
 </nav>
 
 
-<nav ng-controller="NAVCTRL" class="navbar navbar-inverse mobile-hide" style="height: 70px;">
-  <div class="container-fluid ">
+<nav ng-controller="NAVCTRL" class="navbar navbar-inverse mobile-hide" style="height: 70px; margin-bottom:0px;">
+  <div class="container">
     <div class="navbar-header mobile-hide">
       <a class="navbar-brand" href="#" style="padding-top: 0px;">
       	<table style="width: 50px; height: 40px;">
       		<tr style="width: 50px; height: 40px;">
       			<td><img src="https://www.iqool.ro/wp-content/uploads/2016/06/junimea-logo.png" width="40px"></td>
-      			<td><h1>Junimea</h1></td>
+      			<td><h1 style="color:white;">JUNIMEA</h1></td>
       		</tr>
       	</table>
       </a>
@@ -161,91 +162,67 @@
       <li><input type="text" name="search" class="animatedsearch" placeholder="Search.."></li>-->
     </ul>
      <ul class="nav navbar-nav navbar-right mobile-hide">
-     	<!--
-			<li>
-				<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
-			</li>
+     	
+		<!--
+		<li ng-if="user_connected!=false">
+     		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
+     	</li>
 		-->
-        <li class="dropdown" ng-if="user_connected==false">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span class="caret"></span></a>
-			<ul id="login-dp" class="dropdown-menu">
-				<li>
-					 <div class="row">
-							<div class="col-md-12">
-								Login via
-								<div class="social-buttons">
-									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i> Facebook</a>
-									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i> Twitter</a>
-								</div>
-                                or
-								 <form class="form" role="form" accept-charset="UTF-8" id="login-nav">
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputEmail2">Email address</label>
-											 <input name="Username" type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
-										</div>
-										<div class="form-group">
-											 <label class="sr-only" for="exampleInputPassword2">Password</label>
-											 <input type="password" name="Password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
-                                             <div class="help-block text-right"><a href="">Forget the password ?</a></div>
-										</div>
-										<div class="form-group">
-											 <button class="btn btn-primary btn-block" onclick="LogIn()">Sign in</button>
-										</div>
-										<div class="checkbox">
-											 <label>
-											 <input type="checkbox"> keep me logged-in
-											 </label>
-										</div>
-								 </form>
-							</div>
-							<div class="bottom text-center">
-								New here ? <a href="#"><b>Join Us</b></a>
-							</div>
-					 </div>
-				</li>
-			</ul>
-        </li>
-        <li ng-if="user_connected!=false" >
+		
+		<li ng-if="user_connected!=false">
+			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+				<i class="fa fa-moon-o" aria-hidden="true"></i>
+			</a>
+		</li>
+		
+		<li ng-if="user_connected!=false">
+			<a href="https://www.facebook.com/www.juni.ro/" style="color:white; font-size:34px;">
+				<i class="fa fa-facebook-official" aria-hidden="true"></i>
+			</a>
+		</li>
+		
+     	<li ng-if="user_connected!=false" >
         	
         	<div class="dropdown">
 			  <span class="dropdown-toggle" data-toggle="dropdown" >
 				<font style="color: white;">{{UserName}}</font>
 			  	
-			  	<img ng-src="{{Image}}" class="img-circle" alt="Cinque Terre" width="40" height="40" style="margin: 15px;" >
+			  	<img ng-src="{{Image}}" class="img-circle" alt="Profile Pic" width="40" height="40" style="margin: 15px;" >
 
 			  </span>
 			  	
-			  <ul class="dropdown-menu">
-			    <li><a href="#">My Profile</a></li>
-			    <li><a href="#">Notifications</a></li>
-			    <li><a href="#">Settings</a></li>
+			  <ul class="dropdown-menu" style="min-width: 260px;">
+			    <li><a href="../MyProfile/Profile.html" target="_blank" >My Profile</a></li>
+			    <li><a href="#" data-toggle="modal" data-target="#ReportsModal">Tickete Support</a></li>
 			    <li><a href="#">Log Out</a></li>
 			  </ul>
 			</div>
         </li>
+        
+		
+        <li ng-if="user_connected==false">
+		
+			<a style="color:white" href="../LogIn/index.html" class="btn btn-primary" >
+				Log In
+			</a>
+     	
+        </li>
+        
+
       </ul>
   </div>
 </nav>
 
 
-<div class="container-fluid " style="height:100%;">
+<div class="container" style="height:100%;">
 	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
 		
-			<br>
-			<br>
-			<div class="btn-group-vertical">
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>HOT</font></button>
-		
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>TRENDING</font></button>
-	
-			  <button type="button" style="text-align: left;" class="btn grey"><font style="font-size: 24px;"><span class="glyphicon glyphicon-fire" ></span>FRESH</font></button>
-			<br>
-			</div>
 			
-			<div style="width: 100%; height: 2px; background-color: black;"></div>
-		<div style="height: 70%; overflow-y: scroll;">
+			
+	
+		<div style="height: 90%; overflow-y: scroll; margin-top:35px;">
 			<center>
-				<div class="card postare">
+				<div class="card">
 				  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
 				  <div class="card-body">
 				    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
@@ -254,7 +231,7 @@
 				  </div>
 				</div>
 
-				<div class="card postare">
+				<div class="card">
 				  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
 				  <div class="card-body">
 				    <h4 class="card-title">Reclama</h4>
@@ -263,7 +240,7 @@
 				  </div>
 				</div>
 
-				<div class="card postare">
+				<div class="card">
 				  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
 				  <div class="card-body">
 				    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
@@ -279,12 +256,12 @@
 
 	</div>
 
+	
 	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
 		<center>
 			
 			<div class="card" style="width:70%; border-bottom: 1px solid black" > 
 				<!--<img src="https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg" class="img-thumbnail" style="width: 20%;" alt="Cinque Terre">-->
-				<h3>Alex Hang</h3>
 				<p>- Your Personal Profile -</p>
 			</div>
 			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
@@ -379,6 +356,7 @@
 					    <div style="text-align: left;"> 
 					    	<font>{{post["likes"]}}  points </font><font> <!--{{post["comments"]}} --> 0 comments</font>
 					    	<br>
+							<!--
 						    <button type="button" class="btn btn-default btn-sm" ng-click="likepost(post['id'],1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-up"></span> Up
 					        </button>
@@ -388,6 +366,7 @@
 					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
 					         	 <span class="glyphicon glyphicon-comment"></span> Comment
 					        </button>
+							-->
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
 					    <a href="#" class="btn btn-primary">See Profile</a>-->
@@ -448,6 +427,8 @@
 
 	</div>
 
+
+
 	<script type="text/javascript">
 		/*$("#feed").on('scroll', function(){
     if( $("#feed").scrollTop() > $(document).height() - $("#feed").height() ) {
@@ -455,15 +436,24 @@
     }
 }).scroll();*/
 	</script>
-	<div class="col-md-3 full-row-grey mobile-hide" ng-controller="RightCTRL" >
+	<div class="col-md-3 mobile-hide" style="height:90%; " ng-controller="RightCTRL" >
 		
-			<div style="width: 90%; height: 90%; overflow-y: scroll;" >
-
+		
+		
+		
+			
+			<div style="width: 100%; height: 100%; margin-top:50px;">
+						<img src="http://mgmarkham.com/wp-content/uploads/2014/10/GoJS-Vertical-Banner-Ads-160x600-green-MG-Markham-Design.png"
+							alt="ads here"
+							style="height:90%;"/>
+					</div>
 				<center>
-					<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fwww.juni.ro%2F&tabs=timeline&width=340&height=300&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=2034901646732548" width="340" height="300" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
 					
-					<div style="width: 100%; height: 70%; overflow-y: scroll;">
-						<div class="card" style="width:70%;">
+					
+					
+
+					<div ng-if="1==0" style="width: 100%; height: 90%; margin-top:30px; overflow-y: scroll;">
+						<div class="card">
 						  <img class="card-img-top" ng-src="{{postari_blog[0]['Imagine']}}" width="100%" alt="Card image">
 						  <div class="card-body">
 						    <h4 class="card-title">{{postari_blog[0]["titlu"]}}</h4>
@@ -471,7 +461,7 @@
 						    <a href="#" class="btn btn-primary">See Profile</a>-->
 						  </div>
 						</div>
-						<div class="card" style="width:70%;">
+						<div class="card">
 						  <img class="card-img-top" ng-src="https://marketingland.com/wp-content/ml-loads/2017/09/galaxy-S8-screen-capture-800x450.png" width="100%" alt="Card image">
 						  <div class="card-body">
 						    <h4 class="card-title"><br></h4>
@@ -479,7 +469,7 @@
 						    <a href="#" class="btn btn-primary">See Profile</a>-->
 						  </div>
 						</div>
-						<div class="card" style="width:70%;">
+						<div class="card" >
 						  <img class="card-img-top" ng-src="{{postari_blog[1]['Imagine']}}" width="100%" alt="Card image">
 						  <div class="card-body">
 						    <h4 class="card-title">{{postari_blog[1]["titlu"]}}</h4>
@@ -495,10 +485,14 @@
 
 
 				</center>
-			</div>
+			
 		
 	</div>
 </div>
+
+
+
+
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
     <script type="text/javascript" src="script.js"></script>  
 

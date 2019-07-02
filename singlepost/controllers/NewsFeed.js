@@ -125,7 +125,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				}
 			}
 			
-			$scope.likecomment= function(postid, value, $event){
+			$scope.likecomment= function(postid, value, $event, id){
 				$http({
 				    url: " https://junimea.serveo.net/api/Comments/LikeComment",
 				    method: "POST",
@@ -136,21 +136,43 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 					}).then(function (response){
 						var class_to_give;
-						if(value>=0)
-							class_to_give = "button_is_liked";
-						else class_to_give = "button_is_disliked";
-						
-						/*
-						$event.target.style.color = "white";
-						$event.target.style.background = "blue";
-						*/
-						if($event.target.classList.contains('glyphicon'))
-						{
-							$event.target.parentElement.classList.toggle(class_to_give);
-						}
-						$event.target.classList.toggle(class_to_give);
-						
-						console.log(response);
+							if(value>0){
+								class_to_give = "button_is_liked";
+								document.getElementById("downVoteComment"+id).classList.remove("button_is_disliked");
+								
+								if($scope.currentUserLikeValue<=0){
+									document.getElementById('CommentLikeCount'+id).innerHTML=((document.getElementById('CommentLikeCount'+id).innerHTML)*1) + (value*1);
+									$scope.currentUserLikeValue=value;
+								}else{
+									document.getElementById('CommentLikeCount'+id).innerHTML=((document.getElementById('CommentLikeCount'+id).innerHTML)*1) - (value*1);
+									$scope.currentUserLikeValue=0;
+								}
+								
+								
+							}else if(value<0){
+								class_to_give = "button_is_disliked";
+								document.getElementById("upVoteComment"+id).classList.remove("button_is_liked");
+								//document.getElementById('likeCount').innerHTML=((document.getElementById('likeCount').innerHTML)*1) + (value*1);
+								
+								if($scope.currentUserLikeValue>=0){
+									document.getElementById('CommentLikeCount'+id).innerHTML=((document.getElementById('CommentLikeCount'+id).innerHTML)*1) + (value*1);
+									$scope.currentUserLikeValue=value;
+								}else{
+									document.getElementById('CommentLikeCount'+id).innerHTML=((document.getElementById('CommentLikeCount'+id).innerHTML)*1) - (value*1);
+									$scope.currentUserLikeValue=0;
+								}
+							} 
+							
+							/*
+							$event.target.style.color = "white";
+							$event.target.style.background = "blue";
+							*/
+							if($event.target.classList.contains('glyphicon'))
+							{
+								$event.target.parentElement.classList.toggle(class_to_give);
+							}else $event.target.classList.toggle(class_to_give);
+							
+							console.log(response);
 
     				});
 			}

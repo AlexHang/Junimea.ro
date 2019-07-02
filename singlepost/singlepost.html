@@ -405,9 +405,11 @@
 					        <button type="button" id="downVote" class="btn btn-default btn-sm" ng-click="likepost(post['id'],-1,$event)">
 					         	 <span class="glyphicon glyphicon-arrow-down"></span> 
 					        </button>
-					        <button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
-					         	 <span class="glyphicon glyphicon-comment"></span>
-					        </button>
+							<!--
+								<button type="button" class="btn btn-default btn-sm" ng-click="see_post(post['id'])">
+									 <span class="glyphicon glyphicon-comment"></span>
+								</button>
+							-->
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
 					    <a href="#" class="btn btn-primary">See Profile</a>-->
@@ -440,29 +442,52 @@
 
 							<h1><br></h1>
 							<ul style="list-style-type: none; ">
-								<li ng-repeat="comment in comments">
+								<li ng-repeat="comment in comments track by $index">
 									<table style="width: 100%; height: 100px; background-color: #eff1f4; border-radius: 5px;">
 										<tr style="width: 100%; height: 40px;">
 											<td style="width:40px; height: 40px;">
 												<!--
-											<img ng-src="{{comment['UserPic']}}" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="" width="40" height="40">
+													<img ng-src="{{comment['UserPic']}}" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="" width="40" height="40">
 												-->
 												<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" style="margin-top: 0px; margin-left: 20px;" alt="" width="40" height="40">
 											
 											</td>
 											<td>
 
-												<button ng-if="comment['userId']==UserID" style="margin-top: -10px; float: right;" type="button" class="btn btn-danger btn-sm" ng-click="delete_comm(comment['id'])">
-								         		 <span class="glyphicon glyphicon-remove"></span> 
-								       			 </button>
-
-								       			 <button ng-if="comment['userId']==UserID"  style="margin-top: -10px; float: right;" data-toggle="modal" data-target="#editCommentModal"  type="button" class="btn btn-warning btn-sm" ng-click="edit_comm(comment['id'], comment['message'])">
-								         		 <span class="glyphicon glyphicon-pencil"></span> 
-								       			 </button>
+											
+												<div class="dropdown" style="float: right;">
+													<button  class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+														<i class="fa fa-bars" aria-hidden="true"></i>
+													</button>
+												    <ul class="dropdown-menu dropdown-menu-right">
+														<li ng-if="comment['userId']==UserID">
+															<a href="#" data-toggle="modal" data-target="#editCommentModal" ng-click="edit_comm(comment['id'], comment['message'])">
+																<span class="glyphicon glyphicon-pencil"></span>Modifica comentariul
+															</a>
+															
+														</li>
+														<li ng-if="comment['userId']==UserID">
+															<a href="#"  ng-click="delete_comm(comment['id'])">
+																<span class="glyphicon glyphicon-remove"></span>Sterge comentariul
+															</a>
+														</li>
+														<li>
+															<a href="#">
+																<span class="glyphicon glyphicon-alert"></span>Raporteaza comentariul
+															</a>
+														</li>
+																
+												  </ul>
+												</div>
+												
+												 
 
 												<h5 style="margin-left: 15px;"><b>{{comment["firstName"]+" "+comment["lastName"]}}</b>
+												
 												<br>
+												<span style="font-size:12px;"><span id="{{'CommentLikeCount'+$index}}">{{comment['likes']}}</span> points</span>
 												<br>
+												
 												<font style="font-size: 14px;">{{comment["message"]}}</font>
 											</h5>
 											
@@ -474,18 +499,20 @@
 									<div ng-repeat="imagine in comment['files']" style="width: 100%;">
 												<img  ng-src="{{imagine['url']}}" style="width: 100%;">
 											</div>
+									
 								  	<div style="text-align: left;"> 
-									    <button style="margin-top: -10px;" type="button"  class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],1,$event)">
+										
+									    <button style="margin-top: -10px;" type="button" id="{{'upVoteComment'+$index}}"  class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],1,$event,$index)">
 								         	 <span class="glyphicon glyphicon-arrow-up"  ></span>
 								        </button>
-								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],-1,$event)" >
+								        <button style="margin-top: -10px;" type="button" id="{{'downVoteComment'+$index}}" class="btn btn-default btn-sm" ng-click="likecomment(comment['id'],-1,$event,$index)" >
 								         	 <span class="glyphicon glyphicon-arrow-down" ></span>
 								        </button>
-								        
+								        <!--
 								        <button style="margin-top: -10px;" type="button" class="btn btn-default btn-sm">
 								         	 <span class="glyphicon glyphicon-comment"></span> Reply
 								        </button>
-								      
+								      -->
 						    		</div>
 									<br>
 								</li>
@@ -505,7 +532,7 @@
 		        <h4 class="modal-title">Edit your comment</h4>
 		      </div>
 		      <div class="modal-body">
-		        <p>Some text in the modal.</p>
+		        
 		        <form>
 							<input type="text" name="Id" id="edit_comm_id" style="display: none">
 							<textarea class="form-control" name="Comment" rows="5" id="edit_message"></textarea>

@@ -21,28 +21,64 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 
     		};
 			
-						$scope.likepost= function(postid, value, $event){
-				$http({
-				    url: "  https://junimea.serveo.net/api/Post/LikePost",
-				    method: "POST",
-				   	data: {
-						"PostId":postid,
-						"Value": value
-					},
-					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
-					}).then(function (response){
-						/*
-						$event.target.style.color = "white";
-						$event.target.style.background = "blue";
-						*/
-						if($event.target.classList.contains('glyphicon'))
-						{
-							$event.target.parentElement.classList.toggle("button_is_liked");
-						}
-						$event.target.classList.toggle("button_is_liked");
-						console.log(response);
+			$scope.likepost= function(postid, value, $event, id){
+				//console.log('likeCount'+id);
+				if(connected ==true){	
+					
+					$http({
+						url: "https://junimea.serveo.net/api/Post/LikePost",
+						method: "POST",
+						data: {
+							"PostId":postid,
+							"Value": value
+						},
+						headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+						}).then(function (response){
+							var class_to_give;
+							if(value>0){
+								class_to_give = "button_is_liked";
+								document.getElementById("downVote"+id).classList.remove("button_is_disliked");
+								
+								if($scope.feed["result"][id]["currentUserLikeValue"]<=0){
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=value;
+								}else{
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) - (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=0;
+								}
+								
+								
+							}else if(value<0){
+								class_to_give = "button_is_disliked";
+								document.getElementById("upVote"+id).classList.remove("button_is_liked");
+								//document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+								
+								if($scope.feed["result"][id]["currentUserLikeValue"]>=0){
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) + (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=value;
+								}else{
+									document.getElementById('likeCount'+id).innerHTML=((document.getElementById('likeCount'+id).innerHTML)*1) - (value*1);
+									$scope.feed["result"][id]["currentUserLikeValue"]=0;
+								}
+							} 
+							
+							/*
+							$event.target.style.color = "white";
+							$event.target.style.background = "blue";
+							*/
+							if($event.target.classList.contains('glyphicon'))
+							{
+								$event.target.parentElement.classList.toggle(class_to_give);
+							}else $event.target.classList.toggle(class_to_give);
+							
+							console.log(response);
 
-    				});
+						});
+				}else{
+					
+					$('#LogInModal').modal('show');
+
+				}
 			}
 
     		
