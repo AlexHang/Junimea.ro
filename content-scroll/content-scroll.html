@@ -480,21 +480,19 @@
 								<textarea name="Description"  class="form-control" id="Description" style="width: 70%; min-height: 120px;" placeholder="scrie o mica descriere" required></textarea>
 							</div>
 							<div class="form-group">
-							<div class="row">
-								<div class="col-md-6">
-									<label  for="fileupload" style="padding:20px; width:100%; font-size:20px; color:white; border-radius:15px; background-color:#1a3d5c;;">
+							<div style="width:70%;">
+								<div>
+									<label  for="fileupload" style="float:left;padding:20px; font-size:20px; color:white; border-radius:15px; background-color:#1a3d5c;;">
 										Adauga Fisiere
 									</label>
 									<input type="file" style="visibility:hidden;" id="fileupload" multiple><br>
 								</div>
-								<div class="col-md-6">
-									<button type="submit" class="btn" style="padding:20px; font-size:20px; width:100%; color:white; border-radius:15px; background-color:#1a3d5c;" onclick="PostMeme()">
-										<b>Posteaza</b>
-									</button>
-								</div>
+									
+								
+								
 							</div>
 								
-								
+								<br />
 							</div>
 							<div >
 								
@@ -504,7 +502,12 @@
 									</div>
 		
 							</div>
-							
+							<center>
+								<button type="submit" class="btn" style="padding:20px; margin-top:15px; font-size:20px; color:white; border-radius:15px; background-color:#1a3d5c;" onclick="PostMeme()">
+									<b>Posteaza</b>
+								</button>
+							</center>
+								
 							<input type="text" name="Files" style="visibility:hidden;" id="imgSrc">
 							<br />
 							
@@ -595,6 +598,10 @@
 				var data = $('#posteaza_div').find('.nicEdit-main').text();
         		console.log(data);}, 5000);	*/
 			</script>
+			
+			
+			
+			
 			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
 				<div class="card advertising" style="width:70%;" ng-if="$index%5==0 && $index!=0" > 
 					<!--<h4 class="card-title">Reclama</h4>-->
@@ -698,15 +705,26 @@
 					         	
 					        </button>
 							-->
+		
+							
 							<div class="dropdown" style="float: right;">
 							  <button  class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
 								<i class="fa fa-bars" aria-hidden="true"></i>
 							  </button>
 							  <ul class="dropdown-menu dropdown-menu-right">
-								<li><a ng-click="CopyLink(post['id'])">Copy Link</a></li>
-								<li><a ng-click="report_post(post['id'])" href="#">Report</a></li>
-							  </ul>
+								<li>
+									<a href="#" copy-to-clipboard="{{'file:///C:/Users/dell/Desktop/Juni/singlepost/singlepost.html?ID='+post['id']}}">Copy Link</a>
+								</li>
+								<li>
+									<a href="#" ng-click="report_post(post['id'])">Raporteaza</a>
+								</li>
+								
+							 </ul>
 							</div>
+							
+							<a  class="btn btn-primary btn-sm" style="float: right; margin-right:3px;" href="https://www.facebook.com/sharer/sharer.php?u={{'http://www.Juni.ro/singlepost/singlepost.html?ID='+post['id']}}" target="_blank" rel="noopener">
+								<i class="fa fa-facebook-official" aria-hidden="true"></i> Distribuie
+							</a>
 					        
 				    	</div>
 					    <!--<p class="card-text">Some example text.</p>
@@ -716,7 +734,6 @@
 				</div>
 			</div>
 			
-			<input type="text" id="CopyLinkHelper" style="display:none;" />
 			
 			<!-- Modal -->
 			<div id="report_modal" class="modal fade" role="dialog">
