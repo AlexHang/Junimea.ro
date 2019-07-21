@@ -30,7 +30,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.nextPost=function(){
 				 $http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetNext",
+				    url: " http://localhost:5000/api/PostGetters/GetNext",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -47,7 +47,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.previousPost=function(){
 				 $http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetPrevious",
+				    url: " http://localhost:5000/api/PostGetters/GetPrevious",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -70,7 +70,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				if(connected ==true){	
 					
 					$http({
-						url: "https://junimea.serveo.net/api/Post/LikePost",
+						url: "http://localhost:5000/api/Post/LikePost",
 						method: "POST",
 						data: {
 							"PostId":postid,
@@ -127,7 +127,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			$scope.likecomment= function(postid, value, $event, id){
 				$http({
-				    url: " https://junimea.serveo.net/api/Comments/LikeComment",
+				    url: " http://localhost:5000/api/Comments/LikeComment",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,
@@ -179,6 +179,9 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 			
 			
 			
+			
+			
+			
 			$scope.edit_comm=function(id,message){
 					document.getElementById("edit_comm_id").value=id;
 					document.getElementById("edit_message").value=message;
@@ -190,7 +193,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var formData = new FormData($('#commentForm')[0]);
 				console.log(formData);
 				$http({
-				    url: " https://junimea.serveo.net/api/Comments/UpdateComment",
+				    url: " http://localhost:5000/api/Comments/UpdateComment",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -211,7 +214,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var r = confirm("Sigur stergi comentariul");
 				if (r == true) {
 				   $http({
-				    url: " https://junimea.serveo.net/api/Comments/DeleteComment",
+				    url: " http://localhost:5000/api/Comments/DeleteComment",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -233,7 +236,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 				var formData = new FormData($('#commentForm')[0]);
 				console.log(formData);
 				$http({
-				    url: " https://junimea.serveo.net/api/Comments",
+				    url: " http://localhost:5000/api/Comments",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -250,8 +253,61 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
     				});
 			}
 			
+			$scope.reportComment = function(id){
+				if(connected==true){
+					$scope.ReportId=id;
+					document.getElementById("reportID").value=id;
+					$('#report_modal').modal('show');
+					
+				}else{
+					$('#LogInModal').modal('show');
+				}
+				
+			}
+			
+			
+			$scope.reportCommentSubmit = function(){
+				//console.log("started");
+				//window.alert("Inca nu merge, are erori la back-end");
+				if(connected==true){
+					$http({
+				    url: "http://localhost:5000/api/Reports/ReportComment",
+				    method: "POST",
+				   	data: {
+						"EntityId":document.getElementById("reportID").value,
+						"Message": document.getElementById("reportReason").value,
+						"PostId" : myParam
+					},
+					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
+					}).then(function (response){
+						
+						
+						if(response.status==400){
+							window.alert("you already reported this post");
+							$('#report_modal').modal('toggle');
+						}
+						
+						
+						console.log(response);
+						//location.reload();
+						console.log(response["data"]["message"]);
+						window.alert(response["data"]["message"]);
+						
+
+    				});
+				}else{
+					$('#LogInModal').modal('show');
+				}
+				
+			}
+			
+			
+			
+			
+			
+			
 			 $http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetPostById",
+				    url: " http://localhost:5000/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -271,7 +327,7 @@ app.controller('BlogPosts', function($scope, $http,$interval) {
 
 
 					$http({
-				    url: " https://junimea.serveo.net/api/profile/me",
+				    url: " http://localhost:5000/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},

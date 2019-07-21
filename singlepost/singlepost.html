@@ -78,7 +78,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: "  https://junimea.serveo.net/api/profile/me",       
+		    url: "  http://localhost:5000/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -257,7 +257,7 @@
 			        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 			    },
 			    type: "GET",
-			    url: "https://junimea.serveo.net/api/Ticket/GetTickets",                     
+			    url: "http://localhost:5000/api/Ticket/GetTickets",                     
 			    success: function(data){
 			       console.log(data["postReport"]);
 				   let tickets=data["postReport"];
@@ -433,7 +433,16 @@
 							</table>
 							<input type="text" name="PostId" id="PostId" style="display: none">
 							<textarea class="form-control" name="Comment" rows="5" id="comment"></textarea>
-							<input type="file" name="Files">
+							<div>
+								<input type="file" id="UploadFiles" name="Files" style="display:none;">
+								<label for="UploadFiles" style="padding:10px; 
+																border-radius:10px;
+																background-color:#1a3d5c;
+																color:white;">
+									Adauga Fisiere  
+								</label>
+							</div>
+							
 							<button type="button" onclick="postComment()" class="btn btn-primary" style="float: right; margin-top: 10px;">Comenteaza</button>
 					</form>
 					
@@ -472,7 +481,7 @@
 															</a>
 														</li>
 														<li>
-															<a href="#">
+															<a href="#" ng-click="reportComment(comment['id'])">
 																<span class="glyphicon glyphicon-alert"></span>Raporteaza comentariul
 															</a>
 														</li>
@@ -517,6 +526,35 @@
 									<br>
 								</li>
 							</ul>
+							
+							<div id="report_modal" class="modal fade" role="dialog">
+							  <div class="modal-dialog">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Raporteaza un comentariu</h4>
+								  </div>
+								  <div class="modal-body">
+									<form ng-submit="reportCommentSubmit()">
+										<input type="text" name="PostId" id="reportID" class="form-control" >
+										<br>
+										<p>Scrie aici motivul pentru care raportezi postarea</p>
+										<textarea class="form-control" rows="5" id="reportReason" name="Reason" placeholder="De ce vrei ba sa dai report ? ..." required></textarea>
+										<br>
+										<button class="btn btn-danger" type="submit" >Raporteaza</button>
+									</form>
+									
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								  </div>
+								</div>
+
+							  </div>
+							</div>
+
 
 				</div>
 		</center>
@@ -616,6 +654,13 @@
 		
 	</div>
 </div>
+
+
+
+
+
+
+
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
 <script type="text/javascript" src="script.js"></script>  
 

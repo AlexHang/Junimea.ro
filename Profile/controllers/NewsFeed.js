@@ -9,7 +9,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 
     		$scope.init = function(){
     			 $http({
-				    url: "  https://junimea.serveo.net/api/PostGetters/GetAllUserPosts",
+				    url: "  http://localhost:5000/api/PostGetters/GetAllUserPosts",
 				    method: "POST",
 				   	data: {"UserId":localStorage.getItem("userID") ,
 							"StartDate":curentdate()}
@@ -26,7 +26,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 				if(connected ==true){	
 					
 					$http({
-						url: "https://junimea.serveo.net/api/Post/LikePost",
+						url: "http://localhost:5000/api/Post/LikePost",
 						method: "POST",
 						data: {
 							"PostId":postid,

@@ -1,12 +1,5 @@
 
 
-function LogIn(){
-    $.post('https://proiectexemplu.000webhostapp.com/Junimea/Back-End/LogIn.php', $('#login-nav').serialize(), function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
-    });
-}
-
-
 		
 		
 		var FileArray=[];
@@ -154,7 +147,7 @@ function PostMeme(){
 	if(connected){
 			$.ajax({
 				type : 'POST',
-				url : "https://junimea.serveo.net/api/Post",
+				url : "http://localhost:5000/api/Post",
 				//Add the request header
 				headers : {
 					Authorization : 'Bearer ' + localStorage.getItem("token")

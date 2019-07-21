@@ -9,7 +9,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 
 			$scope.edit_post = function(id){
 				$http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetPostById",
+				    url: " http://localhost:5000/api/PostGetters/GetPostById",
 				    headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				    method: "POST",
 				   	data:  {
@@ -35,7 +35,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 			  if(connected){
 						
     			 $http({
-				    url: " https://junimea.serveo.net/api/Post/DeletePost",
+				    url: " http://localhost:5000/api/Post/DeletePost",
 				    method: "POST",
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 				   	data: {"PostId": id}
@@ -56,7 +56,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
     		$scope.init = function(){
 				console.log(curentdate());
     			 $http({
-				    url: " https://junimea.serveo.net/api/PostGetters/GetAllUserPosts",
+				    url: " http://localhost:5000/api/PostGetters/GetAllUserPosts",
 				    method: "POST",
 					headers:{'Content-Type':'application/json'},
 				   	data: {"UserId":localStorage.getItem("userID") ,
@@ -71,7 +71,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 			
 						$scope.likepost= function(postid, value, $event){
 				$http({
-				    url: " https://junimea.serveo.net/api/Post/LikePost",
+				    url: " http://localhost:5000/api/Post/LikePost",
 				    method: "POST",
 				   	data: {
 						"PostId":postid,

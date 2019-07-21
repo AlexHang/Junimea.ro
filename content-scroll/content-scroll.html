@@ -114,7 +114,7 @@
 		        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 		    },
 		    type: "GET",
-		    url: "  https://junimea.serveo.net/api/profile/me",       
+		    url: "  http://localhost:5000/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
 		    success: function(data){
@@ -150,7 +150,7 @@
 			    },
 			    type: "POST",
 			    dataType: "JSON",
-			    url: "  https://junimea.serveo.net/api/Ticket/AddTicket",       
+			    url: "  http://localhost:5000/api/Ticket/AddTicket",       
 			     data: JSON.stringify(aux),               
 			    
 			    success: function(data){
@@ -222,7 +222,7 @@
      	</li>
 		
 		<li ng-if="user_connected!=false">
-			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+			<a href="#" onclick="NightMode()" style="color:white; font-size:34px;">
 				<i class="fa fa-moon-o" aria-hidden="true"></i>
 			</a>
 		</li>
@@ -342,7 +342,7 @@
 			        xhrObj.setRequestHeader("Authorization","Bearer "+ localStorage.getItem("token"));
 			    },
 			    type: "GET",
-			    url: "https://junimea.serveo.net/api/Ticket/GetTickets",                     
+			    url: "http://localhost:5000/api/Ticket/GetTickets",                     
 			    success: function(data){
 			       console.log(data["postReport"]);
 				   let tickets=data["postReport"];
@@ -405,7 +405,7 @@
 </div>
 
 <div class="container" style="height:100%;">
-	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
+	<div class="col-md-3 full-row-grey mobile-hide" id="leftContainer" ng-controller="BlogPosts" >
 		
 			
 			
@@ -629,34 +629,22 @@
 
 				<div class="card postare" style="border-bottom: 1px solid #ceced4" > 
 					<h4 ng-click="see_user(post['userId'])" class="card-title">
-							<table style="width: 100%; height: 100px;">
-								<tr style="width: 100%; height: 100px;">
-									<td style="width:60px; height: 100px;">
-									<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Pic" width="40" height="40">
-									<!-- https://www.bspmediagroup.com/event/img/logos/user_placeholder.png
-										<img ng-src="{{post['Autor_IMG']}}"  class="img-circle" alt="Profile Pic" width="40" height="40">
-									-->
-									</td>
-
-									<td style="height: 100px;">
-
-										<h3>
-											 <font style="font-size: 15px; color: #080baf">{{post["firstName"] + ' '+post["lastName"]}}</font>
-											<br>
-											{{post["postTtile"]}}
-											<br>
-											 
-										</h3>
-										
-											
-										
-									</td>
-								</tr>
-							</table>
+							
+							<div class="media">
+							  <div class="media-left">
+								<img ng-src="https://www.bspmediagroup.com/event/img/logos/user_placeholder.png" class="img-circle" alt="Profile Pic" width="40" height="40">
+							  </div>
+							  <div class="media-body" style="text-align:left;">
+									 <font style="font-size: 15px; color: #080baf" class="postAuthor">{{post["firstName"] + ' '+post["lastName"]}}</font>
+									<br>
+									{{post["postTtile"]}}
+									<br>
+							  </div>
+							</div>
 						</h4>
 						
 						
-							<font style="font-size:14px; float:left; margin-top:-20px;text-align: justify;text-justify: inter-word;">
+							<font style="font-size:14px; float:left;text-align: justify;text-justify: inter-word;">
 								{{post["description"]}}
 							</font>
 						
@@ -836,6 +824,46 @@
 
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
 <script type="text/javascript" src="script.js"></script>  
+
+<script type="text/javascript">
+	
+	var body = document.body;
+	var aside = document.getElementById("leftContainer");
+	if(localStorage.getItem("NightMode")=='true'){
+	
+		body.style.backgroundColor="black";
+		body.style.color="white";
+		aside.style.backgroundColor="#222222";
+		$('.postAuthor').css('color', 'white');
+
+	}else{
+
+		body.style.backgroundColor="white";
+		body.style.color="black";
+		aside.style.backgroundColor="#ededed";
+		$('.postAuthor').css('color', '#080baf');
+	}
+	
+	
+	function NightMode(){
+		if(localStorage.getItem("NightMode")!='true'){
+		
+			localStorage.setItem("NightMode", "true");
+			body.style.backgroundColor="black";
+			body.style.color="white";
+			aside.style.backgroundColor="#222222";
+			$('.postAuthor').css('color', 'white');
+			
+		}else{
+			localStorage.setItem("NightMode", "false");
+			body.style.backgroundColor="white";
+			body.style.color="black";
+			aside.style.backgroundColor="#ededed";
+			$('.postAuthor').css('color', '#080baf');
+		}
+	}
+
+</script>
 
 </body>
 </html>

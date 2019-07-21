@@ -50,7 +50,7 @@
 							  $scope.canScroll=false;
 								
 								$http({
-											url: "  https://junimea.serveo.net/api/PostGetters/GetPosts",
+											url: "  http://localhost:5000/api/PostGetters/GetPosts",
 											method: "POST",
 											data:  {
 														"StartDate":$scope.lastpost
@@ -76,7 +76,7 @@
 							  $scope.canScroll=false;
 								
 									$http({
-										url: " https://junimea.serveo.net/api/PostGetters/GetPrevious",
+										url: " http://localhost:5000/api/PostGetters/GetPrevious",
 										headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
 										method: "POST",
 										data:  {
@@ -105,7 +105,7 @@
 
     		$scope.init = function(){
     			 $http({
-				    url: "  https://junimea.serveo.net/api/PostGetters/GetPostBatchInitial",
+				    url: "  http://localhost:5000/api/PostGetters/GetPostBatchInitial",
 				    method: "POST",
 				   	data:  {
 								"StartDate":curentdate()
@@ -122,7 +122,7 @@
 					
 					
 					$http({
-				    url: "  https://junimea.serveo.net/api/profile/me",
+				    url: "  http://localhost:5000/api/profile/me",
 				    method: "GET",
 				   	data: {},
 					headers: {"Authorization" : "Bearer "+ localStorage.getItem("token")},
@@ -160,7 +160,7 @@
 				if(connected ==true){	
 					
 					$http({
-						url: "https://junimea.serveo.net/api/Post/LikePost",
+						url: "http://localhost:5000/api/Post/LikePost",
 						method: "POST",
 						data: {
 							"PostId":postid,
@@ -231,7 +231,7 @@
 				//window.alert("Inca nu merge, are erori la back-end");
 				if(connected==true){
 					$http({
-				    url: "https://junimea.serveo.net/api/Reports/ReportPost",
+				    url: "http://localhost:5000/api/Reports/ReportPost",
 				    method: "POST",
 				   	data: {
 						"EntityId":document.getElementById("reportID").value,
