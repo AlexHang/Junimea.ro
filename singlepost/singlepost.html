@@ -31,6 +31,15 @@
 		var pictureURL;
 		//let curent_post = 1; this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
+		
+		/*add this to all main pages !!*/
+		var setupTime = localStorage.getItem('CookieSetupTime');
+		console.log(setupTime);
+		var now = new Date().getTime();
+		if(now-setupTime > 2*60*60*1000 || setupTime==undefined) { // 2 hours * 60 minutes * 60 seconds * 1000 mili
+			localStorage.clear()
+		}
+		
 /*
 		function nextPost(){
 			let id=myParam*1;
@@ -112,18 +121,25 @@
 
 
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
-  <a href="#" class="active">Junimea</a>
-  <!--
-  <a href="#">HOT</a>
-  <a href="#">Trending</a>
-  <a href="#">Fresh</a>-->
-  <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
-  <a href="#">My Profile</a>
-  <a>
-  </a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i style="color: white;" class="fa fa-bars"></i>
-  </a>
+	<a href="#" class="active">Junimea</a>
+	  <!--
+	  <a href="#">HOT</a>
+	  <a href="#">Trending</a>
+	  <a href="#">Fresh</a>-->
+	  
+	  
+	<a href="javascript:void(0);" onclick="NightMode()">
+		Toggle Night Mode
+	</a>
+	<a href="javascript:void(0);" ng-if="user_connected!=false" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
+	<a href="../MyProfile/Profile.html" ng-if="user_connected!=false" >My Profile</a>
+	<a href="#" data-toggle="modal" ng-if="user_connected!=false" data-target="#ReportsModal">Tickete Support</a>
+	<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+		<i style="color: white;" class="fa fa-bars"></i>
+	</a>	
+	<a ng-if="user_connected==false" href="../LogIn/index.html" >
+		Log In
+	</a>
 
 </nav>
 
@@ -154,7 +170,7 @@
      	</li>
 		-->
 		<li ng-if="user_connected!=false">
-			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+			<a href="#" onclick="NightMode()" style="color:white; font-size:34px;">
 				<i class="fa fa-moon-o" aria-hidden="true"></i>
 			</a>
 		</li>
@@ -320,7 +336,7 @@
 </div>
 
 <div class="container" style="height:100%;">
-	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
+	<div class="col-md-3 full-row-grey mobile-hide" id="leftContainer"  ng-controller="BlogPosts" >
 		
 			
 			
@@ -452,7 +468,7 @@
 							<h1><br></h1>
 							<ul style="list-style-type: none; ">
 								<li ng-repeat="comment in comments track by $index">
-									<table style="width: 100%; height: 100px; background-color: #eff1f4; border-radius: 5px;">
+									<table class="comment-table" style="width: 100%; height: 100px; border-radius: 5px;">
 										<tr style="width: 100%; height: 40px;">
 											<td style="width:40px; height: 40px;">
 												<!--
@@ -663,6 +679,63 @@
 
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
 <script type="text/javascript" src="script.js"></script>  
+
+<script type="text/javascript">
+	
+	var body = document.body;
+	var aside = document.getElementById("leftContainer");
+	if(localStorage.getItem("NightMode")=='true'){
+		localStorage.setItem("NightMode", "true");
+		body.style.backgroundColor="black";
+		body.style.color="white";
+		aside.style.backgroundColor="#222222";
+		$('.postAuthor').css('color', 'white');
+		$('.comment-table').css('background-color','black');
+		$('.comment-table').css('color','#eff1f4');
+		$('.modal-content').css('background-color','#222222');
+		
+		
+	}else{
+		localStorage.setItem("NightMode", "false");
+		body.style.backgroundColor="white";
+		body.style.color="black";
+		aside.style.backgroundColor="#ededed";
+		$('.postAuthor').css('color', '#080baf');
+		$('.comment-table').css('background-color','#eff1f4');
+		$('.comment-table').css('color','black');
+		$('.modal-content').css('background-color','white');
+	}
+	
+	
+	function NightMode(){
+		if(localStorage.getItem("NightMode")!='true'){
+		
+			localStorage.setItem("NightMode", "true");
+			body.style.backgroundColor="black";
+			body.style.color="white";
+			aside.style.backgroundColor="#222222";
+			$('.postAuthor').css('color', 'white');
+			$('.comment-table').css('background-color','black');
+			$('.comment-table').css('color','#eff1f4');
+			$('.modal-content').css('background-color','#222222');
+			
+			
+		}else{
+			localStorage.setItem("NightMode", "false");
+			body.style.backgroundColor="white";
+			body.style.color="black";
+			aside.style.backgroundColor="#ededed";
+			$('.postAuthor').css('color', '#080baf');
+			$('.comment-table').css('background-color','#eff1f4');
+			$('.comment-table').css('color','black');
+			$('.modal-content').css('background-color','white');
+		}
+	}
+
+</script>
+
+
+
 
 </body>
 </html>

@@ -90,6 +90,16 @@
 		let curent_post = 1; // this will count at which post we scrolled, so that we can know how to refresh the timeline
 		var connected;
 
+		/*add this to all main pages !!*/
+		var setupTime = localStorage.getItem('CookieSetupTime');
+		console.log(setupTime);
+		var now = new Date().getTime();
+		if(now-setupTime > 2*60*60*1000 || setupTime==undefined) { // 2 hours * 60 minutes * 60 seconds * 1000 mili
+			localStorage.clear()
+		}
+		
+		
+		
 		function curentdate(){
 			var currentdate = new Date(); 
 			var datetime =  currentdate.getDate() + "/"
@@ -117,8 +127,9 @@
 		    url: "  http://localhost:5000/api/profile/me",       
 		    // data: jsonStrJson,               
 		    dataType: "json",
-		    success: function(data){
+		    success: function(data,status){
 		       console.log(data);
+			   console.log(status);
 		       Username = data["firstName"] +" "+ data["lastName"];
 		      // window.alert(Username);
 		       if(data["pictureURL"] != null)
@@ -126,7 +137,10 @@
 		       	else pictureURL = "https://www.bspmediagroup.com/event/img/logos/user_placeholder.png";
 		       //var json = JSON.parse(data);
 		       //console.log(json["auth_token"]);
-		    }
+		    },
+			error: function(){
+				connected = false;
+			  }
 		});
 
 
@@ -180,18 +194,25 @@
 
 
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
-  <a href="#" class="active">Junimea</a>
-  <!--
-  <a href="#">HOT</a>
-  <a href="#">Trending</a>
-  <a href="#">Fresh</a>-->
-  <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
-  <a href="#">My Profile</a>
-  <a>
-  </a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i style="color: white;" class="fa fa-bars"></i>
-  </a>
+	<a href="#" class="active">Junimea</a>
+	  <!--
+	  <a href="#">HOT</a>
+	  <a href="#">Trending</a>
+	  <a href="#">Fresh</a>-->
+	  
+	  
+	<a href="javascript:void(0);" onclick="NightMode()">
+		Toggle Night Mode
+	</a>
+	<a href="javascript:void(0);" ng-if="user_connected!=false" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
+	<a href="../MyProfile/Profile.html" ng-if="user_connected!=false" >My Profile</a>
+	<a href="#" data-toggle="modal" ng-if="user_connected!=false" data-target="#ReportsModal">Tickete Support</a>
+	<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+		<i style="color: white;" class="fa fa-bars"></i>
+	</a>	
+	<a ng-if="user_connected==false" href="../LogIn/index.html" >
+		Log In
+	</a>
 
 </nav>
 
@@ -830,19 +851,27 @@
 	var body = document.body;
 	var aside = document.getElementById("leftContainer");
 	if(localStorage.getItem("NightMode")=='true'){
-	
-		body.style.backgroundColor="black";
-		body.style.color="white";
-		aside.style.backgroundColor="#222222";
-		$('.postAuthor').css('color', 'white');
-
-	}else{
-
-		body.style.backgroundColor="white";
-		body.style.color="black";
-		aside.style.backgroundColor="#ededed";
-		$('.postAuthor').css('color', '#080baf');
-	}
+		
+			localStorage.setItem("NightMode", "true");
+			body.style.backgroundColor="black";
+			body.style.color="white";
+			aside.style.backgroundColor="#222222";
+			$('.postAuthor').css('color', 'white');
+			$('.comment-table').css('background-color','black');
+			$('.comment-table').css('color','#eff1f4');
+			$('.modal-content , #TicketScroll, #sendTicket').css('background-color','#222222');
+			
+			
+		}else{
+			localStorage.setItem("NightMode", "false");
+			body.style.backgroundColor="white";
+			body.style.color="black";
+			aside.style.backgroundColor="#ededed";
+			$('.postAuthor').css('color', '#080baf');
+			$('.comment-table').css('background-color','#eff1f4');
+			$('.comment-table').css('color','black');
+			$('.modal-content , #TicketScroll, #sendTicket').css('background-color','white');
+		}
 	
 	
 	function NightMode(){
@@ -853,6 +882,10 @@
 			body.style.color="white";
 			aside.style.backgroundColor="#222222";
 			$('.postAuthor').css('color', 'white');
+			$('.comment-table').css('background-color','black');
+			$('.comment-table').css('color','#eff1f4');
+			$('.modal-content , #TicketScroll, #sendTicket').css('background-color','#222222');
+			
 			
 		}else{
 			localStorage.setItem("NightMode", "false");
@@ -860,6 +893,10 @@
 			body.style.color="black";
 			aside.style.backgroundColor="#ededed";
 			$('.postAuthor').css('color', '#080baf');
+			$('.comment-table').css('background-color','#eff1f4');
+			$('.comment-table').css('color','black');
+			$('.modal-content , #TicketScroll, #sendTicket').css('background-color','white');
+
 		}
 	}
 

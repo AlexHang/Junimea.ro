@@ -202,6 +202,11 @@
 		       console.log(data);
 		       var json = JSON.parse(data);
 		       //console.log(json["auth_token"]);
+			   
+			   var now = new Date().getTime();
+			   localStorage.setItem('CookieSetupTime', now);
+			   console.log(localStorage.getItem('CookieSetupTime'));
+			   
 		       localStorage.setItem("token", json["auth_token"]);
 		       localStorage.setItem("userID", json["id"]);
 		       console.log(localStorage.getItem("token"));
@@ -274,6 +279,9 @@
 		       
 		       var json = data;
 		       //console.log(json["auth_token"]);
+			   var now = new Date().getTime();
+			   localStorage.setItem('CookieSetupTime', now);
+			   console.log(localStorage.getItem('CookieSetupTime'));
 		       localStorage.setItem("token", json["auth_token"]);
 		       localStorage.setItem("userID", json["id"]);
 		       console.log(localStorage.getItem("token"));

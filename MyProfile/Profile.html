@@ -32,6 +32,16 @@
 		//let urlParams = new URLSearchParams(window.location.search);
 		//let id = urlParams.get('id');
 		
+		/*add this to all main pages !!*/
+		var setupTime = localStorage.getItem('CookieSetupTime');
+		console.log(setupTime);
+		var now = new Date().getTime();
+		if(now-setupTime > 2*60*60*1000 || setupTime==undefined) { // 2 hours * 60 minutes * 60 seconds * 1000 mili
+			localStorage.clear()
+		}
+		
+		
+		
 		function curentdate(){
 			var currentdate = new Date(); 
 			var datetime = (currentdate.getMonth()+1)  + "/"  
@@ -126,19 +136,27 @@
 <body  ng-app="myApp">
 
 
+
 <nav ng-controller="NAVCTRL" class="topnav mobile-show" id="myTopnav" style="z-index: 9999;">
-  <a href="#" class="active">Junimea</a>
-  <!--
-  <a href="#">HOT</a>
-  <a href="#">Trending</a>
-  <a href="#">Fresh</a>-->
-  <a href="#" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
-  <a href="#">My Profile</a>
-  <a>
-  </a>
-  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-    <i style="color: white;" class="fa fa-bars"></i>
-  </a>
+	<a href="#" class="active">Junimea</a>
+	  <!--
+	  <a href="#">HOT</a>
+	  <a href="#">Trending</a>
+	  <a href="#">Fresh</a>-->
+	  
+	  
+	<a href="javascript:void(0);" onclick="NightMode()">
+		Toggle Night Mode
+	</a>
+	<a href="javascript:void(0);" ng-if="user_connected!=false" data-toggle="modal" data-target="#myModal" onclick="myFunction()">Posteaza</a>
+	<a href="../MyProfile/Profile.html" ng-if="user_connected!=false" >My Profile</a>
+	<a href="#" data-toggle="modal" ng-if="user_connected!=false" data-target="#ReportsModal">Tickete Support</a>
+	<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+		<i style="color: white;" class="fa fa-bars"></i>
+	</a>	
+	<a ng-if="user_connected==false" href="../LogIn/index.html" >
+		Log In
+	</a>
 
 </nav>
 
@@ -163,14 +181,13 @@
     </ul>
      <ul class="nav navbar-nav navbar-right mobile-hide">
      	
-		<!--
+		
 		<li ng-if="user_connected!=false">
      		<button style="margin:15px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-fire" ></span>Posteaza</button>
      	</li>
-		-->
 		
 		<li ng-if="user_connected!=false">
-			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+			<a href="#" onclick="NightMode()" style="color:white; font-size:34px;">
 				<i class="fa fa-moon-o" aria-hidden="true"></i>
 			</a>
 		</li>
@@ -214,8 +231,9 @@
 </nav>
 
 
+
 <div class="container" style="height:100%;">
-	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
+	<div class="col-md-3 full-row-grey mobile-hide" id="leftContainer"  ng-controller="BlogPosts" >
 		
 			
 			
@@ -260,12 +278,12 @@
 	<div class="col-md-6 full-row-white-scroll" id="feed" ng-controller="NewsFeed" data-ng-init="init()" style="overflow-y: scroll;">
 		<center>
 			
-			<div class="card" style="width:70%; border-bottom: 1px solid black" > 
+			<div class="card" style="width:100%; border-bottom: 1px solid black" > 
 				<!--<img src="https://pbs.twimg.com/profile_images/854356462604353538/a4OGfq--_400x400.jpg" class="img-thumbnail" style="width: 20%;" alt="Cinque Terre">-->
 				<p>- Your Personal Profile -</p>
 			</div>
 			<div ng-repeat="post in feed['result'] track by $index" style="width:100%;">
-				<div class="card advertising" style="width:70%;" ng-if="$index%5==0 && $index!=0" > 
+				<div class="card advertising" style="width:100%;" ng-if="$index%5==0 && $index!=0" > 
 					<!--<h4 class="card-title">Reclama</h4>-->
 					<br>
 					  <img class="card-img-top" src="https://i.ytimg.com/vi/nIRJMkcoTwc/maxresdefault.jpg" width="100%" alt="Card image">
@@ -289,7 +307,7 @@
 					  </div>-->
 				</div>
 
-				<div class="card postare" style="border-bottom: 1px solid black; width:70%;" > 
+				<div class="card postare" style="border-bottom: 1px solid black; width:100%;" > 
 					<h4 class="card-title">
 							
 										
@@ -495,6 +513,54 @@
 
 <script type="text/javascript" src="fileupload/fileupload.js"></script>
     <script type="text/javascript" src="script.js"></script>  
+<script type="text/javascript">
+	
+	var body = document.body;
+	var aside = document.getElementById("leftContainer");
+	
+	if(localStorage.getItem("NightMode")=='true'){
+		localStorage.setItem("NightMode", "true");
+		body.style.backgroundColor="black";
+		body.style.color="white";
+		aside.style.backgroundColor="#222222";
+		$('.postAuthor').css('color', 'white');
+		$('.comment-table').css('background-color','black');
+		$('.comment-table').css('color','#eff1f4');
+		$('.modal-content').css('background-color','#222222');
+	}else{
+		localStorage.setItem("NightMode", "false");
+		body.style.backgroundColor="white";
+		body.style.color="black";
+		aside.style.backgroundColor="#ededed";
+		$('.postAuthor').css('color', '#080baf');
+		$('.comment-table').css('background-color','#eff1f4');
+		$('.comment-table').css('color','black');
+		$('.modal-content').css('background-color','white');
+	}
+	
+	
+	function NightMode(){
+		if(localStorage.getItem("NightMode")!='true'){
+			localStorage.setItem("NightMode", "true");
+			body.style.backgroundColor="black";
+			body.style.color="white";
+			aside.style.backgroundColor="#222222";
+			$('.postAuthor').css('color', 'white');
+			$('.comment-table').css('background-color','black');
+			$('.comment-table').css('color','#eff1f4');
+			$('.modal-content').css('background-color','#222222');
+		}else{
+			localStorage.setItem("NightMode", "false");
+			body.style.backgroundColor="white";
+			body.style.color="black";
+			aside.style.backgroundColor="#ededed";
+			$('.postAuthor').css('color', '#080baf');
+			$('.comment-table').css('background-color','#eff1f4');
+			$('.comment-table').css('color','black');
+			$('.modal-content').css('background-color','white');
+		}
+	}
 
+</script>
 </body>
 </html>
