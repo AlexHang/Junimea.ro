@@ -147,7 +147,7 @@
 		-->
 		
 		<li ng-if="user_connected!=false">
-			<a href="content-scroll-dark.html" style="color:white; font-size:34px;">
+			<a href="javascript:void(0);" onclick="NightMode()" style="color:white; font-size:34px;">
 				<i class="fa fa-moon-o" aria-hidden="true"></i>
 			</a>
 		</li>
@@ -192,7 +192,7 @@
 
 
 <div class="container" style="height:100%;">
-	<div class="col-md-3 full-row-grey mobile-hide"  ng-controller="BlogPosts" >
+	<div class="col-md-3 full-row-grey mobile-hide" id="leftContainer" ng-controller="BlogPosts" >
 		
 			
 			

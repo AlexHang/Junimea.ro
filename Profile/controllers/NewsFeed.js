@@ -4,7 +4,7 @@ app.controller('NewsFeed', function($scope, $http, $interval) {
 
     		$scope.see_post = function(id){
     			// location.href = "singlepost.html?"+id;
-    			window.open("singlepost.html?"+id);
+    			window.open("../singlepost/singlepost.html?ID="+id);
     		};
 
     		$scope.init = function(){
